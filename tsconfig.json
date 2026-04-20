@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "components/shared/splash-cursor.jsx"  ],
   "exclude": ["node_modules"]
 }

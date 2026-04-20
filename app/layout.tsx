@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { DM_Sans, Figtree } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Header from "@/components/header";
+import Footer from "@/components/home/footer";
 
-const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
+const figtree = Figtree({ subsets: ['latin'], variable: '--font-sans' });
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -23,7 +25,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("font-sans", figtree.variable)}>
-      <body className="font-dm-sans antialiased">{children}</body>
+      <body className="font-dm-sans antialiased">
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
