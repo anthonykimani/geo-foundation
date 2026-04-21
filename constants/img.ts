@@ -25,6 +25,7 @@ import FunWaterImg from "@/public/img/fun-while-fetching-water.jpg";
 import SmileyWomenImg from "@/public/img/medium-shot-smiley-women-posing-together.jpg";
 import WomenPosingImg from "@/public/img/medium-shot-women-posing-together.jpg";
 import HappyKidsImg from "@/public/img/happy-kids.jpg";
+import GeoLogo from "@/public/img/geo-logo.jpg";
 
 export {
     HeroImg,
@@ -54,4 +55,5 @@ export {
     SmileyWomenImg,
     WomenPosingImg,
     HappyKidsImg,
+    GeoLogo
 }

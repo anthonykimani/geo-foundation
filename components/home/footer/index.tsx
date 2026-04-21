@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CaretRightIcon } from "@phosphor-icons/react";
 import { FacebookLogoIcon, InstagramLogoIcon, LinkedinLogoIcon, TwitterLogoIcon, YoutubeLogoIcon } from "@phosphor-icons/react";
+import Logo from "@/components/header/Logo";
 
 const footerLinks = {
   explore: [
@@ -43,9 +44,7 @@ function Footer() {
           className="flex flex-col xl:flex-row py-10 sm:py-16 gap-8 sm:gap-10 justify-between items-start xl:items-center border-b border-navy/10"
         >
           <div className="flex flex-col gap-4 sm:gap-6 max-w-md">
-            <h3 className="text-3xl sm:text-4xl md:text-[56px] leading-tight font-normal text-foreground">
-              GEO Foundation
-            </h3>
+            <Logo />
             <p className="opacity-60 text-base sm:text-lg text-foreground">
               Join the Movement to a start impacting lives around you
             </p>
