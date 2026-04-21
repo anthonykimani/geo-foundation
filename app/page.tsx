@@ -14,11 +14,11 @@ export default function Home() {
       <section id="hero">
         <HeroSection />
       </section>
-      <section id="about">
-        <AboutHero />
-      </section>
       <section id="countdown">
         <Countdown targetDate="2026-11-28T06:00:00" />
+      </section>
+      <section id="about">
+        <AboutHero />
       </section>
       <section id="jiwe">
         <JiweKwaJiwe />
