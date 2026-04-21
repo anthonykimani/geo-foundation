@@ -2,7 +2,7 @@
 
 import Header from "./header";
 import TeamCard from "./team-card";
-import { SmileyWomenImg, WomenPosingImg, GirlsTogetherImg } from "@/constants/img";
+import { SmileyWomenImg, WomenPosingImg, GirlsTogetherImg, EmilyTeamImg, AlexTeamImg, MaxTeamImg, RoyTeamImg } from "@/constants/img";
 
 export interface TeamMember {
   name: string;
@@ -31,30 +31,30 @@ const defaultData: TeamData = {
   },
   members: [
     {
-      name: "CHRISPIN NG'ANG'A",
-      title: "Co-Organizer",
-      image: SmileyWomenImg.src,
-      linkedin: "#",
-      twitter: "#",
-    },
-    {
       name: "ROY ODUOR",
       title: "Co-Organizer",
-      image: WomenPosingImg.src,
+      image: RoyTeamImg.src,
       linkedin: "#",
       twitter: "#",
     },
     {
-      name: "MAX ERUDE",
+      name: "EMILY SANG",
       title: "Co-Organizer",
-      image: GirlsTogetherImg.src,
+      image: EmilyTeamImg.src,
       linkedin: "#",
       twitter: "#",
     },
     {
-      name: "TONY ERUDE",
+      name: "ALEX",
       title: "Co-Organizer",
-      image: WomenPosingImg.src,
+      image: AlexTeamImg.src,
+      linkedin: "#",
+      twitter: "#",
+    },
+    {
+      name: "MAX",
+      title: "Co-Organizer",
+      image: MaxTeamImg.src,
       linkedin: "#",
       twitter: "#",
     },
