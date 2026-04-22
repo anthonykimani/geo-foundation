@@ -2,15 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 interface RouteMapProps {
   className?: string;
 }
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  var L: any;
-}
 
 function RouteMap({ className = "h-[300px] md:h-[400px]" }: RouteMapProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -143,29 +141,7 @@ function RouteMap({ className = "h-[300px] md:h-[400px]" }: RouteMapProps) {
   useEffect(() => {
     if (isLoaded.current || !mapContainer.current) return;
 
-    const loadLeaflet = async () => {
-      if (typeof window !== "undefined" && !window.L) {
-        await new Promise<void>((resolve, reject) => {
-          const hasStyles = document.querySelector('link[href*="leaflet"]');
-          if (!hasStyles) {
-            const link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-            document.head.appendChild(link);
-          }
-          
-          const script = document.createElement("script");
-          script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-          script.onload = () => resolve();
-          script.onerror = () => reject(new Error("Failed to load Leaflet"));
-          document.body.appendChild(script);
-        });
-      }
-
-      const L = window.L;
-      if (!L) return;
-
-      const map = L.map(mapContainer.current!, {
+          const map = L.map(mapContainer.current!, {
         center: center,
         zoom: 14,
         zoomControl: true,
@@ -252,9 +228,7 @@ function RouteMap({ className = "h-[300px] md:h-[400px]" }: RouteMapProps) {
       L.marker([0.039, 34.7198], { icon: schoolIcon }).addTo(map);
 
       isLoaded.current = true;
-    };
 
-    loadLeaflet().catch(console.error);
   }, []);
 
   return (
