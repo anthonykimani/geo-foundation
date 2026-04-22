@@ -2,8 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+import dynamic from "next/dynamic";
 
 interface RouteMapProps {
   className?: string;
@@ -12,8 +11,7 @@ interface RouteMapProps {
 
 function RouteMap({ className = "h-[300px] md:h-[400px]" }: RouteMapProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const mapInstance = useRef<L.Map | null>(null); 
-  const isLoaded = useRef(false);
+  const mapInstance = useRef<L.Map | null>(null);
 
   // Tigoi Primary School coordinates - centered on the track loop
   const center: [number, number] = [0.0444, 34.7272];
@@ -140,37 +138,40 @@ function RouteMap({ className = "h-[300px] md:h-[400px]" }: RouteMapProps) {
   const routeCoords: [number, number][] = routeCoordsOSRM.map(([lon, lat]) => [lat, lon] as [number, number]);
 
   useEffect(() => {
-        if (!mapContainer.current) return;
+    if (!mapContainer.current) return;
 
     // Prevent double initialization in Strict Mode / Fast Refresh
     if (mapInstance.current) return;
 
-    const map = L.map(mapContainer.current!, {
-      center: center,
-      zoom: 14,
-      zoomControl: true,
-      dragging: true,
-      scrollWheelZoom: true,
-    });
+    const initMap = async () => {
+      const L = (await import("leaflet")).default;
 
-    // Clean minimal tiles
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-      maxZoom: 19,
-    }).addTo(map);
+      const map = L.map(mapContainer.current!, {
+        center: center,
+        zoom: 14,
+        zoomControl: true,
+        dragging: true,
+        scrollWheelZoom: true,
+      });
 
-    // Draw track as animated dashed line (using real road coordinates)
-    const trackLine = L.polyline(routeCoords, {
-      color: "#DC2626",
-      weight: 5,
-      opacity: 1,
-      dashArray: "16, 12",
-      lineCap: "round",
-      lineJoin: "round",
-    }).addTo(map);
+      // Clean minimal tiles
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        maxZoom: 19,
+      }).addTo(map);
 
-    // Animated dashed line (slower)
-    const style = document.createElement("style");
-    style.textContent = `
+      // Draw track as animated dashed line (using real road coordinates)
+      const trackLine = L.polyline(routeCoords, {
+        color: "#DC2626",
+        weight: 5,
+        opacity: 1,
+        dashArray: "16, 12",
+        lineCap: "round",
+        lineJoin: "round",
+      }).addTo(map);
+
+      // Animated dashed line (slower)
+      const style = document.createElement("style");
+      style.textContent = `
         @keyframes dash-slow {
           from { stroke-dashoffset: 0; }
           to { stroke-dashoffset: -56; }
@@ -179,64 +180,66 @@ function RouteMap({ className = "h-[300px] md:h-[400px]" }: RouteMapProps) {
           animation: dash-slow 2s linear infinite;
         }
       `;
-    document.head.appendChild(style);
+      document.head.appendChild(style);
 
-    setTimeout(() => {
-      const pathEl = trackLine.getElement();
-      if (pathEl) {
-        pathEl.classList.add("track-animated");
-      }
-    }, 200);
+      setTimeout(() => {
+        const pathEl = trackLine.getElement();
+        if (pathEl) {
+          pathEl.classList.add("track-animated");
+        }
+      }, 200);
 
-    // Start marker
-    const startIcon = L.divIcon({
-      html: `<div class="flex items-center justify-center w-8 h-8 bg-green-600 rounded-full border-3 border-white shadow-lg"><div class="w-3 h-3 bg-white rounded-full"></div></div>`,
-      className: "",
-      iconSize: [32, 32],
-      iconAnchor: [16, 16],
-    });
-    L.marker(routeCoords[0], { icon: startIcon }).addTo(map);
+      // Start marker
+      const startIcon = L.divIcon({
+        html: `<div class="flex items-center justify-center w-8 h-8 bg-green-600 rounded-full border-3 border-white shadow-lg"><div class="w-3 h-3 bg-white rounded-full"></div></div>`,
+        className: "",
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+      });
+      L.marker(routeCoords[0], { icon: startIcon }).addTo(map);
 
-    // Finish marker
-    const finishIcon = L.divIcon({
-      html: `<div class="flex items-center justify-center w-8 h-8 bg-red-600 rounded-full border-3 border-white shadow-lg"><div class="w-3 h-3 bg-white rounded-full"></div></div>`,
-      className: "",
-      iconSize: [32, 32],
-      iconAnchor: [16, 16],
-    });
-    L.marker(routeCoords[routeCoords.length - 1], { icon: finishIcon }).addTo(map);
+      // Finish marker
+      const finishIcon = L.divIcon({
+        html: `<div class="flex items-center justify-center w-8 h-8 bg-red-600 rounded-full border-3 border-white shadow-lg"><div class="w-3 h-3 bg-white rounded-full"></div></div>`,
+        className: "",
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+      });
+      L.marker(routeCoords[routeCoords.length - 1], { icon: finishIcon }).addTo(map);
 
-    // KM markers
-    const kmLabels = [0, 2.5, 5];
-    kmLabels.forEach((km) => {
-      const idx = Math.floor((km / 5) * (routeCoords.length - 1));
-      const pos = routeCoords[idx];
-      if (pos) {
-        const kmIcon = L.divIcon({
-          html: `<div class="text-xs font-bold text-gray-700 bg-white px-2 py-1 rounded shadow border border-gray-200 whitespace-nowrap">${km}km</div>`,
-          className: "",
-          iconSize: [45, 24],
-          iconAnchor: [22, 12],
-        });
-        L.marker(pos, { icon: kmIcon }).addTo(map);
-      }
-    });
+      // KM markers
+      const kmLabels = [0, 2.5, 5];
+      kmLabels.forEach((km) => {
+        const idx = Math.floor((km / 5) * (routeCoords.length - 1));
+        const pos = routeCoords[idx];
+        if (pos) {
+          const kmIcon = L.divIcon({
+            html: `<div class="text-xs font-bold text-gray-700 bg-white px-2 py-1 rounded shadow border border-gray-200 whitespace-nowrap">${km}km</div>`,
+            className: "",
+            iconSize: [45, 24],
+            iconAnchor: [22, 12],
+          });
+          L.marker(pos, { icon: kmIcon }).addTo(map);
+        }
+      });
 
-    // Tigoi Primary School label
-    const schoolIcon = L.divIcon({
-      html: `<div class="text-xs font-bold text-blue-700 bg-blue-100 px-2 py-1 rounded shadow border border-blue-300 whitespace-nowrap">Tigoi Primary School</div>`,
-      className: "",
-      iconSize: [130, 24],
-      iconAnchor: [65, 12],
-    });
-    L.marker([0.039, 34.7198], { icon: schoolIcon }).addTo(map);
+      // Tigoi Primary School label
+      const schoolIcon = L.divIcon({
+        html: `<div class="text-xs font-bold text-blue-700 bg-blue-100 px-2 py-1 rounded shadow border border-blue-300 whitespace-nowrap">Tigoi Primary School</div>`,
+        className: "",
+        iconSize: [130, 24],
+        iconAnchor: [65, 12],
+      });
+      L.marker([0.039, 34.7198], { icon: schoolIcon }).addTo(map);
 
-    isLoaded.current = true;
 
-    return () => {
-      map.remove();
-      mapInstance.current = null;
-    };
+      return () => {
+        map.remove();
+        mapInstance.current = null;
+      };
+    }
+
+    initMap();
   }, []);
 
   return (
