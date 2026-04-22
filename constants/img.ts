@@ -17,14 +17,6 @@ import Img15 from "@/public/img/15.jpg";
 import Img16 from "@/public/img/16.jpg";
 import Img17 from "@/public/img/17.jpg";
 import Img18 from "@/public/img/18.jpg";
-import GirlsTogetherImg from "@/public/img/close-up-african-girls-together.jpg";
-import SmileyGirlImg from "@/public/img/close-up-smiley-african-girl.jpg";
-import FetchingWaterImg from "@/public/img/fetching-water.jpg";
-import GirlsPosingImg from "@/public/img/full-shot-cute-african-girls-posing-outdoors.jpg";
-import FunWaterImg from "@/public/img/fun-while-fetching-water.jpg";
-import SmileyWomenImg from "@/public/img/medium-shot-smiley-women-posing-together.jpg";
-import WomenPosingImg from "@/public/img/medium-shot-women-posing-together.jpg";
-import HappyKidsImg from "@/public/img/happy-kids.jpg";
 import GeoLogo from "@/public/img/geo-logo.png";
 import RoyTeamImg from "@/public/img/roy-oduor.jpg";
 import EmilyTeamImg from "@/public/img/emily-sang.jpg";
@@ -52,14 +44,6 @@ export {
     Img16,
     Img17,
     Img18,
-    GirlsTogetherImg,
-    SmileyGirlImg,
-    FetchingWaterImg,
-    GirlsPosingImg,
-    FunWaterImg,
-    SmileyWomenImg,
-    WomenPosingImg,
-    HappyKidsImg,
     GeoLogo,
     RoyTeamImg,
     EmilyTeamImg,

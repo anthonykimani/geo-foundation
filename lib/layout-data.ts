@@ -1,10 +1,8 @@
 export const headerData = [
-  { label: "Home", href: "/#hero" },
-  { label: "5km Run", href: "/#countdown" },
-  { label: "About", href: "/#about" },
-  { label: "Jiwe", href: "/#jiwe" },
-  { label: "Impact", href: "/#impact" },
-  { label: "Team", href: "/#team" },
-  { label: "FAQ", href: "/#faq" },
-  { label: "Stories", href: "/#testimonials" },
+  { label: "Home", href: "/" },
+  { label: "5km Run", href: "/run" },
+  { label: "About", href: "/about" },
+  { label: "News", href: "/gallery" },
+  { label: "Impact", href: "/impact" },
+  { label: "Get Involved", href: "/get-involved" },
 ];

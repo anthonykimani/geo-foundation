@@ -13,7 +13,7 @@ import {
   Img6,
   Img7,
   Img8,
-  WomenPosingImg,
+  Img9,
 } from "@/constants/img";
 
 export interface ImpactItem {
@@ -46,7 +46,7 @@ const defaultData: ImpactAreasData = {
     title: "Kapsagawat Primary School",
     description:
       "Sanitary pads were provided to over 200 girls at both schools in partnership with the Centre for Advocacy on the Rights of Youth Africa, while seniors received free medical checks.",
-    image: WomenPosingImg.src,
+    image: Img9.src,
   },
   impacts: [
     {

@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import TestimonialCard from "./testimonial-card";
-import { GirlsTogetherImg, SmileyGirlImg, WomenPosingImg, FetchingWaterImg, HappyKidsImg, GirlsPosingImg, SmileyWomenImg, FunWaterImg } from "@/constants/img";
+import { Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8 } from "@/constants/img";
 
 export interface Testimonial {
   quote: string;
@@ -38,55 +38,55 @@ const defaultData: TestimonialsData = {
       detail:
         "GEO Foundation has given me peace of mind knowing my family receives the support they need without any hassle.",
       author: "Lila Patel",
-      image: GirlsTogetherImg.src,
+      image: Img1.src,
     },
     {
       quote: "GEO foundation has been a game-changer for me!",
       detail:
         "I could afford to raise school fees for my education but the foundation helped me",
       author: "James Porter",
-      image: SmileyGirlImg.src,
+      image: Img2.src,
     },
     {
       quote: "I love how transparent it is",
       detail: "Our Community couldn't afford",
       author: "James Porter",
-      image: WomenPosingImg.src,
+      image: Img3.src,
     },
     {
       quote: "Amazing community support",
       detail:
         "The foundation helped build a new classroom for our village children.",
       author: "Mary Atieno",
-      image: FetchingWaterImg.src,
+      image: Img4.src,
     },
     {
       quote: "Education for all",
       detail:
         "My children can now go to school thanks to the scholarship program.",
       author: "John Ochieng",
-      image: HappyKidsImg.src,
+      image: Img5.src,
     },
     {
       quote: "Life-changing impact",
       detail:
         "The medical outreach saved my mother's life. Forever grateful!",
       author: "Sarah Wanjiku",
-      image: GirlsPosingImg.src,
+      image: Img6.src,
     },
     {
       quote: "Empowering youth",
       detail:
         "The youth programs gave me skills for my career.",
       author: "David Kiprop",
-      image: SmileyWomenImg.src,
+      image: Img7.src,
     },
     {
       quote: "Clean water access",
       detail:
         "The water project improved our village's health significantly.",
       author: "Grace Akinyi",
-      image: FunWaterImg.src,
+      image: Img8.src,
     },
   ],
 };

@@ -6,6 +6,7 @@ import Team from "@/components/home/team";
 import Countdown from "@/components/home/countdown";
 import FAQ from "@/components/home/faq";
 import Testimonials from "@/components/home/testimonials";
+import News from "@/components/home/news";
 
 
 export default function Home() {
@@ -15,13 +16,16 @@ export default function Home() {
         <HeroSection />
       </section>
       <section id="countdown">
-        <Countdown targetDate="2026-11-28T06:00:00" />
+        <Countdown targetDate="2026-09-06T07:00:00" />
       </section>
       <section id="about">
         <AboutHero />
       </section>
       <section id="jiwe">
         <JiweKwaJiwe />
+      </section>
+      <section id="news">
+        <News />
       </section>
       <section id="impact">
         <ImpactAreas />

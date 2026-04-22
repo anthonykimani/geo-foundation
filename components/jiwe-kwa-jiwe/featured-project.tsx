@@ -5,7 +5,6 @@ import { motion, useInView } from "motion/react";
 import { useRef, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import DonationModal from "@/components/shared/donation-modal";
 
 interface Project {
   title: string;
@@ -28,7 +27,7 @@ function AnimatedNumber({
   inView: boolean;
 }) {
   const [displayValue, setDisplayValue] = useState(0);
-  
+
   useEffect(() => {
     if (!inView) return;
 
@@ -56,7 +55,6 @@ function AnimatedNumber({
 
 function FeaturedProject({ project, animationIndex = 0 }: FeaturedProjectProps) {
   const ref = useRef(null);
-  const [donateOpen, setDonateOpen] = useState(false);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   const bottomAnimation = {
@@ -113,7 +111,9 @@ function FeaturedProject({ project, animationIndex = 0 }: FeaturedProjectProps) 
             </div>
           </div>
 
-          <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
+          <Button className="rounded-full h-[37px] px-6 bg-foreground text-white hover:bg-foreground/90 w-fit">
+            Donate
+          </Button>
         </div>
       </div>
     </motion.div>

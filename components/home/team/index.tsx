@@ -2,7 +2,7 @@
 
 import Header from "./header";
 import TeamCard from "./team-card";
-import { SmileyWomenImg, WomenPosingImg, GirlsTogetherImg, EmilyTeamImg, AlexTeamImg, MaxTeamImg, RoyTeamImg } from "@/constants/img";
+import { Img1, Img2, Img3, EmilyTeamImg, AlexTeamImg, MaxTeamImg, RoyTeamImg } from "@/constants/img";
 
 export interface TeamMember {
   name: string;
