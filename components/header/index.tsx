@@ -87,13 +87,8 @@ const Header = () => {
                             <MobileHeader item={item} />
                           </SheetClose>
                         ))}
-                        <div className="flex flex-col items-center gap-3 px-2 mt-2">
-                          <Link
-                            href={"/donate"}
-                            className="w-full text-white dark:text-navy px-4 py-2 bg-navy dark:bg-white rounded-md hover:opacity-90"
-                          >
-                            Donate a Brick
-                          </Link>
+                        <div className="flex flex-col gap-3 px-2 mt-2">
+                          <DonationModal />
                         </div>
                       </ul>
                     </div>
