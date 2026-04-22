@@ -255,4 +255,4 @@ function RouteMap({ className = "h-[300px] md:h-[400px]" }: RouteMapProps) {
   );
 }
 
-export default RouteMap;
+export default dynamic(() => Promise.resolve(RouteMap), { ssr: false });
