@@ -11,7 +11,7 @@ interface CountdownProps {
 
 function getTimeRemaining(targetDate: string) {
   const total = new Date(targetDate).getTime() - new Date().getTime();
-  
+
   if (total <= 0) {
     return { days: "00", hours: "00", minutes: "00", seconds: "00" };
   }
@@ -32,7 +32,7 @@ function getTimeRemaining(targetDate: string) {
 const defaultConfig = {
   title: "Annual 5km Run",
   subtitle: "Join us for our annual charity run! Every step helps build classrooms for children in need.",
-  targetDate: "2026-11-28T06:00:00",
+  targetDate: "2026-09-05T07:00:00",
 };
 
 function CountdownUnit({ value, label }: { value: string; label: string }) {
@@ -91,6 +91,25 @@ function Countdown({ targetDate }: CountdownProps) {
           <CountdownUnit value={time.hours} label="Hours" />
           <CountdownUnit value={time.minutes} label="Minutes" />
           <CountdownUnit value={time.seconds} label="Seconds" />
+        </motion.div>
+
+        <motion.div>
+
+          <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 md:gap-12 lg:gap-16 mb-12">
+            <div>
+              
+              <p className="text-lg font-medium text-foreground">Sept 5th, 2026</p>
+            </div>
+            <div>
+              
+              <p className="text-lg font-medium text-foreground">7:00 AM</p>
+            </div>
+            <div>
+              
+              <p className="text-lg font-medium text-foreground">St. Micheal's Primary School in Kilifi County</p>
+            </div>
+          </div>
+
         </motion.div>
 
         <motion.div

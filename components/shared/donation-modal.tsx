@@ -31,12 +31,6 @@ export function DonationModal({ open = false, onOpenChange }: DonationModalProps
     <>
       
       <Sheet open={isOpen} onOpenChange={handleClose}>
-      <button 
-        onClick={() => { setShowChoices(true); setIsOpen(true); }}
-        className="bg-primary text-white px-4 py-2 rounded-full hover:bg-primary/90 transition-colors"
-      >
-        Donate
-      </button>
         <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
           <SheetHeader>
             <SheetTitle>Support Our Cause</SheetTitle>

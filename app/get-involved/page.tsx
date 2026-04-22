@@ -7,6 +7,7 @@ import InvolvementCard from "@/components/get-involved/involvement-card";
 import VolunteerForm from "@/components/get-involved/volunteer-form";
 import SponsorForm from "@/components/get-involved/sponsor-form";
 import { DonationModal } from "@/components/shared/donation-modal";
+import { Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8 } from "@/constants/img";
 
 function GetInvolvedPage() {
   const [donateOpen, setDonateOpen] = useState(false);
@@ -28,13 +29,13 @@ function GetInvolvedPage() {
   return (
     <main className="min-h-screen bg-background pt-20">
       <Hero />
-
+      <DonationModal open={donateOpen} onOpenChange={setDonateOpen}/>
       <section className="py-12 md:py-16 lg:py-20">
         <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {/* 1. DONATE */}
             <InvolvementCard
-              icon="❤️"
+              image={Img2}
               title="Make a Donation"
               description="Support our mission to empower women and children in underserved communities across Kenya. All donations are tax-deductible."
               buttonText="Donate Now"
@@ -45,24 +46,40 @@ function GetInvolvedPage() {
 
             {/* 2. RUN */}
             <InvolvementCard
-              icon="🏃"
+              image={Img3}
               title="Join the Memorial Run"
               description="Participate in our annual 5K run. Every step helps build classrooms for children in need."
               buttonText="Register"
               variant="secondary"
               onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSdGsGAGpe9EdCwEcHmC2ugxYRHq9EUsaPs5NLffPOtvs57IHw/viewform", "_blank")}
               animationIndex={1}
+              />
+
+              {/* 3. VOLUNTEER */}
+            <InvolvementCard
+              image={Img5}
+              title="Boots on the Ground"
+              description="Submit your manifest to logistics. We require organizers, physical laborers, and digital strategists."
+              buttonText="Submit Application"
+              variant="secondary"
+              onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSdGsGAGpe9EdCwEcHmC2ugxYRHq9EUsaPs5NLffPOtvs57IHw/viewform", "_blank")}
+              animationIndex={2}
             />
 
-            {/* 3. VOLUNTEER */}
-            <VolunteerForm />
-
             {/* 4. SPONSOR */}
-            <SponsorForm />
+            <InvolvementCard
+              image={Img7}
+              title="Corporate Sponsorship"
+              description="Fund entire milestones. Sponsors receive ledger credits and permanent physical plaques on the structure."
+              buttonText="Request Deal Book"
+              variant="secondary"
+              onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSdGsGAGpe9EdCwEcHmC2ugxYRHq9EUsaPs5NLffPOtvs57IHw/viewform", "_blank")}
+              animationIndex={3}
+            />
 
             {/* 5. PARTNER */}
             <InvolvementCard
-              icon="🤝"
+              image={Img3}
               title="Become a Partner"
               description="Partner with us to expand our impact. We welcome corporations, NGOs, and government agencies."
               buttonText="Contact Us"
@@ -73,7 +90,7 @@ function GetInvolvedPage() {
 
             {/* 6. SHARE */}
             <InvolvementCard
-              icon="📢"
+              image={Img6}
               title="Spread the Word"
               description="Share our mission with your network. Help us reach more communities that need support."
               buttonText="Share"

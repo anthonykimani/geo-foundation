@@ -17,6 +17,7 @@ import Img15 from "@/public/img/15.jpg";
 import Img16 from "@/public/img/16.jpg";
 import Img17 from "@/public/img/17.jpg";
 import Img18 from "@/public/img/18.jpg";
+import RunPoster from "@/public/img/poster.jpg";
 import GeoLogo from "@/public/img/geo-logo.png";
 import RoyTeamImg from "@/public/img/roy-oduor.jpg";
 import EmilyTeamImg from "@/public/img/emily-sang.jpg";
@@ -44,6 +45,7 @@ export {
     Img16,
     Img17,
     Img18,
+    RunPoster,
     GeoLogo,
     RoyTeamImg,
     EmilyTeamImg,

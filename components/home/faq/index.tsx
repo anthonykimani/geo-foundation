@@ -37,37 +37,37 @@ const defaultData: FAQData = {
     {
       question: "How Does the $1 = 1 Brick Model Work?",
       answer:
-        "We believe that sustainable impact is built through transparency, participation, and measurable action — one brick at a time.",
+        "Every dollar you donate directly funds the purchase of one physical brick for our classroom construction project at St. Micheal's Primary School in Kilifi County, Kenya. We negotiate bulk pricing with local suppliers to maximize your impact, and every brick is accounted for in our public ledger. Once the classroom is complete, donors receive a digital certificate showing exactly how many bricks they contributed.",
     },
     {
-      question: "How is Donation Transparency Ensured?",
+      question: "How Is Donation Transparency Ensured?",
       answer:
-        "Fantastic service! The app is easy to use and it's saved me so much time and money when transferring funds across borders. Definitely a must-have for anyone who needs fast and reliable money transfers.",
+        "We publish quarterly impact reports detailing every shilling spent — from brick purchases and contractor payments to community program costs. Our finances are independently audited by a third-party firm, and we share real-time construction updates via photo galleries, GPS-tagged progress maps, and live video walkthroughs on our website and social media channels.",
     },
     {
       question: "Can I Track My Brick Contribution?",
       answer:
-        "Fantastic service! The app is easy to use and it's saved me so much time and money when transferring funds across borders. Definitely a must-have for anyone who needs fast and reliable money transfers.",
+        "Yes. After donating, you'll receive a unique contribution ID that lets you track your bricks through our online dashboard. You'll see when your bricks were purchased, delivered to the site, and laid in the wall. For donations of $50 or more, we also offer the option to have your name or a short message engraved on a commemorative plaque inside the completed classroom.",
     },
     {
-      question: "How Does The 5km Run Convert To Bricks?",
+      question: "How Does the 5km Run Convert to Bricks?",
       answer:
-        "Fantastic service! The app is easy to use and it's saved me so much time and money when transferring funds across borders. Definitely a must-have for anyone who needs fast and reliable money transfers.",
+        "The annual Gladys Erude Memorial Run is both a fundraiser and awareness campaign. Your registration fee covers event costs, while every additional dollar you raise or donate goes straight to bricks. Corporate sponsors often match runner donations brick-for-brick, meaning a single participant can generate hundreds of bricks. Last year's run funded over 12,000 bricks — roughly 20% of the classroom walls.",
     },
     {
       question: "Are Corporate Partnerships Available?",
       answer:
-        "Fantastic service! The app is easy to use and it's saved me so much time and money when transferring funds across borders. Definitely a must-have for anyone who needs fast and reliable money transfers.",
+        "Absolutely. We offer structured partnership tiers for businesses, from local Kenyan enterprises to international organizations. Partners receive branding on construction signage, recognition in our annual report, team volunteer days at the build site, and custom impact dashboards tracking their contribution. Contact us at partnerships@gladyserudeorganization.org to discuss co-branded campaigns or employee giving programs.",
     },
     {
-      question: "Where Is The Classroom Being Built?",
+      question: "Where Is the Classroom Being Built?",
       answer:
-        "Fantastic service! The app is easy to use and it's saved me so much time and money when transferring funds across borders. Definitely a must-have for anyone who needs fast and reliable money transfers.",
+        "The classroom is being constructed at St. Micheal's Primary School in Kilifi County, Coastal Kenya — the same community where Gladys Erude was born and raised. The school currently serves over 400 children but lacks adequate learning spaces, with some classes held outdoors under trees. Our goal is to build a durable, weather-resistant classroom that will serve the community for decades.",
     },
     {
       question: "How Can I Volunteer?",
       answer:
-        "Fantastic service! The app is easy to use and it's saved me so much time and money when transferring funds across borders. Definitely a must-have for anyone who needs fast and reliable money transfers.",
+        "We welcome volunteers both locally and internationally. On-site opportunities include assisting with classroom construction, teaching literacy workshops, or helping with our women's microfinance programs. Remote volunteers can support us with grant writing, graphic design, social media management, or translation services. All volunteers undergo a brief orientation, and international placements include accommodation coordination. Apply through our volunteer form or email volunteer@gladyserudeorganization.org.",
     },
   ],
 };
@@ -116,11 +116,10 @@ function FAQ({ data }: FAQProps) {
               <button
                 key={index}
                 onClick={() => setActiveTab(index)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  activeTab === index
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeTab === index
                     ? "bg-foreground text-white"
                     : "bg-transparent text-foreground"
-                }`}
+                  }`}
               >
                 {tab.label}
               </button>

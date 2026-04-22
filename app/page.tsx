@@ -16,7 +16,7 @@ export default function Home() {
         <HeroSection />
       </section>
       <section id="countdown">
-        <Countdown targetDate="2026-09-06T07:00:00" />
+        <Countdown targetDate="2026-09-05T07:00:00" />
       </section>
       <section id="about">
         <AboutHero />

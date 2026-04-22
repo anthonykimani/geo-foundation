@@ -11,6 +11,7 @@ import ProjectDetails from "@/components/impact/project-details";
 import ProjectProgress from "@/components/impact/project-progress";
 import ProjectCard from "@/components/impact/project-card";
 import DonationModal from "@/components/shared/donation-modal";
+import { useState } from "react";
 
 const projects = [
   {
@@ -136,6 +137,7 @@ function ProjectPage() {
   const params = useParams();
   const id = Number(params.id);
   const project = projects.find((p) => p.id === id) || projects[0];
+  const [donateOpen, setDonateOpen] = useState(false);
 
   return (
     <main className="min-h-screen bg-background pt-20">
@@ -178,8 +180,8 @@ function ProjectPage() {
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 pt-2 px-4 sm:px-0">
-                <Button className="flex-1 bg-primary text-white hover:bg-primary/90 h-12 px-6">
-                  <DonationModal />
+                <Button className="flex-1 bg-primary text-white hover:bg-primary/90 h-12 px-6 " onClick={() => setDonateOpen(true)}>
+                  Donate
                 </Button>
 
                 <Button variant="outline" className="flex-1 h-12 px-6">
@@ -189,6 +191,7 @@ function ProjectPage() {
             </div>
           </div>
 
+          <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
           {/* Tabs */}
           <div className="mt-12">
             <Tabs defaultValue="description">

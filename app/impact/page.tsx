@@ -55,7 +55,7 @@ function ImpactPage() {
   return (
     <main className="min-h-screen bg-background pt-20">
       <Hero />
-
+      <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
       <StatsBanner stats={stats} />
 
       <section className="py-12 md:py-16 lg:py-20">
@@ -88,7 +88,7 @@ function ImpactPage() {
             Make a Difference Today
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Your donation directly impacts the lives of women and children in underserved communities. 
+            Your donation directly impacts the lives of women and children in underserved communities.
             Every contribution brings us closer to our goal of transforming education across Kenya.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
@@ -107,7 +107,8 @@ function ImpactPage() {
               GoFundMe
             </a>
             <Link href="/get-involved">
-              <Button variant="outline">Get Involved</Button>
+              <button className="inline-flex items-center justify-center px-6 py-3 border-2 border-primary text-primary rounded-md hover:bg-primary/5"
+              >Get Involved</button>
             </Link>
           </div>
         </div>

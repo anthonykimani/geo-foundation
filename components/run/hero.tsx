@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { Img4 } from "@/constants/img";
+import { Img4, RunPoster } from "@/constants/img";
 
 interface HeroProps {
   eventDate?: string;
@@ -42,8 +42,8 @@ function CountdownUnit({ value, label }: { value: string; label: string }) {
   );
 }
 
-function Hero({ eventDate = "SEP 06, 2026 | TIGOI, KENYA" }: HeroProps) {
-  const targetDate = "2026-09-06T07:00:00";
+function Hero({ eventDate = "SEP 05, 2026 | TIGOI, KENYA" }: HeroProps) {
+  const targetDate = "2026-09-05T07:00:00";
   const [time, setTime] = useState(getTimeRemaining(targetDate));
 
   useEffect(() => {
@@ -94,7 +94,7 @@ function Hero({ eventDate = "SEP 06, 2026 | TIGOI, KENYA" }: HeroProps) {
               <div className="grid grid-cols-3 gap-8">
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Date</p>
-                  <p className="text-lg font-medium text-foreground">Sept 6th, 2026</p>
+                  <p className="text-lg font-medium text-foreground">Sept 5th, 2026</p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Time</p>
@@ -112,13 +112,13 @@ function Hero({ eventDate = "SEP 06, 2026 | TIGOI, KENYA" }: HeroProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] rounded-2xl overflow-hidden"
+            className="relative w-full h-[680px] md:h-[800px] lg:h-[1080px] rounded-xl overflow-hidden "
           >
             <Image
-              src={Img4.src}
+              src={RunPoster.src}
               alt="5KM Run"
               fill
-              className="object-cover"
+              className="object-contain"
             />
           </motion.div>
         </div>

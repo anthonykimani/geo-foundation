@@ -10,7 +10,8 @@ import {
   Img3,
   Img4,
   Img13,
-  Img14
+  Img14,
+  RunPoster
 } from "@/constants/img";
 
 export interface Project {
@@ -47,11 +48,11 @@ const defaultData: JiweKwaJiweData = {
     subtitle: "Track the classroom build in real time",
   },
   featuredProject: {
-    title: "Kapsagawat Primary School Construction",
-    subtitle: "Clear construction targets and progress reports.",
-    bricksRaised: 400000,
-    targetBricks: 660000,
-    image: Img12.src,
+    title: "St. Micheal's Primary School Construction",
+    subtitle: "Join us in making a lasting impact—be part of our Gladys Erude 5K Run as we come together to restore hope and rebuild a dilapidated school (St Michael's Primary, Kilifi county). Whether you choose to donate, volunteer, or participate, your support will help create a better learning environment for children in need. Let’s run with purpose and give back to the next generation. Pamoja! Dreams are made by action.",
+    bricksRaised: 500,
+    targetBricks: 12000,
+    image: RunPoster.src,
   },
   news: [
     {

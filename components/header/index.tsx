@@ -20,10 +20,12 @@ import {
 import { ListIcon, XIcon } from "@phosphor-icons/react";
 import { headerData } from "@/lib/layout-data";
 import { DonationModal } from "@/components/shared/donation-modal";
+import { Button } from "../ui/button";
 
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [donateOpen, setDonateOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -36,8 +38,8 @@ const Header = () => {
     <>
       <header
         className={`fixed top-0 z-50 w-full max-w-[100vw] overflow-hidden transition-all duration-300  text-nowrap ${scrolled
-            ? "backdrop-blur-xl bg-white/70 dark:bg-dark_black/70 shadow-[0_1px_0_0_rgba(15,28,63,0.06)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
-            : ""
+          ? "backdrop-blur-xl bg-white/70 dark:bg-dark_black/70 shadow-[0_1px_0_0_rgba(15,28,63,0.06)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
+          : ""
           }`}
       >
         <div className="container p-3 sm:p-4">
@@ -58,7 +60,14 @@ const Header = () => {
             <div className="flex items-center gap-3">
 
               <div className="hidden lg:flex items-center gap-2">
-                <DonationModal />
+                <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
+
+                <Button
+                  onClick={() => setDonateOpen(true)}
+                  className="bg-primary text-white rounded-full p-4"
+                >
+                  Donate
+                </Button>
               </div>
 
               <div className="hidden max-lg:flex">
@@ -88,7 +97,7 @@ const Header = () => {
                           </SheetClose>
                         ))}
                         <div className="flex flex-col gap-3 px-2 mt-2">
-                          <DonationModal />
+                          <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
                         </div>
                       </ul>
                     </div>

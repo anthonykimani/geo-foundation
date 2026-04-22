@@ -73,17 +73,17 @@ function FeaturedProject({ project, animationIndex = 0 }: FeaturedProjectProps) 
   return (
     <motion.div ref={ref} {...bottomAnimation} className="mb-10 sm:mb-12 md:mb-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-0">
-        <div className="relative w-full h-[300px] sm:h-[350px] md:h-[445px] lg:h-[445px] rounded-[24px] overflow-hidden">
+        <div className="relative w-full h-[380px] md:h-[400px] lg:h-[680px] rounded-[24px] overflow-hidden">
           <Image
             src={project.image}
             alt={project.title}
             fill
-            className="object-cover"
+            className="object-contain"
           />
         </div>
 
-        <div className="bg-[#f6f6f6] dark:bg-white/5 p-6 sm:p-8 md:p-10 lg:p-10 rounded-[24px] lg:rounded-none lg:rounded-r-[24px] flex flex-col justify-center">
-          <div className="space-y-4 mb-6">
+        <div className="bg-[#f6f6f6] dark:bg-white/5 p-6 sm:p-8 md:p-10 lg:p-10 rounded-r-[24px] flex flex-col justify-between">
+          <div className="mb-6">
             <h2 className="text-2xl sm:text-3xl md:text-[40px] leading-tight font-normal text-foreground">
               {project.title}
             </h2>
@@ -92,7 +92,7 @@ function FeaturedProject({ project, animationIndex = 0 }: FeaturedProjectProps) 
             </p>
           </div>
 
-          <div className="space-y-3 mb-6">
+          <div className="">
             <div className="flex justify-between text-sm sm:text-base">
               <span className="text-foreground">
                 <AnimatedNumber value={project.bricksRaised} inView={inView} /> Bricks

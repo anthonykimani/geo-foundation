@@ -2,9 +2,11 @@
 
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
+import Image, { StaticImageData } from "next/image";
+
 
 interface InvolvementCardProps {
-  icon: string;
+  image: StaticImageData;
   title: string;
   description: string;
   buttonText: string;
@@ -14,7 +16,7 @@ interface InvolvementCardProps {
 }
 
 function InvolvementCard({
-  icon,
+  image,
   title,
   description,
   buttonText,
@@ -30,7 +32,11 @@ function InvolvementCard({
       viewport={{ once: true }}
       className="p-8 sm:p-10 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 flex flex-col"
     >
-      <div className="text-5xl mb-6">{icon}</div>
+      <Image
+        src={image}
+        alt={title}
+        className="w-full h-full object-cover rounded-xl"
+      />
       <h3 className="text-xl md:text-2xl font-normal text-foreground mb-3">{title}</h3>
       <p className="text-sm text-muted-foreground mb-6 flex-grow">{description}</p>
       {variant === "primary" && (
