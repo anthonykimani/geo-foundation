@@ -16,7 +16,7 @@ interface DonationModalProps {
 
 export function DonationModal({ open = false, onOpenChange }: DonationModalProps) {
   const [internalOpen, setInternalOpen] = useState(false);
-  const [showChoices, setShowChoices] = useState(false);
+  const [showChoices, setShowChoices] = useState(true);
   
   const isControlled = onOpenChange !== undefined;
   const isOpen = isControlled ? open : internalOpen;
@@ -24,7 +24,7 @@ export function DonationModal({ open = false, onOpenChange }: DonationModalProps
 
   const handleClose = () => {
     setIsOpen(false);
-    setShowChoices(false);
+    setShowChoices(true);
   };
 
   return (

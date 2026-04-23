@@ -5,22 +5,8 @@ import Image from "next/image";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import { Button } from "@/components/ui/button";
 import { Img1 } from "@/constants/img";
-
-const boardMembers = [
-  { name: "Alex Gonzo" },
-  { name: "Byron Erude" },
-  { name: "Chrispin Ng'ang'a" },
-  { name: "Emily Sang" },
-  { name: "Gloria Miseri" },
-  { name: "Julius Ngombo" },
-  { name: "Maxwell Erude" },
-  { name: "Purity Chepkirui" },
-  { name: "Roy Oduor" },
-  { name: "Silvester Erude" },
-  { name: "Tony K. Erude" },
-  { name: "Valentine Masila" },
-  { name: "Victor E Lidaywa" },
-];
+import { boardMembers } from "@/data/organization/board";
+import { contacts, generalEmail } from "@/data/organization/contact";
 
 function ContactPage() {
   return (

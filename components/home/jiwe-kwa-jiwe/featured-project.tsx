@@ -28,7 +28,7 @@ function AnimatedNumber({
   inView: boolean;
 }) {
   const [displayValue, setDisplayValue] = useState(0);
-  
+
   useEffect(() => {
     if (!inView) return;
 
@@ -112,7 +112,12 @@ function FeaturedProject({ project, animationIndex = 0 }: FeaturedProjectProps) 
               />
             </div>
           </div>
-
+          <Button
+            onClick={() => setDonateOpen(true)}
+            className="bg-primary text-white rounded-full py-6 px-4"
+          >
+            Donate
+          </Button>
           <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
         </div>
       </div>

@@ -50,17 +50,17 @@ const defaultData: ImpactAreasData = {
   },
   impacts: [
     {
-      label: "Kapsabet",
+      label: "Kapsagawat",
       title: "Community Sports Initiatives",
       image: Img11.src,
     },
     {
-      label: "Tigoni",
+      label: "Tigoi",
       title: "Youth Empowerment Programs",
       image: Img17.src,
     },
     {
-      label: "Tigoni",
+      label: "Tigoi",
       title: "Environmental Awareness Campaigns",
       image: Img15.src,
     },

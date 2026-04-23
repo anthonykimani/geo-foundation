@@ -97,6 +97,12 @@ const Header = () => {
                           </SheetClose>
                         ))}
                         <div className="flex flex-col gap-3 px-2 mt-2">
+                          <Button
+                            onClick={() => setDonateOpen(true)}
+                            className="bg-primary text-white rounded-full p-4"
+                          >
+                            Donate
+                          </Button>
                           <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
                         </div>
                       </ul>

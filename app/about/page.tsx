@@ -5,31 +5,9 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import { Button } from "@/components/ui/button";
-import { RoyTeamImg, EmilyTeamImg, AlexTeamImg, MaxTeamImg, Img1, GeoLogo } from "@/constants/img";
-
-const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdGsGAGpe9EdCwEcHmC2ugxYRHq9EUsaPs5NLffPOtvs57IHw/viewform";
-
-const boardMembers = [
-  { name: "Alex Gonzo", image: AlexTeamImg.src },
-  { name: "Byron Erude", image: GeoLogo.src },
-  { name: "Chrispin Ng'ang'a", image: GeoLogo.src },
-  { name: "Emily Sang", image: EmilyTeamImg.src },
-  { name: "Gloria Miseri", image: GeoLogo.src },
-  { name: "Julius Ngombo", image: GeoLogo.src },
-  { name: "Maxwell Erude", image: MaxTeamImg.src },
-  { name: "Purity Chepkirui", image: GeoLogo.src },
-  { name: "Roy Oduor", image: RoyTeamImg.src },
-  { name: "Silvester Erude", image: GeoLogo.src },
-  { name: "Tony K. Erude", image: GeoLogo.src },
-  { name: "Valentine Masila", image: GeoLogo.src },
-  { name: "Victor E Lidaywa", image: GeoLogo.src },
-];
-
-const values = [
-  { title: "Equality", description: "We believe that everyone should have equitable access to essential life sustaining services." },
-  { title: "Integrity", description: "We have a deep passion for the mission and transparency is at the forefront of what we do. We are fair with colleagues, partners, and to those we serve." },
-  { title: "Respect", description: "We value all people equally regardless of tribe, race, sex, religion, or gender." },
-];
+import { Img1 } from "@/constants/img";
+import { boardMembers, values, organizationName, organizationSubtitle, mission, whyWeAreInspired, howWeWork, aboutCta } from "@/data/pages/about";
+import { contacts, generalEmail } from "@/data/organization/contact";
 
 function AboutPage() {
   return (
@@ -53,7 +31,7 @@ function AboutPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal text-white text-center leading-tight"
           >
-            <TextGenerateEffect words="THE GLADYS ERUDE ORGANIZATION" />
+            <TextGenerateEffect words={organizationName} />
           </motion.h1>
 
           {/* Subtitle */}
@@ -63,7 +41,7 @@ function AboutPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-lg text-white/80 text-center mt-6 max-w-xl"
           >
-            Empowering communities through education, healthcare, and sustainable development across Kenya.
+            {organizationSubtitle}
           </motion.p>
         </div>
       </section>
@@ -188,7 +166,7 @@ function AboutPage() {
                 Meet our dedicated board members who guide GEO&apos;s mission.
               </p>
               <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
-                {boardMembers.slice(0, 8).map((member, index) => (
+                {boardMembers.map((member, index) => (
                   <div key={index} className="text-center">
                     <div className="relative w-16 h-16 rounded-full overflow-hidden mb-2 bg-gray-200 mx-auto">
                       <Image src={member.image} alt={member.name} fill className="object-cover" />
