@@ -1,19 +1,72 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
-
 
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import SplashCursor from "@/components/shared/splash-cursor";
+import { heroSection } from "@/data/components/countdown";
+
+const BRICKS_RAISED = heroSection.bricksRaised;
+const TARGET_BRICKS = heroSection.targetBricks;
+
+function AnimatedNumber({ value, inView }: { value: number; inView: boolean }) {
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+
+    const duration = 2000;
+    const startTime = Date.now();
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(eased * value);
+
+      setDisplayValue(current);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [inView, value]);
+
+  return <span>{displayValue.toLocaleString()}</span>;
+}
 
 function HeroSection() {
   const ref = useRef(null);
   const [avatarList, setAvatarList] = useState<any>(null);
+  const [inView, setInView] = useState(false);
+
+  const progressPercentage = Math.min(
+    (BRICKS_RAISED / TARGET_BRICKS) * 100,
+    100
+  );
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,20 +109,43 @@ function HeroSection() {
           <div className="flex flex-col max-w-xl gap-6 sm:gap-8">
             <div className="relative flex flex-col text-left items-start sm:gap-6 gap-4">
               <h1>
-                <TextGenerateEffect words="Build a Classroom." className=" text-white" />
-                <TextGenerateEffect
-                  words="Brick by Brick"
-                  delay={0.8}
-                  className="font-instrument-serif italic tracking-tight text-teal-brand"
-                />
+                <TextGenerateEffect words="Make an Impact" className="text-white whitespace-nowrap" />
+
               </h1>
+              <h1><TextGenerateEffect
+                words="Brick by Brick"
+                delay={0.8}
+                className="font-instrument-serif italic tracking-tight text-teal-brand "
+              /></h1>
               <motion.p {...bottomAnimation} className="max-w-2xl text-base sm:text-lg md:text-xl text-white/90">
                 We believe that sustainable impact is built through transparency, participation, and measurable action one brick at a time.
               </motion.p>
             </div>
+
+            <motion.div {...bottomAnimation} className="mt-4">
+              <div className="relative w-full h-[41px] bg-white/20 rounded-[55px] overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progressPercentage}%` }}
+                  transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
+                  className="absolute top-0 left-0 h-full bg-primary rounded-[32px]"
+                />
+              </div>
+
+              <div className="flex justify-between text-sm sm:text-base text-white/90 mb-2">
+                <span>
+                  <AnimatedNumber value={BRICKS_RAISED} inView={inView} /> Bricks Raised
+                </span>
+                <span>
+                  {TARGET_BRICKS.toLocaleString()} Targeted Bricks
+                </span>
+              </div>
+
+            </motion.div>
+
             <motion.div
               {...bottomAnimation}
-              className="flex flex-col md:flex-row  gap-8"
+              className="flex flex-col md:flex-row gap-8"
             >
               <Button
                 className="relative text-sm font-medium rounded-full h-12 p-1 ps-6 pe-14 group transition-all duration-500 hover:ps-14 hover:pe-6 w-fit overflow-hidden"
@@ -83,6 +159,8 @@ function HeroSection() {
                 </div>
               </Button>
             </motion.div>
+
+
           </div>
         </div>
       </div>

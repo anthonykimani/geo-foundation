@@ -23,7 +23,7 @@ export const jiweHomeData = {
   featuredProject: {
     title: "St. Micheal's Primary School Construction",
     subtitle: "Join us in making a lasting impact—be part of our Gladys Erude 5K Run as we come together to restore hope and rebuild a dilapidated school (St Michael's Primary, Kilifi county). Whether you choose to donate, volunteer, or participate, your support will help create a better learning environment for children in need. Let's run with purpose and give back to the next generation. Pamoja! Dreams are made by action.",
-    bricksRaised: 500,
+    bricksRaised: 1500,
     targetBricks: 12000,
     image: Img14.src,
   },

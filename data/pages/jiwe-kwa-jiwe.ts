@@ -81,7 +81,7 @@ export const jiweNews: JiweNewsItem[] = [
   { label: "News", title: "Phase 2 Complete", date: "Dec 15, 2025", image: Img4.src },
 ];
 
-export const currentBricks = 15420;
+export const currentBricks = 1500;
 
 export const jiweCta = {
   title: "Join the Movement",

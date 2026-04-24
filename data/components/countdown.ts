@@ -5,4 +5,6 @@ export const countdownConfig = {
 
 export const heroSection = {
   scrollText: "SCROLL TO EXPLORE",
+  bricksRaised: 1500,
+  targetBricks: 15000,
 };

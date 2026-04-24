@@ -3,98 +3,25 @@
 import Header from "./header";
 import FeaturedProject from "./featured-project";
 import NewsCard from "./news-card";
-import {
-  Img1,
-  Img12,
-  Img2,
-  Img3,
-  Img4,
-  Img13,
-  Img14,
-  RunPoster
-} from "@/constants/img";
+import { jiweHomeData } from "@/data/components/jiwe-home";
 
-export interface Project {
-  title: string;
-  subtitle: string;
-  bricksRaised: number;
-  targetBricks: number;
-  image: string;
-}
-
-export interface NewsItem {
-  label: string;
-  title: string;
-  date: string;
-  image: string;
-}
-
-export interface JiweKwaJiweData {
-  header: {
-    title: string;
-    subtitle: string;
-  };
-  featuredProject: Project;
-  news: NewsItem[];
-}
-
-interface JiweKwaJiweProps {
-  data?: JiweKwaJiweData;
-}
-
-const defaultData: JiweKwaJiweData = {
-  header: {
-    title: "Jiwe Kwa Jiwe",
-    subtitle: "Track the classroom build in real time",
-  },
-  featuredProject: {
-    title: "St. Micheal's Primary School Construction",
-    subtitle: "Join us in making a lasting impact—be part of our Gladys Erude 5K Run as we come together to restore hope and rebuild a dilapidated school (St Michael's Primary, Kilifi county). Whether you choose to donate, volunteer, or participate, your support will help create a better learning environment for children in need. Let’s run with purpose and give back to the next generation. Pamoja! Dreams are made by action.",
-    bricksRaised: 500,
-    targetBricks: 12000,
-    image: RunPoster.src,
-  },
-  news: [
-    {
-      label: "News name here",
-      title: "Annual 5km Run",
-      date: "Nov 28, 2026",
-      image: Img14.src,
-    },
-    {
-      label: "News name here",
-      title: "Community Highlights",
-      date: "April 28, 2026",
-      image: Img13.src,
-    },
-    {
-      label: "News name here",
-      title: "GEO Wins Charity Award 2026",
-      date: "Jan 28, 2026",
-      image: Img4.src,
-    },
-  ],
-};
-
-function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
-  const content = data || defaultData;
-
+function JiweKwaJiwe() {
   return (
     <section className="w-full bg-background">
       <div className="container py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
         <Header
-          title={content.header.title}
-          subtitle={content.header.subtitle}
+          title={jiweHomeData.header.title}
+          subtitle={jiweHomeData.header.subtitle}
           animationIndex={0}
         />
 
         <FeaturedProject
-          project={content.featuredProject}
+          project={jiweHomeData.featuredProject}
           animationIndex={1}
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {content.news.map((newsItem, index) => (
+          {jiweHomeData.news.map((newsItem, index) => (
             <NewsCard key={index} news={newsItem} animationIndex={2 + index} />
           ))}
         </div>
