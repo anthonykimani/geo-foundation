@@ -13,7 +13,7 @@ const Logo = () => {
                 height={48}
                 quality={100}
                 priority={true}
-                className="h-[48px] w-auto max-w-[55vw] sm:max-w-none object-contain"
+                className="h-[58px] md:h-[88px] w-auto max-w-[55vw] sm:max-w-none object-contain"
             />
         </Link> 
     );

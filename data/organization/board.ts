@@ -1,4 +1,5 @@
 import { AlexTeamImg, BryonTeamImg, EmilyTeamImg, GeoLogo, JuliusTeamImg, MaxTeamImg, RoyTeamImg, ValentineTeamImg } from "@/constants/img";
+import { VictorTeamImg } from "../images";
 
 export interface BoardMember {
   name: string;
@@ -11,7 +12,7 @@ export interface Value {
 }
 
 export const boardMembers: BoardMember[] = [
-  { name: "Victor E Lidaywa", image: GeoLogo.src },
+  { name: "Victor E Lidaywa", image: VictorTeamImg.src },
   { name: "Alex Gonzo", image: AlexTeamImg.src },
   { name: "Byron Erude", image: BryonTeamImg.src },
   { name: "Chrispin Ng'ang'a", image: GeoLogo.src },

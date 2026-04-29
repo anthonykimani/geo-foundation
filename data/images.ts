@@ -28,6 +28,7 @@ import CharlesTeamImg from "@/public/img/charles.jpg";
 import JacksonTeamImg from "@/public/img/max.jpg";
 import JuliusTeamImg from "@/public/img/julius.jpg";
 import ValentineTeamImg from "@/public/img/valentine.jpg";
+import VictorTeamImg from "@/public/img/victor-erude-img.jpg";
 
 export {
   HeroImg,
@@ -60,4 +61,5 @@ export {
   JacksonTeamImg,
   JuliusTeamImg,
   ValentineTeamImg,
+  VictorTeamImg
 };
