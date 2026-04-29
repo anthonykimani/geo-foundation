@@ -1,6 +1,6 @@
 export const countdownConfig = {
   targetDate: "2026-09-05T07:00:00",
-  title: "NEXT EVENT: SEP 05, 2026 | TIGOI, KENYA",
+  title: "NEXT EVENT: SEP 05, 2026 | KILIFI, KENYA",
 };
 
 export const heroSection = {

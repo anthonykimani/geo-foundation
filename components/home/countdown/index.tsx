@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import { Button } from "@/components/ui/button";
+import { event } from "@/data/pages/run";
 
 interface CountdownProps {
-  targetDate: string;
+  targetDate?: string;
 }
 
 function getTimeRemaining(targetDate: string) {
@@ -29,12 +30,6 @@ function getTimeRemaining(targetDate: string) {
   };
 }
 
-const defaultConfig = {
-  title: "Annual 5km Run",
-  subtitle: "Join us for our annual charity run! Every step helps build classrooms for children in need.",
-  targetDate: "2026-09-05T07:00:00",
-};
-
 function CountdownUnit({ value, label }: { value: string; label: string }) {
   return (
     <div className="flex flex-col items-center">
@@ -48,10 +43,13 @@ function CountdownUnit({ value, label }: { value: string; label: string }) {
   );
 }
 
-function Countdown({ targetDate }: CountdownProps) {
-  const [time, setTime] = useState(getTimeRemaining(targetDate));
+function Countdown({ targetDate = event.date }: CountdownProps) {
+  const [time, setTime] = useState({ days: "00", hours: "00", minutes: "00", seconds: "00" });
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+    setTime(getTimeRemaining(targetDate));
     const timer = setInterval(() => {
       setTime(getTimeRemaining(targetDate));
     }, 1000);
@@ -73,11 +71,11 @@ function Countdown({ targetDate }: CountdownProps) {
           </span>
 
           <h1 className="text-3xl sm:text-4xl md:text-[56px] leading-tight font-normal text-foreground font-sans mb-4">
-            <TextGenerateEffect words={defaultConfig.title} />
+            <TextGenerateEffect words={event.title} />
           </h1>
 
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
-            {defaultConfig.subtitle}
+            {event.subtitle}
           </p>
         </motion.div>
 
@@ -94,22 +92,21 @@ function Countdown({ targetDate }: CountdownProps) {
         </motion.div>
 
         <motion.div>
-
           <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 md:gap-12 lg:gap-16 mb-12">
             <div>
-              
-              <p className="text-lg font-medium text-foreground">Sept 5th, 2026</p>
+              <p className="text-lg font-medium text-foreground">
+                {event.dateFormatted}
+              </p>
             </div>
             <div>
-              
-              <p className="text-lg font-medium text-foreground">7:00 AM</p>
+              <p className="text-lg font-medium text-foreground">{event.time}</p>
             </div>
             <div>
-              
-              <p className="text-lg font-medium text-foreground">St. Micheal's Primary School in Kilifi County</p>
+              <p className="text-lg font-medium text-foreground">
+                {event.location}
+              </p>
             </div>
           </div>
-
         </motion.div>
 
         <motion.div

@@ -147,9 +147,9 @@ function HeroSection() {
               {...bottomAnimation}
               className="flex flex-col md:flex-row gap-8"
             >
+              <Link href="/get-involved">
               <Button
                 className="relative text-sm font-medium rounded-full h-12 p-1 ps-6 pe-14 group transition-all duration-500 hover:ps-14 hover:pe-6 w-fit overflow-hidden"
-                render={<Link href="/get-involved" />}
               >
                 <span className="relative z-10 transition-all duration-500">
                   Join the Movement
@@ -158,6 +158,7 @@ function HeroSection() {
                   <ArrowUpRight size={16} />
                 </div>
               </Button>
+            </Link>
             </motion.div>
 
 

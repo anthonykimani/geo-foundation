@@ -1,6 +1,5 @@
 "use client";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import HeaderLink from "./Navigation/HeaderLink";
 import Logo from "./Logo";
@@ -24,23 +23,12 @@ import { Button } from "../ui/button";
 
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [donateOpen, setDonateOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <>
       <header
-        className={`fixed top-0 z-50 w-full max-w-[100vw] overflow-hidden transition-all duration-300  text-nowrap ${scrolled
-          ? "backdrop-blur-xl bg-white/70 dark:bg-dark_black/70 shadow-[0_1px_0_0_rgba(15,28,63,0.06)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
-          : ""
-          }`}
+        className="fixed top-0 z-50 w-full max-w-[100vw] overflow-hidden transition-all duration-300 text-nowrap backdrop-blur-xl bg-white/70 dark:bg-dark_black/70 shadow-[0_1px_0_0_rgba(15,28,63,0.06)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
       >
         <div className="container p-3 sm:p-4">
           <div className="flex items-center justify-between px-0 sm:px-2">

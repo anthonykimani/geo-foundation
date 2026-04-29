@@ -5,16 +5,7 @@ import Header from "./header";
 import FeaturedImpact from "./featured-impact";
 import ImpactCard from "./impact-card";
 import Pagination from "./pagination";
-import {
-  Img11,
-  Img15,
-  Img17,
-  Img5,
-  Img6,
-  Img7,
-  Img8,
-  Img9,
-} from "@/constants/img";
+import { impactAreasData } from "@/data/components/impact-areas";
 
 export interface ImpactItem {
   label: string;
@@ -36,39 +27,8 @@ interface ImpactAreasProps {
   data?: ImpactAreasData;
 }
 
-const defaultData: ImpactAreasData = {
-  header: {
-    title: "Our Impact Areas",
-    subtitle: "Some of the notable projects we've undertaken",
-  },
-  featuredImpact: {
-    label: "FEATURED",
-    title: "Kapsagawat Primary School",
-    description:
-      "Sanitary pads were provided to over 200 girls at both schools in partnership with the Centre for Advocacy on the Rights of Youth Africa, while seniors received free medical checks.",
-    image: Img9.src,
-  },
-  impacts: [
-    {
-      label: "Kapsagawat",
-      title: "Community Sports Initiatives",
-      image: Img11.src,
-    },
-    {
-      label: "Tigoi",
-      title: "Youth Empowerment Programs",
-      image: Img17.src,
-    },
-    {
-      label: "Tigoi",
-      title: "Environmental Awareness Campaigns",
-      image: Img15.src,
-    },
-  ],
-};
-
 function ImpactAreas({ data }: ImpactAreasProps) {
-  const content = data || defaultData;
+  const content = data || impactAreasData;
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 3;
 

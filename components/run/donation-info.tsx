@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import DonationForm from "@/components/shared/donation-form";
+import { donationInfo } from "@/data/pages/run";
 
 function DonationInfo() {
   return (
@@ -15,30 +16,32 @@ function DonationInfo() {
             viewport={{ once: true }}
           >
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-6">
-              To Support Us
+              {donationInfo.title}
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Your donation directly impacts the lives of women and children in underserved 
-              communities across Kenya. Every contribution brings us closer to our goal of 
-              transforming education and providing essential services.
+              {donationInfo.description}
             </p>
-            
+
             <div className="bg-white rounded-xl p-6 shadow-sm mb-6">
-              <h3 className="text-lg font-medium text-foreground mb-4">Alternative Payment Methods</h3>
+              <h3 className="text-lg font-medium text-foreground mb-4">
+                {donationInfo.alternativePayments.title}
+              </h3>
               <div className="space-y-3 text-muted-foreground">
                 <div>
                   <p className="font-medium text-foreground">M-PESA</p>
-                  <p>Pay Bill: 522522</p>
-                  <p>Account: 1332946089</p>
+                  <p>Pay Bill: {donationInfo.alternativePayments.mpesa.paybill}</p>
+                  <p>Account: {donationInfo.alternativePayments.mpesa.account}</p>
                 </div>
                 <div className="pt-2">
-                  <p className="font-medium text-foreground">Kenya Commercial Bank</p>
-                  <p>Account: 1332946089</p>
-                  <p>Account Name: GLADYS ADISA ERUDE FOUNDATION</p>
+                  <p className="font-medium text-foreground">
+                    {donationInfo.alternativePayments.bank.name}
+                  </p>
+                  <p>Account: {donationInfo.alternativePayments.bank.account}</p>
+                  <p>Account Name: {donationInfo.alternativePayments.bank.accountName}</p>
                 </div>
                 <div className="pt-2">
                   <a
-                    href="https://gofund.me/323c458f"
+                    href={donationInfo.alternativePayments.gofundme}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-primary hover:underline"

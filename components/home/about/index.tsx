@@ -8,29 +8,7 @@ import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import { Img8 } from "@/constants/img";
-
-const features = [
-  {
-    number: "01",
-    title: "Transparency",
-    description: "Every Brick donated is tracked in real time",
-  },
-  {
-    number: "02",
-    title: "Community Participation",
-    description: "Donors, runners, and partners build together.",
-  },
-  {
-    number: "03",
-    title: "Measurable Impact",
-    description: "Clear construction targets and progress reports.",
-  },
-  {
-    number: "04",
-    title: "Sustainable Structure",
-    description: "From event to year-round fundraising ecosystem.",
-  },
-];
+import { homeFeatures } from "@/data/components/home-about";
 
 function AboutHero() {
   const ref = useRef(null);
@@ -49,13 +27,14 @@ function AboutHero() {
           {...bottomAnimation(0)}
           className="space-y-4 sm:space-y-6 mb-10 sm:mb-12 md:mb-16"
         >
-          <Button
-            variant="outline"
-            className="rounded-full h-10.75 px-5 border-navy text-navy hover:bg-navy hover:text-white"
-            render={<Link href="/about" />}
-          >
-            ABOUT US
-          </Button>
+          <Link href="/about">
+            <Button
+              variant="outline"
+              className="rounded-full h-10.75 px-5 border-navy text-navy hover:bg-navy hover:text-white"
+            >
+              ABOUT US
+            </Button>
+          </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
             <div>
@@ -91,6 +70,7 @@ function AboutHero() {
             src={Img8}
             alt="Gladys Erude Organization"
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
           />
         </motion.div>
@@ -99,7 +79,7 @@ function AboutHero() {
           {...bottomAnimation(2)}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"
         >
-          {features.map((feature, index) => (
+          {homeFeatures.map((feature, index) => (
             <motion.div
               key={index}
               {...bottomAnimation(3 + index)}

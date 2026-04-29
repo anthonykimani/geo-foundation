@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 import { Img2 } from "@/constants/img";
+import { eventDetails } from "@/data/pages/run";
 
 function EventInfo() {
   return (
@@ -16,19 +17,22 @@ function EventInfo() {
             viewport={{ once: true }}
           >
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-6">
-              Gladys Erude Memorial Run 2026
+              {eventDetails.title}
             </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              We are excited to invite you to our Annual Gladys Erude Memorial 5K Run/Walk, a special event dedicated to supporting improvements of schools across Kenya. Bring your friends and family for a day of fun, fitness, and making a real difference.
-            </p>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              This year, funds raised will support <strong>St. Michael's School in Kilifi County</strong> - an underserved rural community along the coast. Your participation will help enhance facilities, expand educational resources, and create greater opportunities for students who need it most.
-            </p>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              If you can't join us for the run/walk, you can still contribute to this worthy cause. Every donation, no matter the size, brings us closer to our goal. Your support is invaluable!
-            </p>
+            {eventDetails.description.map((paragraph, index) => (
+              <p
+                key={index}
+                className="text-lg text-muted-foreground leading-relaxed mb-6"
+                dangerouslySetInnerHTML={{
+                  __html: paragraph.replace(
+                    /St\. Michael's School in Kilifi County/g,
+                    "<strong>St. Michael's School in Kilifi County</strong>"
+                  ),
+                }}
+              />
+            ))}
             <p className="text-lg text-primary font-medium">
-              Pamoja! Dreams are made by action. #GladysErude5K #RunWalkForACause
+              {eventDetails.hashtags}
             </p>
           </motion.div>
 
@@ -43,6 +47,7 @@ function EventInfo() {
               src={Img2.src}
               alt="Run Event"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover"
             />
           </motion.div>

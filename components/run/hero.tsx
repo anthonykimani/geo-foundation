@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { Img4, RunPoster } from "@/constants/img";
+import { RunPoster } from "@/constants/img";
+import { event, heroSection } from "@/data/pages/run";
 
 interface HeroProps {
   eventDate?: string;
@@ -11,7 +12,7 @@ interface HeroProps {
 
 function getTimeRemaining(targetDate: string) {
   const total = new Date(targetDate).getTime() - new Date().getTime();
-  
+
   if (total <= 0) {
     return { days: "00", hours: "00", minutes: "00", seconds: "00" };
   }
@@ -42,17 +43,19 @@ function CountdownUnit({ value, label }: { value: string; label: string }) {
   );
 }
 
-function Hero({ eventDate = "SEP 05, 2026 | TIGOI, KENYA" }: HeroProps) {
-  const targetDate = "2026-09-05T07:00:00";
-  const [time, setTime] = useState(getTimeRemaining(targetDate));
+function Hero({ eventDate = event.displayDate }: HeroProps) {
+  const [time, setTime] = useState({ days: "00", hours: "00", minutes: "00", seconds: "00" });
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+    setTime(getTimeRemaining(event.date));
     const timer = setInterval(() => {
-      setTime(getTimeRemaining(targetDate));
+      setTime(getTimeRemaining(event.date));
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [targetDate]);
+  }, [event.date]);
 
   return (
     <section className="py-12 md:py-16 lg:py-20">
@@ -64,17 +67,19 @@ function Hero({ eventDate = "SEP 05, 2026 | TIGOI, KENYA" }: HeroProps) {
             transition={{ duration: 0.8 }}
           >
             <span className="inline-block px-4 py-2 rounded-full border border-border text-sm font-medium mb-6">
-              NEXT EVENT: {eventDate}
+              {heroSection.badgeText}: {eventDate}
             </span>
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[80px] leading-tight font-normal text-foreground font-sans text-left">
-              THE<br />
-              <span className="text-primary">5KM = 1 BRICK</span><br />
-              CHALLENGE
+              {heroSection.title}
+              <br />
+              <span className="text-primary">{heroSection.highlight}</span>
+              <br />
+              {heroSection.subtitle}
             </h1>
 
             <p className="text-lg text-muted-foreground mt-8 max-w-[500px] leading-relaxed">
-              You don&apos;t need money to build a school. You just need momentum. Register for the annual run, hook up your tracker, and let the Engine convert your mileage into physical structural blocks.
+              {heroSection.description}
             </p>
 
             <motion.div
@@ -94,15 +99,15 @@ function Hero({ eventDate = "SEP 05, 2026 | TIGOI, KENYA" }: HeroProps) {
               <div className="grid grid-cols-3 gap-8">
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Date</p>
-                  <p className="text-lg font-medium text-foreground">Sept 5th, 2026</p>
+                  <p className="text-lg font-medium text-foreground">{event.dateFormatted}</p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Time</p>
-                  <p className="text-lg font-medium text-foreground">7:00 AM</p>
+                  <p className="text-lg font-medium text-foreground">{event.time}</p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Location</p>
-                  <p className="text-lg font-medium text-foreground">Tigoi Primary</p>
+                  <p className="text-lg font-medium text-foreground">{event.locationShort}</p>
                 </div>
               </div>
             </div>
@@ -118,6 +123,7 @@ function Hero({ eventDate = "SEP 05, 2026 | TIGOI, KENYA" }: HeroProps) {
               src={RunPoster.src}
               alt="5KM Run"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-contain"
             />
           </motion.div>

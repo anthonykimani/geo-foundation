@@ -2,7 +2,14 @@
 
 import Header from "./header";
 import TeamCard from "./team-card";
-import { Img1, Img2, Img3, EmilyTeamImg, AlexTeamImg, MaxTeamImg, RoyTeamImg } from "@/constants/img";
+import { teamData } from "@/data/components/team";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export interface TeamMember {
   name: string;
@@ -10,6 +17,7 @@ export interface TeamMember {
   image: string;
   linkedin?: string;
   twitter?: string;
+  bio?: string;
 }
 
 export interface TeamData {
@@ -24,45 +32,8 @@ interface TeamProps {
   data?: TeamData;
 }
 
-const defaultData: TeamData = {
-  header: {
-    label: "TEAM",
-    title: "The Hearts Behind The Mission",
-  },
-  members: [
-    {
-      name: "ROY ODUOR",
-      title: "Co-Organizer",
-      image: RoyTeamImg.src,
-      linkedin: "#",
-      twitter: "#",
-    },
-    {
-      name: "EMILY SANG",
-      title: "Co-Organizer",
-      image: EmilyTeamImg.src,
-      linkedin: "#",
-      twitter: "#",
-    },
-    {
-      name: "ALEX",
-      title: "Co-Organizer",
-      image: AlexTeamImg.src,
-      linkedin: "#",
-      twitter: "#",
-    },
-    {
-      name: "MAX",
-      title: "Co-Organizer",
-      image: MaxTeamImg.src,
-      linkedin: "#",
-      twitter: "#",
-    },
-  ],
-};
-
 function Team({ data }: TeamProps) {
-  const content = data || defaultData;
+  const content = data || teamData;
 
   return (
     <section className="w-full bg-background">
@@ -73,10 +44,27 @@ function Team({ data }: TeamProps) {
           animationIndex={0}
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
-          {content.members.map((member, index) => (
-            <TeamCard key={index} member={member} animationIndex={1 + index} />
-          ))}
+        <div className="relative">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {content.members.map((member, index) => (
+                <CarouselItem
+                  key={member.name}
+                  className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+                >
+                  <TeamCard member={member} animationIndex={index} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-0 -translate-x-4 md:-translate-x-12" />
+            <CarouselNext className="right-0 translate-x-4 md:translate-x-12" />
+          </Carousel>
         </div>
       </div>
     </section>

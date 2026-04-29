@@ -5,6 +5,7 @@ import Link from "next/link";
 import Hero from "@/components/impact/hero";
 import StatsBanner from "@/components/impact/stats-banner";
 import ProjectCard from "@/components/impact/project-card";
+import ImpactAreas from "@/components/home/impact-areas";
 import { Button } from "@/components/ui/button";
 import { DonationModal } from "@/components/shared/donation-modal";
 import { projects, organizationStats, impactCta } from "@/data/pages/impact";
@@ -17,6 +18,8 @@ function ImpactPage() {
       <Hero />
       <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
       <StatsBanner stats={organizationStats} />
+      
+      <ImpactAreas />
 
       <section className="py-12 md:py-16 lg:py-20">
         <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
