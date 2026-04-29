@@ -48,13 +48,14 @@ function AboutHero() {
           {...bottomAnimation(0)}
           className="space-y-4 sm:space-y-6 mb-10 sm:mb-12 md:mb-16"
         >
+          <Link href="/about">
           <Button
             variant="outline"
             className="rounded-full h-10.75 px-5 border-navy text-navy hover:bg-navy hover:text-white"
-            render={<Link href="/about" />}
           >
             ABOUT US
           </Button>
+        </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
             <div>
