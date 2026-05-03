@@ -11,6 +11,7 @@ import ProjectDetails from "@/components/impact/project-details";
 import ProjectProgress from "@/components/impact/project-progress";
 import ProjectCard from "@/components/impact/project-card";
 import DonationModal from "@/components/shared/donation-modal";
+import { HeartIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 const projects = [
@@ -180,7 +181,8 @@ function ProjectPage() {
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 pt-2 px-4 sm:px-0">
-                <Button className="flex-1 bg-primary text-white hover:bg-primary/90 h-12 px-6 " onClick={() => setDonateOpen(true)}>
+                <Button className="flex-1 bg-primary text-white hover:bg-primary/90 h-14 px-8 gap-2 text-lg" onClick={() => setDonateOpen(true)}>
+                  <HeartIcon size={24} weight="fill" className="text-white" />
                   Donate
                 </Button>
 

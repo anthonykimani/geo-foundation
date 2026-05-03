@@ -5,4 +5,5 @@ export const headerData = [
   { label: "News", href: "/gallery" },
   { label: "Impact", href: "/impact" },
   { label: "Get Involved", href: "/get-involved" },
+  { label: "Contact", href: "/contact" },
 ];

@@ -1,4 +1,4 @@
-import { boardMembers, values } from "../organization/board";
+import { boardMembers, values } from "../organization/team";
 import { contacts, generalEmail } from "../organization/contact";
 
 export { boardMembers, values, contacts, generalEmail };

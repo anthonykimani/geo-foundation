@@ -16,7 +16,7 @@ import {
   SheetTitle,
   SheetClose,
 } from "@/components/ui/sheet";
-import { ListIcon, XIcon } from "@phosphor-icons/react";
+import { ListIcon, XIcon, HeartIcon } from "@phosphor-icons/react";
 import { headerData } from "@/lib/layout-data";
 import { DonationModal } from "@/components/shared/donation-modal";
 import { Button } from "../ui/button";
@@ -52,8 +52,9 @@ const Header = () => {
 
                 <Button
                   onClick={() => setDonateOpen(true)}
-                  className="bg-primary text-white rounded-full p-4"
+                  className="bg-primary text-white rounded-full text-lg px-6 py-6 gap-2"
                 >
+                  <HeartIcon size={24} weight="fill" className="text-white" />
                   Donate
                 </Button>
               </div>
@@ -87,8 +88,9 @@ const Header = () => {
                         <div className="flex flex-col gap-3 px-2 mt-2">
                           <Button
                             onClick={() => setDonateOpen(true)}
-                            className="bg-primary text-white rounded-full p-4"
+                            className="bg-primary text-white rounded-full text-lg px-6 py-6 gap-2"
                           >
+                            <HeartIcon size={24} weight="fill" className="text-white" />
                             Donate
                           </Button>
                           <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />

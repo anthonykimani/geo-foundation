@@ -3,9 +3,33 @@
 import Header from "./header";
 import FeaturedProject from "./featured-project";
 import NewsCard from "./news-card";
-import { jiweHomeData } from "@/data/components/jiwe-home";
+import { jiweHomeData } from "@/data/pages/home";
+import { useEffect, useState } from "react";
 
 function JiweKwaJiwe() {
+  const [project, setProject] = useState(jiweHomeData.featuredProject);
+
+  useEffect(() => {
+    const fetchDonations = async () => {
+      try {
+        const res = await fetch("/api/donations");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.totalBricks > 0) {
+            setProject((prev) => ({
+              ...prev,
+              bricksRaised: data.totalBricks,
+            }));
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching donations:", error);
+      }
+    };
+
+    fetchDonations();
+  }, []);
+
   return (
     <section className="w-full bg-background">
       <div className="container py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
@@ -16,7 +40,7 @@ function JiweKwaJiwe() {
         />
 
         <FeaturedProject
-          project={jiweHomeData.featuredProject}
+          project={project}
           animationIndex={1}
         />
 

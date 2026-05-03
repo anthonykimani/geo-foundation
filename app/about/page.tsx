@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Img1 } from "@/constants/img";
 import { boardMembers, values, organizationName, organizationSubtitle, mission, whyWeAreInspired, howWeWork, aboutCta } from "@/data/pages/about";
 import { contacts, generalEmail } from "@/data/organization/contact";
+import BoardMemberCard from "@/components/shared/board-member-card";
 
 function AboutPage() {
   return (
@@ -165,14 +166,16 @@ function AboutPage() {
               <p className="text-muted-foreground mb-6">
                 Meet our dedicated board members who guide GEO&apos;s mission.
               </p>
-              <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 {boardMembers.map((member, index) => (
-                  <div key={index} className="text-center">
-                    <div className="relative w-16 h-16 rounded-full overflow-hidden mb-2 bg-gray-200 mx-auto">
-                      <Image src={member.image} alt={member.name} fill className="object-cover" />
-                    </div>
-                    <p className="text-xs text-foreground truncate">{member.name}</p>
-                  </div>
+                  <BoardMemberCard
+                    key={index}
+                    name={member.name}
+                    image={member.image}
+                    title={member.title}
+                    bio={member.bio}
+                    animationIndex={index}
+                  />
                 ))}
               </div>
             </div>

@@ -8,7 +8,7 @@ import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import { Img8 } from "@/constants/img";
-import { homeFeatures } from "@/data/components/home-about";
+import { homeFeatures } from "@/data/pages/home";
 
 function AboutHero() {
   const ref = useRef(null);

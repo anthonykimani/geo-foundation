@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import { Button } from "@/components/ui/button";
+import { HeartIcon } from "@phosphor-icons/react";
 
 interface StatItem {
   value: string | number;
@@ -89,7 +90,8 @@ return (
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button className="rounded-full h-12 px-8 bg-primary text-white hover:bg-primary/90">
+            <Button className="rounded-full text-lg px-8 py-6 bg-primary text-white hover:bg-primary/90 gap-2">
+              <HeartIcon size={24} weight="fill" className="text-white" />
               {primaryButton.text}
             </Button>
             <Link href={secondaryButton.href}>

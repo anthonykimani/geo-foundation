@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
@@ -115,12 +116,16 @@ function Countdown({ targetDate = event.date }: CountdownProps) {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="flex justify-center gap-4"
         >
-          <Button className="rounded-full h-12 px-8 bg-foreground text-white hover:bg-foreground/90">
-            Register Now
-          </Button>
-          <Button variant="outline" className="rounded-full h-12 px-8">
-            Learn More
-          </Button>
+          <Link href="/run">
+            <Button className="rounded-full h-12 px-8 bg-foreground text-white hover:bg-foreground/90">
+              Register Now
+            </Button>
+          </Link>
+          <Link href="/about">
+            <Button variant="outline" className="rounded-full h-12 px-8">
+              Learn More
+            </Button>
+          </Link>
         </motion.div>
       </div>
     </section>

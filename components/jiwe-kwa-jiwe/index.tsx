@@ -62,7 +62,7 @@ const defaultData: JiweKwaJiweData = {
     },
     {
       label: "News name here",
-      title: "Community Highlights",
+      title: "Here Hasbah Kenya Iimited donated 32 cartons of sanitary towels for school girls of age, to be distributed during the 4th annual Gem run held at Tigoi primary school",
       date: "April 28, 2026",
       image: Img13.src,
     },

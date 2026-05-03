@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/header";
 import Footer from "@/components/home/footer";
+import AutoDonateModal from "@/components/shared/auto-donate-modal";
 
 const figtree = Figtree({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <AutoDonateModal />
       </body>
     </html>
   );

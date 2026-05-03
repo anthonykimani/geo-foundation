@@ -2,7 +2,7 @@
 
 import Header from "./header";
 import TeamCard from "./team-card";
-import { teamData } from "@/data/components/team";
+import { teamData } from "@/data/organization/team";
 import {
   Carousel,
   CarouselContent,

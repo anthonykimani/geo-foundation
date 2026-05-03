@@ -4,6 +4,7 @@ import * as React from "react"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
+import Autoplay from "embla-carousel-autoplay"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -20,6 +21,8 @@ type CarouselProps = {
   plugins?: CarouselPlugin
   orientation?: "horizontal" | "vertical"
   setApi?: (api: CarouselApi) => void
+  autoplay?: boolean
+  autoplayDelay?: number
 }
 
 type CarouselContextProps = {
@@ -50,14 +53,20 @@ function Carousel({
   plugins,
   className,
   children,
+  autoplay = false,
+  autoplayDelay = 3000,
   ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
+  const autoplayPlugin = React.useRef(
+    Autoplay({ delay: autoplayDelay, stopOnInteraction: false })
+  )
+
   const [carouselRef, api] = useEmblaCarousel(
     {
       ...opts,
       axis: orientation === "horizontal" ? "x" : "y",
     },
-    plugins
+    autoplay ? [autoplayPlugin.current, ...(plugins || [])] : plugins
   )
   const [canScrollPrev, setCanScrollPrev] = React.useState(false)
   const [canScrollNext, setCanScrollNext] = React.useState(false)

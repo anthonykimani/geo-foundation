@@ -11,6 +11,7 @@ import FeaturedProject from "@/components/jiwe-kwa-jiwe/featured-project";
 import NewsCard from "@/components/jiwe-kwa-jiwe/news-card";
 import { Button } from "@/components/ui/button";
 import { DonationModal } from "@/components/shared/donation-modal";
+import { HeartIcon } from "@phosphor-icons/react";
 import { googleFormUrl } from "@/data/forms";
 import { 
   jiweStats, 
@@ -73,8 +74,9 @@ function JiweKwaJiwePage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Button 
               onClick={() => setDonateOpen(true)}
-              className="bg-white text-primary hover:bg-gray-100"
+              className="bg-white text-primary hover:bg-gray-100 text-lg px-8 py-5 gap-2"
             >
+              <HeartIcon size={24} weight="fill" className="text-primary" />
               {jiweCta.donateText}
             </Button>
             <a 

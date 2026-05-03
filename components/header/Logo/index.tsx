@@ -7,7 +7,7 @@ const Logo = () => {
     return (
         <Link href="/" className="flex items-center shrink-0">
             <Image
-                src={GeoLogo}
+                src={ErudeLogo}
                 alt="GEO Logo"
                 width={180}
                 height={48}

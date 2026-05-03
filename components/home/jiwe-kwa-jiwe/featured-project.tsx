@@ -6,6 +6,7 @@ import { useRef, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import DonationModal from "@/components/shared/donation-modal";
+import { HeartIcon } from "@phosphor-icons/react";
 
 interface Project {
   title: string;
@@ -114,8 +115,9 @@ function FeaturedProject({ project, animationIndex = 0 }: FeaturedProjectProps) 
           </div>
           <Button
             onClick={() => setDonateOpen(true)}
-            className="bg-primary text-white rounded-full py-6 px-4"
+            className="bg-primary text-white rounded-full text-lg px-8 py-6 gap-2"
           >
+            <HeartIcon size={24} weight="fill" className="text-white" />
             Donate
           </Button>
           <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />

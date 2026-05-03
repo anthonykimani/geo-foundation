@@ -76,7 +76,7 @@ export const featuredProject: FeaturedProject = {
 
 export const jiweNews: JiweNewsItem[] = [
   { label: "News", title: "Annual 5km Run", date: "Nov 28, 2026", image: Img1.src },
-  { label: "News", title: "Community Highlights", date: "April 28, 2026", image: Img2.src },
+  { label: "News", title: "Here Hasbah Kenya Iimited donated 32 cartons of sanitary towels for school girls of age, to be distributed during the 4th annual Gem run held at Tigoi primary school", date: "April 28, 2026", image: Img2.src },
   { label: "News", title: "GEO Wins Charity Award 2026", date: "Jan 28, 2026", image: Img3.src },
   { label: "News", title: "Phase 2 Complete", date: "Dec 15, 2025", image: Img4.src },
 ];

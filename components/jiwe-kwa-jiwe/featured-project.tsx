@@ -5,6 +5,7 @@ import { motion, useInView } from "motion/react";
 import { useRef, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { HeartIcon } from "@phosphor-icons/react";
 
 interface Project {
   title: string;
@@ -111,7 +112,8 @@ function FeaturedProject({ project, animationIndex = 0 }: FeaturedProjectProps) 
             </div>
           </div>
 
-          <Button className="rounded-full h-[37px] px-6 bg-foreground text-white hover:bg-foreground/90 w-fit">
+          <Button className="rounded-full text-lg px-8 py-6 bg-foreground text-white hover:bg-foreground/90 w-fit gap-2">
+            <HeartIcon size={24} weight="fill" className="text-white" />
             Donate
           </Button>
         </div>

@@ -1,3 +1,45 @@
+import { Img14, Img13, Img4, GeoTeamWithPrincipal, GeoRepaintsSchool } from "@/constants/img";
+
+export const heroSection = {
+  scrollText: "SCROLL TO EXPLORE",
+  bricksRaised: 1500,
+  targetBricks: 15000,
+};
+
+export const countdownConfig = {
+  targetDate: "2026-09-05T08:00:00",
+  title: "NEXT EVENT: SEP 05, 2026 | KILIFI, KENYA",
+};
+
+export interface Feature {
+  number: string;
+  title: string;
+  description: string;
+}
+
+export const homeFeatures: Feature[] = [
+  {
+    number: "01",
+    title: "Transparency",
+    description: "Every Brick donated is tracked in real time",
+  },
+  {
+    number: "02",
+    title: "Community Participation",
+    description: "Donors, runners, and partners build together.",
+  },
+  {
+    number: "03",
+    title: "Measurable Impact",
+    description: "Clear construction targets and progress reports.",
+  },
+  {
+    number: "04",
+    title: "Sustainable Structure",
+    description: "From event to year-round fundraising ecosystem.",
+  },
+];
+
 export interface HomeNewsItem {
   id: number;
   title: string;
@@ -33,4 +75,38 @@ export const homeNewsItems: HomeNewsItem[] = [
 export const homeNewsSection = {
   title: "Latest News",
   subtitle: "Stay updated with the latest from the Gladys Erude Organization",
+};
+
+export interface JiweHomeProject {
+  title: string;
+  subtitle: string;
+  bricksRaised: number;
+  targetBricks: number;
+  image: string;
+}
+
+export interface JiweHomeNews {
+  label: string;
+  title: string;
+  date: string;
+  image: string;
+}
+
+export const jiweHomeData = {
+  header: {
+    title: "Jiwe Kwa Jiwe",
+    subtitle: "Track the classroom build in real time",
+  },
+  featuredProject: {
+    title: "St. Micheal's Primary School Construction",
+    subtitle: "Join us in making a lasting impact—be part of our Gladys Erude 5K Run as we come together to restore hope and rebuild a dilapidated school (St Michael's Primary, Kilifi county). Whether you choose to donate, volunteer, or participate, your support will help create a better learning environment for children in need. Let's run with purpose and give back to the next generation. Pamoja! Dreams are made by action.",
+    bricksRaised: 1500,
+    targetBricks: 12000,
+    image: GeoTeamWithPrincipal.src,
+  },
+  news: [
+    { label: "News name here", title: "Annual 5km Run", date: "Nov 28, 2026", image: Img14.src },
+    { label: "News name here", title: "Here Hasbah Kenya Iimited donated 32 cartons of sanitary towels for school girls of age, to be distributed during the 4th annual Gem run held at Tigoi primary school", date: "April 28, 2026", image: Img13.src },
+    { label: "News name here", title: "GEO Wins Charity Award 2026", date: "Jan 28, 2026", image: Img4.src },
+  ],
 };

@@ -1,12 +1,10 @@
 "use client";
 
 import { motion } from "motion/react";
-import Image from "next/image";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import { Button } from "@/components/ui/button";
-import { Img1 } from "@/constants/img";
-import { boardMembers } from "@/data/organization/board";
-import { contacts, generalEmail } from "@/data/organization/contact";
+import BoardMemberCard from "@/components/shared/board-member-card";
+import { boardMembers } from "@/data/organization/team";
 
 function ContactPage() {
   return (
@@ -56,14 +54,16 @@ function ContactPage() {
               <p className="text-muted-foreground mb-6">
                 Meet our dedicated board members who guide GEO&apos;s mission.
               </p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 {boardMembers.map((member, index) => (
-                  <div key={index} className="text-center">
-                    <div className="w-16 h-16 rounded-full bg-gray-200 mb-2 mx-auto flex items-center justify-center">
-                      <span className="text-2xl">👤</span>
-                    </div>
-                    <p className="text-xs text-foreground truncate">{member.name}</p>
-                  </div>
+                  <BoardMemberCard
+                    key={index}
+                    name={member.name}
+                    image={member.image}
+                    title={member.title}
+                    bio={member.bio}
+                    animationIndex={index}
+                  />
                 ))}
               </div>
             </div>

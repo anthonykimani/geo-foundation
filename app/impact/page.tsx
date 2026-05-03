@@ -8,6 +8,7 @@ import ProjectCard from "@/components/impact/project-card";
 import ImpactAreas from "@/components/home/impact-areas";
 import { Button } from "@/components/ui/button";
 import { DonationModal } from "@/components/shared/donation-modal";
+import { HeartIcon } from "@phosphor-icons/react";
 import { projects, organizationStats, impactCta } from "@/data/pages/impact";
 
 function ImpactPage() {
@@ -57,8 +58,9 @@ function ImpactPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <button
               onClick={() => setDonateOpen(true)}
-              className="inline-flex items-center justify-center px-6 py-3 bg-primary text-white rounded-md hover:bg-primary/90"
+              className="inline-flex items-center justify-center text-lg px-8 py-5 bg-primary text-white rounded-full hover:bg-primary/90 gap-2"
             >
+              <HeartIcon size={24} weight="fill" className="text-white" />
               Donate Now
             </button>
             <a

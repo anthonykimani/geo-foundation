@@ -7,6 +7,7 @@ import InvolvementCard from "@/components/get-involved/involvement-card";
 import VolunteerForm from "@/components/get-involved/volunteer-form";
 import SponsorForm from "@/components/get-involved/sponsor-form";
 import { DonationModal } from "@/components/shared/donation-modal";
+import { HeartIcon } from "@phosphor-icons/react";
 import { Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8 } from "@/constants/img";
 
 function GetInvolvedPage() {
@@ -112,8 +113,9 @@ function GetInvolvedPage() {
           </p>
           <button 
             onClick={() => setDonateOpen(true)}
-            className="bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition-colors"
+            className="bg-primary text-white text-lg px-8 py-5 rounded-full hover:bg-primary/90 transition-colors flex items-center gap-2"
           >
+            <HeartIcon size={24} weight="fill" className="text-white" />
             Donate Now
           </button>
         </div>

@@ -1,16 +1,16 @@
 export const event = {
   title: "Annual 5km Run",
   subtitle: "Join us for our annual charity run! Every step helps build classrooms for children in need.",
-  date: "2026-09-05T07:00:00",
+  date: "2026-09-05T08:00:00",
   displayDate: "SEP 05, 2026 | KILIFI, KENYA",
   dateFormatted: "Sept 5th, 2026",
-  time: "7:00 AM",
+  time: "8:00 AM",
   location: "St Micheal Primary School",
   locationShort: "Kilifi",
 };
 
 export const eventInfo = {
-  date: "2026-09-05T07:00:00",
+  date: "2026-09-05T08:00:00",
   displayDate: "SEP 05, 2026 | KILIFI, KENYA",
   location: "Kilifi, Kenya",
 };
@@ -73,11 +73,12 @@ export const eventHighlights: EventHighlight[] = [
 
 export const impactStats = {
   title: "Our Impact Over The Years",
-  subtitle: "Over the past three years, the GEM Run has raised a total of $21,165",
+  subtitle: "Over the past four years, the GEM Run has raised a total of $30,390",
   years: [
     { year: "2022", amount: "$10,000", isGoal: false },
     { year: "2023", amount: "$6,520", isGoal: false },
     { year: "2024", amount: "$4,645", isGoal: false },
+    { year: "2025", amount: "$9,225", isGoal: false },
     { year: "2026 Goal", amount: "$8,000", isGoal: true },
   ],
   goalDescription:
