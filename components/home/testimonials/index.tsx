@@ -5,13 +5,13 @@ import { motion } from "motion/react";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import TestimonialCard from "./testimonial-card";
-import { Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8 } from "@/constants/img";
 
 export interface Testimonial {
+  _id?: string;
   quote: string;
   detail: string;
   author: string;
-  image: string;
+  image?: any;
 }
 
 export interface TestimonialsData {
@@ -26,77 +26,32 @@ interface TestimonialsProps {
   data?: TestimonialsData;
 }
 
-const defaultData: TestimonialsData = {
-  header: {
-    title: "Real stories, real impact",
-    subtitle:
-      "Discover how the Glady's Erude Foundation has transformed lives and the community through real experiences",
-  },
-  testimonials: [
-    {
-      quote: "They are helpful and always dependable.",
-      detail:
-        "GEO Foundation has given me peace of mind knowing my family receives the support they need without any hassle.",
-      author: "Lila Patel",
-      image: Img1.src,
-    },
-    {
-      quote: "GEO foundation has been a game-changer for me!",
-      detail:
-        "I could afford to raise school fees for my education but the foundation helped me",
-      author: "James Porter",
-      image: Img2.src,
-    },
-    {
-      quote: "I love how transparent it is",
-      detail: "Our Community couldn't afford",
-      author: "James Porter",
-      image: Img3.src,
-    },
-    {
-      quote: "Amazing community support",
-      detail:
-        "The foundation helped build a new classroom for our village children.",
-      author: "Mary Atieno",
-      image: Img4.src,
-    },
-    {
-      quote: "Education for all",
-      detail:
-        "My children can now go to school thanks to the scholarship program.",
-      author: "John Ochieng",
-      image: Img5.src,
-    },
-    {
-      quote: "Life-changing impact",
-      detail:
-        "The medical outreach saved my mother's life. Forever grateful!",
-      author: "Sarah Wanjiku",
-      image: Img6.src,
-    },
-    {
-      quote: "Empowering youth",
-      detail:
-        "The youth programs gave me skills for my career.",
-      author: "David Kiprop",
-      image: Img7.src,
-    },
-    {
-      quote: "Clean water access",
-      detail:
-        "The water project improved our village's health significantly.",
-      author: "Grace Akinyi",
-      image: Img8.src,
-    },
-  ],
-};
+async function getTestimonialsData() {
+  const { getTestimonials } = await import("@/lib/sanity/queries");
+  return getTestimonials();
+}
 
 function Testimonials({ data }: TestimonialsProps) {
-  const content = data || defaultData;
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+
+  useEffect(() => {
+    if (data) {
+      // Use provided data
+      setTestimonials(data.testimonials || []);
+    } else {
+      // Fetch from Sanity
+      getTestimonialsData()
+        .then(setTestimonials)
+        .catch(() => setTestimonials([]));
+    }
+  }, [data]);
+
+  const headerTitle = data?.header?.title || "Real stories, real impact";
+  const headerSubtitle = data?.header?.subtitle || "Discover how the Glady's Erude Foundation has transformed lives and the community through real experiences";
 
   const cardWidth = 507;
   const gap = 24;
@@ -135,7 +90,7 @@ function Testimonials({ data }: TestimonialsProps) {
     }
   };
 
-  const totalDots = content.testimonials.length;
+  const totalDots = testimonials.length;
 
   return (
     <section className="w-full bg-background overflow-hidden">
@@ -148,10 +103,10 @@ function Testimonials({ data }: TestimonialsProps) {
         >
           <div className="max-w-[541px]">
             <h1 className="text-3xl sm:text-4xl md:text-[56px] leading-tight font-normal text-foreground font-sans">
-              <TextGenerateEffect words={content.header.title} />
+              <TextGenerateEffect words={headerTitle} />
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground mt-2">
-              {content.header.subtitle}
+              {headerSubtitle}
             </p>
           </div>
 
@@ -194,9 +149,9 @@ function Testimonials({ data }: TestimonialsProps) {
             WebkitOverflowScrolling: 'touch',
           }}
         >
-          {content.testimonials.map((testimonial, index) => (
+          {testimonials.map((testimonial, index) => (
             <div 
-              key={index} 
+              key={testimonial._id || index} 
               className="flex-shrink-0 snap-start"
               style={{ width: cardWidth }}
             >

@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { faqData } from "@/data/components/faq";
 
 export interface FAQItem {
   question: string;
@@ -27,8 +26,33 @@ interface FAQProps {
   data?: FAQData;
 }
 
+async function getFAQData() {
+  const { getFAQ } = await import("@/lib/sanity/queries");
+  return getFAQ();
+}
+
 function FAQ({ data }: FAQProps) {
-  const content = data || faqData;
+  const [faqData, setFaqData] = useState<any>(null);
+
+  useEffect(() => {
+    if (data) {
+      setFaqData(data);
+    } else {
+      getFAQData()
+        .then(setFaqData)
+        .catch(() => setFaqData(null));
+    }
+  }, [data]);
+
+  const content = faqData || {
+    header: {
+      label: "Frequently asked questions",
+      title: "Got questions?\nWe've got answers!",
+      subtitle: "Discover answers to common questions about our events, processes, and more."
+    },
+    faqs: []
+  };
+
   const [activeTab, setActiveTab] = useState(0);
 
   return (
@@ -67,7 +91,7 @@ function FAQ({ data }: FAQProps) {
           className="flex flex-col lg:flex-row gap-8"
         >
           <div className="flex-shrink-0">
-            {content.tabs?.map((tab, index) => (
+            {content.tabs?.map((tab: any, index: number) => (
               <button
                 key={index}
                 onClick={() => setActiveTab(index)}
@@ -83,7 +107,7 @@ function FAQ({ data }: FAQProps) {
 
           <div className="flex-1">
             <Accordion type="single" defaultValue="item-0" collapsible>
-              {content.faqs.map((faq, index) => (
+              {(content.faqs || []).map((faq: any, index: number) => (
                 <AccordionItem key={index} value={`item-${index}`}>
                   <AccordionTrigger className="text-lg text-foreground hover:no-underline">
                     {faq.question}

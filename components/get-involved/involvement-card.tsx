@@ -2,11 +2,11 @@
 
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
-import Image, { StaticImageData } from "next/image";
-
+import Image from "next/image";
+import { getImageUrl } from "@/lib/sanity";
 
 interface InvolvementCardProps {
-  image: StaticImageData;
+  image?: any;
   title: string;
   description: string;
   buttonText: string;
@@ -24,6 +24,8 @@ function InvolvementCard({
   onClick,
   animationIndex = 0,
 }: InvolvementCardProps) {
+  const imageSrc = getImageUrl(image);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -32,11 +34,18 @@ function InvolvementCard({
       viewport={{ once: true }}
       className="p-8 sm:p-10 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 flex flex-col"
     >
-      <Image
-        src={image}
-        alt={title}
-        className="w-full h-full object-cover rounded-xl"
-      />
+      {imageSrc ? (
+        <div className="relative w-full h-[200px] mb-4 rounded-xl overflow-hidden">
+          <Image
+            src={imageSrc}
+            alt={title}
+            fill
+            className="object-cover"
+          />
+        </div>
+      ) : (
+        <div className="relative w-full h-[200px] mb-4 rounded-xl overflow-hidden bg-gray-200" />
+      )}
       <h3 className="text-xl md:text-2xl font-normal text-foreground mb-3">{title}</h3>
       <p className="text-sm text-muted-foreground mb-6 flex-grow">{description}</p>
       {variant === "primary" && (

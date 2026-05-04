@@ -7,8 +7,6 @@ import Countdown from "@/components/home/countdown";
 import FAQ from "@/components/home/faq";
 import Testimonials from "@/components/home/testimonials";
 import News from "@/components/home/news";
-import { event } from "@/data/pages/run";
-
 
 export default function Home() {
   return (
@@ -17,7 +15,7 @@ export default function Home() {
         <HeroSection />
       </section>
       <section id="countdown">
-        <Countdown targetDate={event.date} />
+        <Countdown />
       </section>
       <section id="about">
         <AboutHero />

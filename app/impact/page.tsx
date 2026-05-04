@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Hero from "@/components/impact/hero";
 import StatsBanner from "@/components/impact/stats-banner";
@@ -9,16 +9,31 @@ import ImpactAreas from "@/components/home/impact-areas";
 import { Button } from "@/components/ui/button";
 import { DonationModal } from "@/components/shared/donation-modal";
 import { HeartIcon } from "@phosphor-icons/react";
-import { projects, organizationStats, impactCta } from "@/data/pages/impact";
+
+async function getImpactPageData() {
+  const { getImpactPage, getProjects } = await import("@/lib/sanity/queries");
+  const [impactPage, projects] = await Promise.all([getImpactPage(), getProjects()]);
+  return { impactPage, projects };
+}
 
 function ImpactPage() {
+  const [data, setData] = useState<any>(null);
   const [donateOpen, setDonateOpen] = useState(false);
+
+  useEffect(() => {
+    getImpactPageData()
+      .then(setData)
+      .catch(() => setData(null));
+  }, []);
+
+  const projects = data?.projects || [];
+  const cta = data?.impactPage || {};
 
   return (
     <main className="min-h-screen bg-background pt-20">
       <Hero />
       <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
-      <StatsBanner stats={organizationStats} />
+      <StatsBanner stats={[]} />
       
       <ImpactAreas />
 
@@ -39,8 +54,8 @@ function ImpactPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.filter(p => !p.removed).map((project) => (
-              <ProjectCard key={project.id} project={project} />
+            {projects.filter((p: any) => !p.removed).map((project: any) => (
+              <ProjectCard key={project._id} project={project} />
             ))}
           </div>
         </div>
@@ -49,11 +64,10 @@ function ImpactPage() {
       <section className="py-12 md:py-16 lg:py-20 bg-gray-50">
         <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto text-center">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-6">
-            Make a Difference Today
+            {cta.ctaTitle || "Make a Difference Today"}
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Your donation directly impacts the lives of women and children in underserved communities.
-            Every contribution brings us closer to our goal of transforming education across Kenya.
+            {cta.ctaDescription || "Your donation directly impacts the lives of women and children in underserved communities."}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <button
@@ -61,17 +75,17 @@ function ImpactPage() {
               className="inline-flex items-center justify-center text-lg px-8 py-5 bg-primary text-white rounded-full hover:bg-primary/90 gap-2"
             >
               <HeartIcon size={24} weight="fill" className="text-white" />
-              Donate Now
+              {cta.donateText || "Donate Now"}
             </button>
             <a
-              href="https://gofund.me/323c458f"
+              href={cta.gofundmeUrl || "https://gofund.me/323c458f"}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center px-6 py-3 border-2 border-primary text-primary rounded-md hover:bg-primary/5"
             >
               GoFundMe
             </a>
-            <Link href="/get-involved">
+            <Link href={cta.getInvolvedHref || "/get-involved"}>
               <button className="inline-flex items-center justify-center px-6 py-3 border-2 border-primary text-primary rounded-md hover:bg-primary/5"
               >Get Involved</button>
             </Link>

@@ -5,19 +5,18 @@ import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { LinkedinLogoIcon, TwitterLogoIcon } from "@phosphor-icons/react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-
-interface TeamMember {
-  name: string;
-  title: string;
-  image: string;
-  linkedin?: string;
-  twitter?: string;
-  bio?: string;
-}
+import { getImageUrl } from "@/lib/sanity";
 
 interface TeamCardProps {
-  member: TeamMember;
+  member: {
+    _id?: string;
+    name: string;
+    title: string;
+    image?: string | any;
+    linkedin?: string;
+    twitter?: string;
+    bio?: string;
+  };
   animationIndex?: number;
 }
 
@@ -31,6 +30,8 @@ function TeamCard({ member, animationIndex = 0 }: TeamCardProps) {
     transition: { duration: 0.3 },
   };
 
+  const imageUrl = getImageUrl(member.image);
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -40,13 +41,19 @@ function TeamCard({ member, animationIndex = 0 }: TeamCardProps) {
           className="flex flex-col items-center p-4 cursor-pointer group"
         >
           <div className="relative w-full aspect-square rounded-full overflow-hidden mb-4 max-w-[180px] group-hover:scale-105 transition-transform duration-300">
-            <Image
-              src={member.image}
-              alt={member.name}
-              fill
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className="object-cover"
-            />
+            {imageUrl ? (
+              <Image
+                src={imageUrl}
+                alt={member.name}
+                fill
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                className="object-cover"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                <span className="text-gray-400 text-xs">No image</span>
+              </div>
+            )}
           </div>
 
           <div className="text-center space-y-1">
@@ -88,13 +95,17 @@ function TeamCard({ member, animationIndex = 0 }: TeamCardProps) {
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
             <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
-              <Image
-                src={member.image}
-                alt={member.name}
-                fill
-                sizes="64px"
-                className="object-cover"
-              />
+              {imageUrl ? (
+                <Image
+                  src={imageUrl}
+                  alt={member.name}
+                  fill
+                  sizes="64px"
+                  className="object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-200" />
+              )}
             </div>
             <div>
               <h4 className="font-medium text-foreground">{member.name}</h4>

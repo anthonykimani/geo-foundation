@@ -1,9 +1,28 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { aboutRun } from "@/data/pages/run";
+
+async function getRunPageData() {
+  const { getRunPage } = await import("@/lib/sanity/queries");
+  return getRunPage();
+}
 
 function AboutRun() {
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    getRunPageData()
+      .then(setData)
+      .catch(() => setData(null));
+  }, []);
+
+  const aboutRun = data || {
+    aboutRunTitle: "About the Run",
+    aboutRunDescription: ["Join us for our annual memorial run to support education initiatives in Kenya."],
+    runHashtags: "#GERun2025"
+  };
+
   return (
     <section className="py-12 md:py-16 lg:py-20">
       <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
@@ -14,9 +33,9 @@ function AboutRun() {
           viewport={{ once: true }}
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-6">
-            {aboutRun.title}
+            {aboutRun.aboutRunTitle || "About the Run"}
           </h2>
-          {aboutRun.description.map((paragraph, index) => (
+          {(aboutRun.aboutRunDescription || []).map((paragraph: string, index: number) => (
             <p
               key={index}
               className="text-lg text-muted-foreground leading-relaxed mb-6"
@@ -25,7 +44,7 @@ function AboutRun() {
             </p>
           ))}
           <p className="text-lg text-primary font-medium">
-            {aboutRun.hashtags}
+            {aboutRun.runHashtags || "#GERun2025"}
           </p>
         </motion.div>
       </div>

@@ -1,11 +1,30 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { Img2 } from "@/constants/img";
-import { eventDetails } from "@/data/pages/run";
+import { getImageUrl } from "@/lib/sanity";
+
+async function getRunPageData() {
+  const { getRunPage } = await import("@/lib/sanity/queries");
+  return getRunPage();
+}
 
 function EventInfo() {
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    getRunPageData()
+      .then(setData)
+      .catch(() => setData(null));
+  }, []);
+
+  const title = data?.eventDetailsTitle || "Event Details";
+  const description = data?.eventDetailsDescription || [];
+  const hashtags = data?.runHashtags || "#GERun2025";
+  const eventImage = data?.eventImage;
+  const eventImageUrl = getImageUrl(eventImage);
+
   return (
     <section className="py-12 md:py-16 lg:py-20">
       <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
@@ -17,9 +36,9 @@ function EventInfo() {
             viewport={{ once: true }}
           >
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-6">
-              {eventDetails.title}
+              {title}
             </h2>
-            {eventDetails.description.map((paragraph, index) => (
+            {description.map((paragraph: string, index: number) => (
               <p
                 key={index}
                 className="text-lg text-muted-foreground leading-relaxed mb-6"
@@ -32,7 +51,7 @@ function EventInfo() {
               />
             ))}
             <p className="text-lg text-primary font-medium">
-              {eventDetails.hashtags}
+              {hashtags}
             </p>
           </motion.div>
 
@@ -43,13 +62,17 @@ function EventInfo() {
             viewport={{ once: true }}
             className="relative w-full h-[300px] md:h-[400px] rounded-2xl overflow-hidden"
           >
-            <Image
-              src={Img2.src}
-              alt="Run Event"
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover"
-            />
+            {eventImageUrl ? (
+              <Image
+                src={eventImageUrl}
+                alt="Run Event"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-200" />
+            )}
           </motion.div>
         </div>
       </div>

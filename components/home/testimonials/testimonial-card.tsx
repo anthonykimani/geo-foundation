@@ -3,12 +3,13 @@
 import Image from "next/image";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
+import { getImageUrl } from "@/lib/sanity";
 
 interface TestimonialCardProps {
   quote: string;
   detail: string;
   author: string;
-  image: string;
+  image?: string | any;
   animationIndex?: number;
 }
 
@@ -28,6 +29,8 @@ function TestimonialCard({
     transition: { duration: 0.8, delay: 0.2 + animationIndex * 0.2 },
   };
 
+  const imageSrc = getImageUrl(image);
+
   return (
     <motion.div
       ref={ref}
@@ -35,7 +38,9 @@ function TestimonialCard({
       className="bg-[#f6f6f6] rounded-[24px] overflow-hidden h-full"
     >
       <div className="relative w-full aspect-[507/335] shrink-0">
-        <Image src={image} alt={author} fill className="object-cover" />
+        {imageSrc ? (
+          <Image src={imageSrc} alt={author} fill className="object-cover" />
+        ) : null}
       </div>
 
       <div className="p-4 sm:p-6 space-y-2 sm:space-y-3">

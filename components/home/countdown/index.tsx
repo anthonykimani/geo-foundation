@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import { Button } from "@/components/ui/button";
-import { event } from "@/data/pages/run";
+
+async function getRunPageData() {
+  const { getRunPage } = await import("@/lib/sanity/queries");
+  return getRunPage();
+}
 
 interface CountdownProps {
   targetDate?: string;
@@ -44,19 +48,34 @@ function CountdownUnit({ value, label }: { value: string; label: string }) {
   );
 }
 
-function Countdown({ targetDate = event.date }: CountdownProps) {
+function Countdown({ targetDate }: CountdownProps) {
+  const [data, setData] = useState<any>(null);
   const [time, setTime] = useState({ days: "00", hours: "00", minutes: "00", seconds: "00" });
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    getRunPageData()
+      .then(setData)
+      .catch(() => setData(null));
+  }, []);
+
+  useEffect(() => {
+    if (!data?.date) return;
     setMounted(true);
-    setTime(getTimeRemaining(targetDate));
+    const dateToUse = targetDate || data.date;
+    setTime(getTimeRemaining(dateToUse));
     const timer = setInterval(() => {
-      setTime(getTimeRemaining(targetDate));
+      setTime(getTimeRemaining(dateToUse));
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [targetDate]);
+  }, [data?.date, targetDate]);
+
+  const title = data?.countdownTitle || "NEXT EVENT: SEP 05, 2026 | KILIFI, KENYA";
+  const subtitle = data?.eventSubtitle || "Join us for our annual memorial run";
+  const dateFormatted = data?.dateFormatted || "";
+  const timeValue = data?.time || "";
+  const location = data?.location || "";
 
   return (
     <section className="w-full bg-background py-16 sm:py-20 md:py-24 overflow-hidden">
@@ -72,11 +91,11 @@ function Countdown({ targetDate = event.date }: CountdownProps) {
           </span>
 
           <h1 className="text-3xl sm:text-4xl md:text-[56px] leading-tight font-normal text-foreground font-sans mb-4">
-            <TextGenerateEffect words={event.title} />
+            <TextGenerateEffect words={title} />
           </h1>
 
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
-            {event.subtitle}
+            {subtitle}
           </p>
         </motion.div>
 
@@ -86,25 +105,29 @@ function Countdown({ targetDate = event.date }: CountdownProps) {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 md:gap-12 lg:gap-16 mb-12"
         >
-          <CountdownUnit value={time.days} label="Days" />
-          <CountdownUnit value={time.hours} label="Hours" />
-          <CountdownUnit value={time.minutes} label="Minutes" />
-          <CountdownUnit value={time.seconds} label="Seconds" />
+          {mounted && (
+            <>
+              <CountdownUnit value={time.days} label="Days" />
+              <CountdownUnit value={time.hours} label="Hours" />
+              <CountdownUnit value={time.minutes} label="Minutes" />
+              <CountdownUnit value={time.seconds} label="Seconds" />
+            </>
+          )}
         </motion.div>
 
         <motion.div>
           <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 md:gap-12 lg:gap-16 mb-12">
             <div>
               <p className="text-lg font-medium text-foreground">
-                {event.dateFormatted}
+                {dateFormatted}
               </p>
             </div>
             <div>
-              <p className="text-lg font-medium text-foreground">{event.time}</p>
+              <p className="text-lg font-medium text-foreground">{timeValue}</p>
             </div>
             <div>
               <p className="text-lg font-medium text-foreground">
-                {event.location}
+                {location}
               </p>
             </div>
           </div>

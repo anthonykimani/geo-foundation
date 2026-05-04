@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Hero from "@/components/get-involved/hero";
 import InvolvementCard from "@/components/get-involved/involvement-card";
@@ -8,14 +8,26 @@ import VolunteerForm from "@/components/get-involved/volunteer-form";
 import SponsorForm from "@/components/get-involved/sponsor-form";
 import { DonationModal } from "@/components/shared/donation-modal";
 import { HeartIcon } from "@phosphor-icons/react";
-import { Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8 } from "@/constants/img";
+import { urlFor } from "@/lib/sanity";
+
+async function getGetInvolvedPageData() {
+  const { getGetInvolvedPage } = await import("@/lib/sanity/queries");
+  return getGetInvolvedPage();
+}
 
 function GetInvolvedPage() {
+  const [data, setData] = useState<any>(null);
   const [donateOpen, setDonateOpen] = useState(false);
 
+  useEffect(() => {
+    getGetInvolvedPageData()
+      .then(setData)
+      .catch(() => setData(null));
+  }, []);
+
   const shareToSocials = () => {
-    const text = "Support the Gladys Erude Organization! Together we can empower women and children in underserved communities across Kenya. Join us in making a difference. #GEO #Charity #Kenya";
-    const url = "https://gladyserudeorganization.org";
+    const text = data?.shareText || "Support the Gladys Erude Organization! Together we can empower women and children in underserved communities across Kenya. Join us in making a difference. #GEO #Charity #Kenya";
+    const url = data?.shareUrl || "https://gladyserudeorganization.org";
     
     const shareUrls = {
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`,
@@ -27,6 +39,17 @@ function GetInvolvedPage() {
     window.open(shareUrls.facebook, "_blank");
   };
 
+  if (!data) {
+    return (
+      <main className="min-h-screen bg-background pt-20">
+        <Hero />
+        <div className="container px-4 py-12 text-center">
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-background pt-20">
       <Hero />
@@ -34,71 +57,26 @@ function GetInvolvedPage() {
       <section className="py-12 md:py-16 lg:py-20">
         <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {/* 1. DONATE */}
-            <InvolvementCard
-              image={Img2}
-              title="Make a Donation"
-              description="Support our mission to empower women and children in underserved communities across Kenya. All donations are tax-deductible."
-              buttonText="Donate Now"
-              variant="primary"
-              onClick={() => setDonateOpen(true)}
-              animationIndex={0}
-            />
-
-            {/* 2. RUN */}
-            <InvolvementCard
-              image={Img3}
-              title="Join the Memorial Run"
-              description="Participate in our annual 5K run. Every step helps build classrooms for children in need."
-              buttonText="Register"
-              variant="secondary"
-              onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSdGsGAGpe9EdCwEcHmC2ugxYRHq9EUsaPs5NLffPOtvs57IHw/viewform", "_blank")}
-              animationIndex={1}
+            {(data.cards || []).map((card: any, index: number) => (
+              <InvolvementCard
+                key={index}
+                image={card.image}
+                title={card.title}
+                description={card.description}
+                buttonText={card.buttonText}
+                variant={card.variant || "secondary"}
+                onClick={() => {
+                  if (card.buttonUrl?.startsWith('http')) {
+                    window.open(card.buttonUrl, "_blank");
+                  } else if (card.buttonUrl?.startsWith('mailto:')) {
+                    window.location.href = card.buttonUrl;
+                  } else {
+                    setDonateOpen(true);
+                  }
+                }}
+                animationIndex={index}
               />
-
-              {/* 3. VOLUNTEER */}
-            <InvolvementCard
-              image={Img5}
-              title="Boots on the Ground"
-              description="Submit your manifest to logistics. We require organizers, physical laborers, and digital strategists."
-              buttonText="Submit Application"
-              variant="secondary"
-              onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSdGsGAGpe9EdCwEcHmC2ugxYRHq9EUsaPs5NLffPOtvs57IHw/viewform", "_blank")}
-              animationIndex={2}
-            />
-
-            {/* 4. SPONSOR */}
-            <InvolvementCard
-              image={Img7}
-              title="Corporate Sponsorship"
-              description="Fund entire milestones. Sponsors receive ledger credits and permanent physical plaques on the structure."
-              buttonText="Request Deal Book"
-              variant="secondary"
-              onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSdGsGAGpe9EdCwEcHmC2ugxYRHq9EUsaPs5NLffPOtvs57IHw/viewform", "_blank")}
-              animationIndex={3}
-            />
-
-            {/* 5. PARTNER */}
-            <InvolvementCard
-              image={Img3}
-              title="Become a Partner"
-              description="Partner with us to expand our impact. We welcome corporations, NGOs, and government agencies."
-              buttonText="Contact Us"
-              variant="secondary"
-              onClick={() => window.location.href = "mailto:info@gladyserudeorganization.org?subject=Partnership%20Inquiry"}
-              animationIndex={4}
-            />
-
-            {/* 6. SHARE */}
-            <InvolvementCard
-              image={Img6}
-              title="Spread the Word"
-              description="Share our mission with your network. Help us reach more communities that need support."
-              buttonText="Share"
-              variant="outline"
-              onClick={shareToSocials}
-              animationIndex={5}
-            />
+            ))}
           </div>
         </div>
       </section>
@@ -106,17 +84,17 @@ function GetInvolvedPage() {
       <section className="py-12 md:py-16 lg:py-20 bg-primary/5">
         <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto text-center">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-4">
-            Ready to Make a Difference?
+            {data.ctaTitle || "Ready to Make a Difference?"}
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Your support helps us empower women and children in underserved communities across Kenya.
+            {data.ctaDescription || "Your support helps us empower women and children in underserved communities across Kenya."}
           </p>
           <button 
             onClick={() => setDonateOpen(true)}
             className="bg-primary text-white text-lg px-8 py-5 rounded-full hover:bg-primary/90 transition-colors flex items-center gap-2"
           >
             <HeartIcon size={24} weight="fill" className="text-white" />
-            Donate Now
+            {data.ctaButtonText || "Donate Now"}
           </button>
         </div>
       </section>

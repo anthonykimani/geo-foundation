@@ -1,10 +1,29 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { getInvolved } from "@/data/pages/run";
+
+async function getRunPageData() {
+  const { getRunPage } = await import("@/lib/sanity/queries");
+  return getRunPage();
+}
 
 function GetInvolved() {
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    getRunPageData()
+      .then(setData)
+      .catch(() => setData(null));
+  }, []);
+
+  const getInvolved = data || {
+    getInvolvedTitle: "Get Involved",
+    getInvolvedDescription: "Join us in making a difference.",
+    cards: []
+  };
+
   return (
     <section className="py-12 md:py-16 lg:py-20 bg-gray-50">
       <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
@@ -15,17 +34,17 @@ function GetInvolved() {
           viewport={{ once: true }}
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-6">
-            {getInvolved.title}
+            {getInvolved.getInvolvedTitle || "Get Involved"}
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-            {getInvolved.description}
+            {getInvolved.getInvolvedDescription || "Join us in making a difference."}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {getInvolved.cards.map((card, index) => (
+          {(getInvolved.cards || []).map((card: any, index: number) => (
             <motion.div
-              key={card.title}
+              key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.1 }}
@@ -36,7 +55,7 @@ function GetInvolved() {
                 {card.title}
               </h3>
               <p className="text-muted-foreground mb-4">{card.description}</p>
-              {card.buttonUrl.startsWith("http") ? (
+              {card.buttonUrl?.startsWith("http") ? (
                 <a
                   href={card.buttonUrl}
                   target="_blank"
@@ -47,7 +66,7 @@ function GetInvolved() {
                 </a>
               ) : (
                 <Link
-                  href={card.buttonUrl}
+                  href={card.buttonUrl || "/"}
                   className="inline-flex items-center justify-center px-4 py-2 border border-input bg-background rounded-md hover:bg-accent hover:text-accent-foreground"
                 >
                   {card.buttonText}

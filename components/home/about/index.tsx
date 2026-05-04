@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, useInView } from "motion/react";
 import Link from "next/link";
@@ -7,12 +8,38 @@ import { useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
-import { Img8 } from "@/constants/img";
-import { homeFeatures } from "@/data/pages/home";
+import { getImageUrl } from "@/lib/sanity";
+
+interface Feature {
+  number: string;
+  title: string;
+  description: string;
+}
+
+async function getHomePageData() {
+  const { getHomePage } = await import("@/lib/sanity/queries");
+  return getHomePage();
+}
 
 function AboutHero() {
+  const [data, setData] = useState<any>(null);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    getHomePageData()
+      .then(setData)
+      .catch(() => setData(null));
+  }, []);
+
+  const features = data?.features || [
+    { number: "01", title: "Education", description: "Building classrooms and providing scholarships for underserved children." },
+    { number: "02", title: "Health", description: "Organizing medical camps and health awareness programs." },
+    { number: "03", title: "Empowerment", description: "Supporting women through skills training and resources." },
+    { number: "04", title: "Community", description: "Engaging local leaders and partners for sustainable impact." },
+  ];
+
+  const aboutImageUrl = getImageUrl(data?.aboutImage);
 
   const bottomAnimation = (index: number) => ({
     initial: { y: 50, opacity: 0 },
@@ -66,20 +93,22 @@ function AboutHero() {
           {...bottomAnimation(1)}
           className="relative w-full h-[200px] sm:h-[300px] md:h-[350px] lg:h-[445px] mb-10 sm:mb-12 md:mb-16 overflow-hidden rounded-[24px]"
         >
-          <Image
-            src={Img8}
-            alt="Gladys Erude Organization"
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover"
-          />
+          {aboutImageUrl && (
+            <Image
+              src={aboutImageUrl}
+              alt="Gladys Erude Organization"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+            />
+          )}
         </motion.div>
 
         <motion.div
           {...bottomAnimation(2)}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"
         >
-          {homeFeatures.map((feature, index) => (
+          {features.map((feature: Feature, index: number) => (
             <motion.div
               key={index}
               {...bottomAnimation(3 + index)}

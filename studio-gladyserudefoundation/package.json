@@ -1,0 +1,32 @@
+{
+  "name": "studio-gladyserudefoundation",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "deploy-graphql": "sanity graphql deploy",
+    "migrate": "npx tsx scripts/migrate.ts"
+  },
+  "dependencies": {
+    "@sanity/client": "^6.0.0",
+    "@sanity/icons": "^3.0.0",
+    "@sanity/ui": "^2.0.0",
+    "@sanity/vision": "^3.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sanity": "^3.99.0",
+    "styled-components": "^6.1.0"
+  },
+  "devDependencies": {
+    "@sanity/eslint-config-studio": "^3.0.1",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/styled-components": "^5",
+    "tsx": "^4.0.0",
+    "typescript": "^5",
+    "vite": "^5.0.0"
+  }
+}

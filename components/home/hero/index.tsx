@@ -14,21 +14,10 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { Img1, Img2, Img3, Img4, GeoTeamAtPrimarySchool, GeoTeamWithPrincipal, GeoOnTheGround, GeoKidsReceiveAid, GeoGroupPhotoBannerBg } from "@/constants/img";
-import { heroSection } from "@/data/pages/home";
-
-const TARGET_BRICKS = heroSection.targetBricks;
+import { getImageUrl } from "@/lib/sanity";
 
 const heroImages = [
-  { src: Img1, alt: "GEO community work" },
-  { src: Img2, alt: "GEO team in action" },
-  { src: Img3, alt: "GEO event" },
-  { src: Img4, alt: "GEO project" },
-  { src: GeoTeamAtPrimarySchool, alt: "GEO team at primary school" },
-  { src: GeoTeamWithPrincipal, alt: "GEO team with principal" },
-  { src: GeoOnTheGround, alt: "GEO on the ground" },
-  { src: GeoKidsReceiveAid, alt: "GEO kids receive aid" },
-  { src: GeoGroupPhotoBannerBg, alt: "GEO group photo" },
+  { src: null, alt: "GEO community work" },
 ];
 
 function AnimatedNumber({ value, inView }: { value: number; inView: boolean }) {
@@ -59,16 +48,27 @@ function AnimatedNumber({ value, inView }: { value: number; inView: boolean }) {
   return <span>{displayValue.toLocaleString()}</span>;
 }
 
+async function getHomePageData() {
+  const { getHomePage, getJiwePage } = await import("@/lib/sanity/queries");
+  const [homePage, jiwePage] = await Promise.all([getHomePage(), getJiwePage()]);
+  return { homePage, jiwePage };
+}
+
 function HeroSection() {
   const ref = useRef(null);
   const [avatarList, setAvatarList] = useState<any>(null);
   const [inView, setInView] = useState(false);
   const [api, setApi] = useState<CarouselApi | undefined>();
   const [current, setCurrent] = useState(0);
-  const [bricksRaised, setBricksRaised] = useState(heroSection.bricksRaised);
+  const [homePageData, setHomePageData] = useState<any>(null);
+  const [jiweData, setJiweData] = useState<any>(null);
+  
+  const bricksRaised = homePageData?.bricksRaised || 0;
+  const targetBricks = homePageData?.targetBricks || 15000;
+  const heroBackgroundImage = homePageData?.heroBackgroundImage;
 
   const progressPercentage = Math.min(
-    (bricksRaised / TARGET_BRICKS) * 100,
+    (bricksRaised / targetBricks) * 100,
     100
   );
 
@@ -111,7 +111,7 @@ function HeroSection() {
         if (res.ok) {
           const data = await res.json();
           if (data.totalBricks > 0) {
-            setBricksRaised(data.totalBricks);
+            setHomePageData((prev: any) => ({ ...prev, bricksRaised: data.totalBricks }));
           }
         }
       } catch (error) {
@@ -120,6 +120,21 @@ function HeroSection() {
     };
 
     fetchDonations();
+  }, []);
+
+  useEffect(() => {
+    const fetchSanityData = async () => {
+      try {
+        const data = await getHomePageData();
+        setHomePageData(data.homePage || { bricksRaised: 0, targetBricks: 15000 });
+        setJiweData(data.jiwePage);
+      } catch (error) {
+        console.error("Error fetching sanity data:", error);
+        setHomePageData({ bricksRaised: 0, targetBricks: 15000 });
+      }
+    };
+
+    fetchSanityData();
   }, []);
 
   useEffect(() => {
@@ -136,6 +151,10 @@ function HeroSection() {
     transition: { duration: 1, delay: 0.8 },
   };
 
+  const displayImages = heroBackgroundImage 
+    ? [{ src: heroBackgroundImage, alt: "GEO community work" }]
+    : heroImages;
+
   return (
     <section ref={ref} className="relative overflow-hidden">
       <Carousel
@@ -148,16 +167,20 @@ function HeroSection() {
         setApi={setApi}
       >
         <CarouselContent>
-          {heroImages.map((image, index) => (
+          {displayImages.map((image, index) => {
+            const imageUrl = getImageUrl(image.src);
+            return (
             <CarouselItem key={index} className="relative w-full h-screen">
               <div className="absolute inset-0">
+                {imageUrl && (
                 <Image
-                  src={image.src}
+                  src={imageUrl}
                   alt={image.alt}
                   fill
                   className="object-cover object-top"
                   priority={index === 0}
                 />
+                )}
                 <div className="absolute inset-0 bg-black/20" />
               </div>
               <div className="relative h-full container pt-28 sm:pt-40 md:pt-52 2xl:pb-20 pb-10 flex items-center">
@@ -209,7 +232,7 @@ function HeroSection() {
                         Bricks Raised
                       </span>
                       <span>
-                        {TARGET_BRICKS.toLocaleString()} Targeted Bricks
+                        {targetBricks.toLocaleString()} Targeted Bricks
                       </span>
                     </div>
                   </motion.div>
@@ -232,10 +255,11 @@ function HeroSection() {
                 </div>
               </div>
             </CarouselItem>
-          ))}
+            );
+          })}
         </CarouselContent>
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-          {heroImages.map((_, index) => (
+          {displayImages.map((_, index) => (
             <button
               key={index}
               onClick={() => api?.scrollTo(index)}

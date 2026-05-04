@@ -1,8 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Header from "./header";
 import TeamCard from "./team-card";
-import { teamData } from "@/data/organization/team";
 import {
   Carousel,
   CarouselContent,
@@ -12,9 +12,10 @@ import {
 } from "@/components/ui/carousel";
 
 export interface TeamMember {
+  _id?: string;
   name: string;
   title: string;
-  image: string;
+  image?: string | any;
   linkedin?: string;
   twitter?: string;
   bio?: string;
@@ -32,8 +33,58 @@ interface TeamProps {
   data?: TeamData;
 }
 
+async function getTeamData() {
+  const { getTeamMembers, getBoardMembers } = await import("@/lib/sanity/queries");
+  const [teamMembers, boardMembers] = await Promise.all([getTeamMembers(), getBoardMembers()]);
+  
+  const allMembers = [
+    ...(teamMembers || []).map((m: any) => ({
+      name: m.name,
+      title: m.title,
+      image: m.imageUrl,
+      linkedin: m.linkedin,
+      twitter: m.twitter,
+      bio: m.bio,
+      type: 'team'
+    })),
+    ...(boardMembers || []).map((m: any) => ({
+      name: m.name,
+      title: m.title,
+      image: m.imageUrl,
+      bio: m.bio,
+      type: 'board'
+    }))
+  ];
+  
+  return {
+    header: { label: "TEAM", title: "The Hearts Behind The Mission" },
+    members: allMembers
+  };
+}
+
 function Team({ data }: TeamProps) {
-  const content = data || teamData;
+  const [teamData, setTeamData] = useState<TeamData | null>(null);
+  
+  useEffect(() => {
+    if (data) {
+      setTeamData(data);
+    } else {
+      getTeamData()
+        .then(setTeamData)
+        .catch(() => {
+          setTeamData({
+            header: { label: "TEAM", title: "The Hearts Behind The Mission" },
+            members: []
+          });
+        });
+    }
+  }, [data]);
+
+  const content = teamData || { header: { label: "TEAM", title: "The Hearts Behind The Mission" }, members: [] };
+
+  if (!content.members || content.members.length === 0) {
+    return null;
+  }
 
   return (
     <section className="w-full bg-background">
@@ -55,7 +106,7 @@ function Team({ data }: TeamProps) {
             <CarouselContent className="-ml-2 md:-ml-4">
               {content.members.map((member, index) => (
                 <CarouselItem
-                  key={member.name}
+                  key={member._id || `member-${index}`}
                   className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
                 >
                   <TeamCard member={member} animationIndex={index} />

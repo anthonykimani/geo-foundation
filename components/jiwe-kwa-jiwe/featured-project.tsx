@@ -3,16 +3,16 @@
 import Image from "next/image";
 import { motion, useInView } from "motion/react";
 import { useRef, useEffect, useState } from "react";
-
 import { Button } from "@/components/ui/button";
 import { HeartIcon } from "@phosphor-icons/react";
+import { getImageUrl } from "@/lib/sanity";
 
 interface Project {
   title: string;
   subtitle: string;
   bricksRaised: number;
   targetBricks: number;
-  image: string;
+  image?: any;
 }
 
 interface FeaturedProjectProps {
@@ -69,16 +69,22 @@ function FeaturedProject({ project, animationIndex = 0 }: FeaturedProjectProps) 
     100
   );
 
+  const imageSrc = getImageUrl(project.image);
+
   return (
     <motion.div ref={ref} {...bottomAnimation} className="mb-10 sm:mb-12 md:mb-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-0">
         <div className="relative w-full h-[300px] sm:h-[350px] md:h-[445px] lg:h-[445px] rounded-[24px] overflow-hidden">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-cover"
-          />
+          {imageSrc ? (
+            <Image
+              src={imageSrc}
+              alt={project.title}
+              fill
+              className="object-cover"
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-200" />
+          )}
         </div>
 
         <div className="bg-[#f6f6f6] dark:bg-white/5 p-6 sm:p-8 md:p-10 lg:p-10 rounded-[24px] lg:rounded-none lg:rounded-r-[24px] flex flex-col justify-center">

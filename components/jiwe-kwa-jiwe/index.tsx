@@ -1,31 +1,23 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Header from "./header";
 import FeaturedProject from "./featured-project";
 import NewsCard from "./news-card";
-import {
-  Img1,
-  Img12,
-  Img2,
-  Img3,
-  Img4,
-  Img13,
-  Img14
-} from "@/constants/img";
 
 export interface Project {
   title: string;
   subtitle: string;
   bricksRaised: number;
   targetBricks: number;
-  image: string;
+  image?: any;
 }
 
 export interface NewsItem {
   label: string;
   title: string;
   date: string;
-  image: string;
+  image?: any;
 }
 
 export interface JiweKwaJiweData {
@@ -41,42 +33,37 @@ interface JiweKwaJiweProps {
   data?: JiweKwaJiweData;
 }
 
-const defaultData: JiweKwaJiweData = {
-  header: {
-    title: "Jiwe Kwa Jiwe",
-    subtitle: "Track the classroom build in real time",
-  },
-  featuredProject: {
-    title: "Kapsagawat Primary School Construction",
-    subtitle: "Clear construction targets and progress reports.",
-    bricksRaised: 400000,
-    targetBricks: 660000,
-    image: Img12.src,
-  },
-  news: [
-    {
-      label: "News name here",
-      title: "Annual 5km Run",
-      date: "Nov 28, 2026",
-      image: Img14.src,
-    },
-    {
-      label: "News name here",
-      title: "Here Hasbah Kenya Iimited donated 32 cartons of sanitary towels for school girls of age, to be distributed during the 4th annual Gem run held at Tigoi primary school",
-      date: "April 28, 2026",
-      image: Img13.src,
-    },
-    {
-      label: "News name here",
-      title: "GEO Wins Charity Award 2026",
-      date: "Jan 28, 2026",
-      image: Img4.src,
-    },
-  ],
-};
+async function getJiweKwaJiweData() {
+  const { getJiwePage } = await import("@/lib/sanity/queries");
+  return getJiwePage();
+}
 
 function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
-  const content = data || defaultData;
+  const [jiweData, setJiweData] = useState<any>(null);
+
+  useEffect(() => {
+    if (data) {
+      setJiweData(data);
+    } else {
+      getJiweKwaJiweData()
+        .then(setJiweData)
+        .catch(() => setJiweData(null));
+    }
+  }, [data]);
+
+  const content = jiweData || {
+    header: {
+      title: "Jiwe Kwa Jiwe",
+      subtitle: "Track the classroom build in real time",
+    },
+    featuredProject: {
+      title: "Kapsagawat Primary School Construction",
+      subtitle: "Clear construction targets and progress reports.",
+      bricksRaised: 400000,
+      targetBricks: 660000,
+    },
+    news: [],
+  };
 
   return (
     <section className="w-full bg-background">
@@ -93,8 +80,8 @@ function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {content.news.map((newsItem, index) => (
-            <NewsCard key={index} news={newsItem} animationIndex={2 + index} />
+          {(content.news || []).map((newsItem: any, index: number) => (
+            <NewsCard key={newsItem._id || index} news={newsItem} animationIndex={2 + index} />
           ))}
         </div>
       </div>

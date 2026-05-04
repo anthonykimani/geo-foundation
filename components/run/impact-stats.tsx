@@ -1,9 +1,29 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { impactStats } from "@/data/pages/run";
+
+async function getRunPageData() {
+  const { getRunPage } = await import("@/lib/sanity/queries");
+  return getRunPage();
+}
 
 function ImpactStats() {
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    getRunPageData()
+      .then(setData)
+      .catch(() => setData(null));
+  }, []);
+
+  const impactStats = data || {
+    impactStatsTitle: "Our Impact",
+    impactStatsSubtitle: "See how your support makes a difference.",
+    years: [],
+    goalDescription: "Help us reach our goal."
+  };
+
   return (
     <section className="py-12 md:py-16 lg:py-20">
       <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
@@ -15,17 +35,17 @@ function ImpactStats() {
           className="text-center mb-12"
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-4">
-            {impactStats.title}
+            {impactStats.impactStatsTitle || "Our Impact"}
           </h2>
           <p className="text-lg text-muted-foreground">
-            {impactStats.subtitle}
+            {impactStats.impactStatsSubtitle || "See how your support makes a difference."}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-          {impactStats.years.map((yearData, index) => (
+          {(impactStats.years || []).map((yearData: any, index: number) => (
             <motion.div
-              key={yearData.year}
+              key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.1 }}
@@ -66,7 +86,7 @@ function ImpactStats() {
           className="text-center"
         >
           <p className="text-lg text-muted-foreground">
-            {impactStats.goalDescription}
+            {impactStats.goalDescription || "Help us reach our goal."}
           </p>
         </motion.div>
       </div>

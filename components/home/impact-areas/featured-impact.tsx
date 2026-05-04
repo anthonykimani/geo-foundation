@@ -3,12 +3,13 @@
 import Image from "next/image";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
+import { getImageUrl } from "@/lib/sanity";
 
 interface FeaturedImpactProps {
   label: string;
   title: string;
   description: string;
-  image: string;
+  image?: any;
   animationIndex?: number;
 }
 
@@ -28,18 +29,24 @@ function FeaturedImpact({
     transition: { duration: 0.8, delay: 0.2 + animationIndex * 0.2 },
   };
 
+  const imageSrc = getImageUrl(image);
+
   return (
     <motion.div
       ref={ref}
       {...bottomAnimation}
       className="relative w-full h-[350px] sm:h-[400px] md:h-[445px] rounded-[24px] overflow-hidden mb-10 sm:mb-12 md:mb-16"
     >
-      <Image
-        src={image}
-        alt={title}
-        fill
-        className="object-cover object-top"
-      />
+      {imageSrc ? (
+        <Image
+          src={imageSrc}
+          alt={title}
+          fill
+          className="object-cover object-top"
+        />
+      ) : (
+        <div className="w-full h-full bg-gray-200" />
+      )}
 
       <div className="absolute inset-0 bg-black/30 p-6 sm:p-8 md:p-10 flex flex-col justify-end">
         <div className="max-w-[805px]">
