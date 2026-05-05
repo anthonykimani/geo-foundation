@@ -7,6 +7,7 @@ import { useRef, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import DonationModal from "@/components/shared/donation-modal";
 import { HeartIcon } from "@phosphor-icons/react";
+import { getImageUrl } from "@/lib/sanity";
 
 interface Project {
   title: string;
@@ -71,16 +72,20 @@ function FeaturedProject({ project, animationIndex = 0 }: FeaturedProjectProps) 
     100
   );
 
+  const imageSrc = getImageUrl(project.image);
+
   return (
     <motion.div ref={ref} {...bottomAnimation} className="mb-10 sm:mb-12 md:mb-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-0">
         <div className="relative w-full h-[380px] md:h-[400px] lg:h-[680px] rounded-[24px] overflow-hidden">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-contain"
-          />
+          {imageSrc && (
+            <Image
+              src={imageSrc}
+              alt={project.title}
+              fill
+              className="object-contain"
+            />
+          )}
         </div>
 
         <div className="bg-[#f6f6f6] dark:bg-white/5 p-6 sm:p-8 md:p-10 lg:p-10 rounded-r-[24px] flex flex-col justify-between">

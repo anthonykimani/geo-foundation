@@ -9,20 +9,20 @@ import BoardMemberCard from "@/components/shared/board-member-card";
 import { getImageUrl } from "@/lib/sanity";
 
 async function getPageData() {
-  const { getAboutPage, getBoardMembers, getValues, getContactPage } = await import("@/lib/sanity/queries");
-  const [aboutPage, boardMembers, values, contactPage] = await Promise.all([
+  const { getAboutPage, getTeamMembers, getValues, getContactPage } = await import("@/lib/sanity/queries");
+  const [aboutPage, teamMembers, values, contactPage] = await Promise.all([
     getAboutPage(),
-    getBoardMembers(),
+    getTeamMembers(),
     getValues(),
     getContactPage()
   ]);
-  return { aboutPage, boardMembers, values, contactPage };
+  return { aboutPage, teamMembers, values, contactPage };
 }
 
 export default function AboutPage() {
   const [data, setData] = useState<{
     aboutPage: any;
-    boardMembers: any[];
+    teamMembers: any[];
     values: any[];
     contactPage: any;
   } | null>(null);
@@ -41,7 +41,7 @@ export default function AboutPage() {
     );
   }
 
-  const { aboutPage, boardMembers, values, contactPage } = data;
+  const { aboutPage, teamMembers, values, contactPage } = data;
   const organizationName = aboutPage?.organizationName || "THE GLADYS ERUDE ORGANIZATION";
   const organizationSubtitle = aboutPage?.organizationSubtitle || "Empowering communities through education, healthcare, and sustainable development across Kenya.";
   const whyWeAreInspiredTitle = aboutPage?.whyWeAreInspiredTitle || "Why We Are Inspired";
@@ -224,14 +224,14 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-6">
-                Our Board
+                Our Team
               </h2>
               <p className="text-muted-foreground mb-6">
-                Meet our dedicated board members who guide GEO&apos;s mission.
+                Meet our dedicated team members who guide GEO&apos;s mission.
               </p>
-              {boardMembers && boardMembers.length > 0 ? (
+              {teamMembers && teamMembers.length > 0 ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {boardMembers.slice(0, 8).map((member: any, index: number) => (
+                  {teamMembers.slice(0, 8).map((member: any, index: number) => (
                     <BoardMemberCard
                       key={member._id || index}
                       name={member.name}
