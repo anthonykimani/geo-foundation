@@ -69,9 +69,14 @@ function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
     }
   }, [data]);
 
-  const header = jiweData?.header || null;
+  const header = {
+    title: jiweData?.headerTitle || jiweData?.header?.title || "",
+    subtitle: jiweData?.headerSubtitle || jiweData?.header?.subtitle || "",
+  };
   const featuredProject = {
-    ...(jiweData?.featuredProject || {}),
+    title: jiweData?.featuredProjectTitle || jiweData?.featuredProject?.title || "",
+    subtitle: jiweData?.featuredProjectSubtitle || jiweData?.featuredProject?.subtitle || "",
+    image: jiweData?.featuredProjectImage || jiweData?.featuredProject?.image,
     bricksRaised: bricksRaised || jiweData?.bricksRaised || 0,
     targetBricks: jiweData?.targetBricks || 12000,
   };
