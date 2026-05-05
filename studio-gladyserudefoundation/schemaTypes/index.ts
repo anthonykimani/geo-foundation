@@ -1,60 +1,52 @@
 // ============================================================
-// GLOBAL SETTINGS - Foundation for the entire site
+// SHARED - Reusable across multiple pages
 // ============================================================
-import siteSettings from './siteSettings'
-import stat from './stat'
-import socialLink from './socialLink'
+import news from './shared/news'
+import project from './shared/project'
+import testimonial from './shared/testimonial'
+import faq from './shared/faq'
+import impactArea from './shared/impactArea'
+import donationInfo from './shared/donationInfo'
+import involvementOption from './shared/involvementOption'
+import value from './shared/value'
+import stat from './shared/stat'
+
+// ============================================================
+// SITE - Global settings
+// ============================================================
+import siteSettings from './site/siteSettings'
+import socialLink from './site/socialLink'
 
 // ============================================================
 // TEAM - Organization people
 // ============================================================
-import teamMember from './teamMember'
-import boardMember from './boardMember'
-import value from './value'
+import teamMember from './team/teamMember'
+import boardMember from './team/boardMember'
 
 // ============================================================
-// PAGES - Website pages
+// PAGES - Website page configurations
 // ============================================================
-import homePage from './homePage'
-import aboutPage from './aboutPage'
-import runPage from './runPage'
-import impactPage from './impactPage'
-import jiwePage from './jiwePage'
-import getInvolvedPage from './getInvolvedPage'
-import contactPage from './contactPage'
-import galleryPage from './galleryPage'
-
-// ============================================================
-// CONTENT - News and Projects
-// ============================================================
-import news from './news'
-import project from './project'
-
-// ============================================================
-// COMPONENTS - Reusable UI components
-// ============================================================
-import faq from './faq'
-import impactArea from './impactArea'
-import testimonial from './testimonial'
-
-// ============================================================
-// FORMS & DONATIONS - Engagement components
-// ============================================================
-import involvementOption from './involvementOption'
-import donationInfo from './donationInfo'
+import homePage from './home/homePage'
+import aboutPage from './pages/aboutPage'
+import runPage from './pages/runPage'
+import impactPage from './pages/impactPage'
+import jiwePage from './pages/jiwePage'
+import getInvolvedPage from './pages/getInvolvedPage'
+import contactPage from './pages/contactPage'
+import galleryPage from './pages/galleryPage'
 
 export const schemaTypes = [
-  // Global Settings
+  // Site Settings
   siteSettings,
-  stat,
   socialLink,
+  stat,
 
   // Team
   teamMember,
   boardMember,
   value,
 
-  // Pages (top to bottom)
+  // Pages
   homePage,
   aboutPage,
   runPage,
@@ -64,16 +56,12 @@ export const schemaTypes = [
   contactPage,
   galleryPage,
 
-  // Content
+  // Shared/Components
   news,
   project,
-
-  // Components
   faq,
   impactArea,
   testimonial,
-
-  // Forms & Donations
   involvementOption,
   donationInfo,
 ]
