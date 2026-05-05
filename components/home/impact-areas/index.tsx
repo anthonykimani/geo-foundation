@@ -95,7 +95,7 @@ function ImpactAreas({ data }: ImpactAreasProps) {
               key={impact._id || index}
               label={impact.label || ""}
               title={impact.title || ""}
-              image={impact.image || null}
+              image={impact.imageUrl || null}
               animationIndex={2 + index}
             />
           ))}

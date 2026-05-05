@@ -22,7 +22,7 @@ export default {
         {name: 'label', title: 'Label', type: 'string'},
         {name: 'title', title: 'Title', type: 'string'},
         {name: 'description', title: 'Description', type: 'string'},
-        {name: 'imageUrl', title: 'Image', type: 'image'},
+        {name: 'imageUrl', title: 'Impact Image', type: 'image'},
       ]}],
     },
   ],

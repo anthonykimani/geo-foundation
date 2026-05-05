@@ -23,6 +23,8 @@ export default {
     {name: 'heroSubtitle', title: 'Hero Subtitle', type: 'string'},
     {name: 'heroDescription', title: 'Hero Description', type: 'text'},
     {name: 'heroImage', title: 'Hero Image', type: 'image', options: {hotspot: true}},
+    {name: 'eventImage', title: 'Event Image', type: 'image', options: {hotspot: true}},
+    {name: 'registrationImage', title: 'Registration Image', type: 'image', options: {hotspot: true}},
     {name: 'eventDetailsTitle', title: 'Event Details Title', type: 'string'},
     {
       name: 'eventDetailsDescription',
