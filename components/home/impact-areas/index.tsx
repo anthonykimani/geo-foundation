@@ -45,7 +45,19 @@ function ImpactAreas({ data }: ImpactAreasProps) {
     }
   }, [data]);
 
-  const content = impactData || {
+  const content = impactData ? {
+    header: {
+      title: impactData.headerTitle || "Our Impact",
+      subtitle: impactData.headerSubtitle || "See how we're making a difference in communities across Kenya.",
+    },
+    featuredImpact: {
+      label: impactData.featuredLabel || "FEATURED",
+      title: impactData.featuredTitle || "",
+      description: impactData.featuredDescription || "",
+      image: impactData.featuredImageUrl || null,
+    },
+    impacts: impactData.impacts || [],
+  } : {
     header: {
       title: "Our Impact",
       subtitle: "See how we're making a difference in communities across Kenya."
@@ -83,7 +95,7 @@ function ImpactAreas({ data }: ImpactAreasProps) {
               key={impact._id || index}
               label={impact.label || ""}
               title={impact.title || ""}
-              image={impact.image}
+              image={impact.image || null}
               animationIndex={2 + index}
             />
           ))}
