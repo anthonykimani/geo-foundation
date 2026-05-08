@@ -83,7 +83,7 @@ function FeaturedProject({ project, animationIndex = 0 }: FeaturedProjectProps) 
               src={imageSrc}
               alt={project.title}
               fill
-              className="object-contain"
+              className="object-cover"
             />
           )}
         </div>
