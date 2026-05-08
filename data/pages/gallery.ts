@@ -1,8 +1,29 @@
-import { Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8, GeoTeamAtPrimarySchool, GeoTeamWithPrincipal, GeoRepaintsSchool, GeoKidsReceiveAid, VictorAndGeoKids, GeoDonations, GeoTshirtPrizes } from "@/constants/img";
+import {
+  Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8, Img9, Img10, Img11, Img12, Img13, Img14, Img15, Img16, Img17, Img18,
+  GeoTeamAtPrimarySchool, GeoTeamWithPrincipal, GeoRepaintsSchool, GeoKidsReceiveAid, VictorAndGeoKids, GeoDonations, GeoTshirtPrizes,
+  GeoTeamWithSchoolTeachers,
+  GeoTeamOnTheGround1, GeoTeamOnTheGround2, GeoTeamOnTheGround3, GeoTeamOnTheGround4, GeoTeamOnTheGround5,
+  GeoTeamOnTheGround6, GeoTeamOnTheGround7, GeoTeamOnTheGround8, GeoTeamOnTheGround9,
+  GeoTeamPosing1, GeoTeamPosing2, GeoTeamPosing3, GeoTeamPosing4,
+  GeoGroupPhotoVillaBg1, GeoGroupPhotoVillaBg2, GeoGroupPhotoVillaBg3, GeoGroupPhotoVillaBg4, GeoGroupPhotoVillaBg5,
+  GeoGroupPhoto1, GeoGroupPhoto2, GeoGroupPhoto3,
+  ThreeGeoTeam, ThreeGeoTeamMembers,
+  GeoSelfie, GeoMenPhoto, GeoMenGroupPhoto,
+  GeoRepaintsSchool2, GeoOnTheGround, GeoGroupPhotoBannerBg,
+} from "@/constants/img";
 
 export const galleryImages = [
-  Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8,
-  GeoTeamAtPrimarySchool, GeoTeamWithPrincipal, GeoRepaintsSchool, GeoKidsReceiveAid, VictorAndGeoKids, GeoDonations, GeoTshirtPrizes
+  Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8, Img9, Img10, Img11, Img12, Img13, Img14, Img15, Img16, Img17, Img18,
+  GeoTeamAtPrimarySchool, GeoTeamWithPrincipal, GeoRepaintsSchool, GeoKidsReceiveAid, VictorAndGeoKids, GeoDonations, GeoTshirtPrizes,
+  GeoTeamWithSchoolTeachers,
+  GeoTeamOnTheGround1, GeoTeamOnTheGround2, GeoTeamOnTheGround3, GeoTeamOnTheGround4, GeoTeamOnTheGround5,
+  GeoTeamOnTheGround6, GeoTeamOnTheGround7, GeoTeamOnTheGround8, GeoTeamOnTheGround9,
+  GeoTeamPosing1, GeoTeamPosing2, GeoTeamPosing3, GeoTeamPosing4,
+  GeoGroupPhotoVillaBg1, GeoGroupPhotoVillaBg2, GeoGroupPhotoVillaBg3, GeoGroupPhotoVillaBg4, GeoGroupPhotoVillaBg5,
+  GeoGroupPhoto1, GeoGroupPhoto2, GeoGroupPhoto3,
+  ThreeGeoTeam, ThreeGeoTeamMembers,
+  GeoSelfie, GeoMenPhoto, GeoMenGroupPhoto,
+  GeoRepaintsSchool2, GeoOnTheGround, GeoGroupPhotoBannerBg,
 ];
 
 export interface NewsItem {

@@ -11,8 +11,12 @@ import { HeartIcon } from "@phosphor-icons/react";
 import { urlFor } from "@/lib/sanity";
 
 async function getGetInvolvedPageData() {
-  const { getGetInvolvedPage } = await import("@/lib/sanity/queries");
-  return getGetInvolvedPage();
+  const { getGetInvolvedPage, getInvolvementOptions } = await import("@/lib/sanity/queries");
+  const [pageData, options] = await Promise.all([
+    getGetInvolvedPage(),
+    getInvolvementOptions(),
+  ]);
+  return { ...pageData, options };
 }
 
 function GetInvolvedPage() {
@@ -57,10 +61,10 @@ function GetInvolvedPage() {
       <section className="py-12 md:py-16 lg:py-20">
         <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {(data.cards || []).map((card: any, index: number) => (
+            {(data.options || data.cards || []).map((card: any, index: number) => (
               <InvolvementCard
                 key={index}
-                image={card.image}
+                image={card.imageUrl || card.image}
                 title={card.title}
                 description={card.description}
                 buttonText={card.buttonText}
@@ -91,7 +95,7 @@ function GetInvolvedPage() {
           </p>
           <button 
             onClick={() => setDonateOpen(true)}
-            className="bg-primary text-white text-lg px-8 py-5 rounded-full hover:bg-primary/90 transition-colors flex items-center gap-2"
+            className="bg-primary text-white text-lg px-8 py-5 rounded-full hover:bg-primary/90 transition-colors inline-flex items-center gap-2 mx-auto"
           >
             <HeartIcon size={24} weight="fill" className="text-white" />
             {data.ctaButtonText || "Donate Now"}

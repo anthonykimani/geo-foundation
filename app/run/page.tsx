@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import Image from "next/image";
 import Hero from "@/components/run/hero";
 import EventHighlights from "@/components/run/event-highlights";
 import EventInfo from "@/components/run/event-info";
@@ -10,7 +11,6 @@ import GetInvolved from "@/components/run/get-involved";
 import AboutRun from "@/components/run/about-run";
 import MediaContacts from "@/components/run/media-contacts";
 import RegistrationForm from "@/components/run/registration-form";
-import RouteMap from "@/components/run/route-map";
 
 function RunPage() {
   return (
@@ -30,7 +30,14 @@ function RunPage() {
               viewport={{ once: true }}
               className="w-full"
             >
-              <RouteMap className="h-[350px] md:h-[450px] lg:h-[500px]" />
+              <div className="relative w-full h-[350px] md:h-[450px] lg:h-[500px] rounded-2xl overflow-hidden">
+                <Image
+                  src="/img/runkeeper-track.jpg"
+                  alt="5KM Run Route Map"
+                  fill
+                  className="object-cover"
+                />
+              </div>
             </motion.div>
 
             <motion.div

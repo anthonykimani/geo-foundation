@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
+import GalleryGrid from "@/components/gallery/gallery-grid";
 import { getImageUrl } from "@/lib/sanity";
+import { galleryImages } from "@/data/pages/gallery";
 
 async function getPageData() {
   const { getGalleryPage, getNews } = await import("@/lib/sanity/queries");
@@ -95,6 +97,27 @@ export default function GalleryPage() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      <section className="py-12 md:py-16 lg:py-20 bg-muted/30">
+        <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal text-foreground mb-4">
+              Photo Gallery
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Browse through moments captured from our events, projects, and community engagements.
+            </p>
+          </motion.div>
+
+          <GalleryGrid images={galleryImages} />
         </div>
       </section>
     </main>
