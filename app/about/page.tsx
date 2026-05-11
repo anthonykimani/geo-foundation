@@ -9,20 +9,20 @@ import BoardMemberCard from "@/components/shared/board-member-card";
 import { getImageUrl } from "@/lib/sanity";
 
 async function getPageData() {
-  const { getAboutPage, getTeamMembers, getValues, getContactPage } = await import("@/lib/sanity/queries");
-  const [aboutPage, teamMembers, values, contactPage] = await Promise.all([
+  const { getAboutPage, getBoardMembers, getValues, getContactPage } = await import("@/lib/sanity/queries");
+  const [aboutPage, boardMembers, values, contactPage] = await Promise.all([
     getAboutPage(),
-    getTeamMembers(),
+    getBoardMembers(),
     getValues(),
     getContactPage()
   ]);
-  return { aboutPage, teamMembers, values, contactPage };
+  return { aboutPage, boardMembers, values, contactPage };
 }
 
 export default function AboutPage() {
   const [data, setData] = useState<{
     aboutPage: any;
-    teamMembers: any[];
+    boardMembers: any[];
     values: any[];
     contactPage: any;
   } | null>(null);
@@ -41,7 +41,7 @@ export default function AboutPage() {
     );
   }
 
-  const { aboutPage, teamMembers, values, contactPage } = data;
+  const { aboutPage, boardMembers, values, contactPage } = data;
   const organizationName = aboutPage?.organizationName || "THE GLADYS ERUDE ORGANIZATION";
   const organizationSubtitle = aboutPage?.organizationSubtitle || "Empowering communities through education, healthcare, and sustainable development across Kenya.";
   const whyWeAreInspiredTitle = aboutPage?.whyWeAreInspiredTitle || "Why We Are Inspired";
@@ -229,9 +229,9 @@ export default function AboutPage() {
               <p className="text-muted-foreground mb-6">
                 Meet our dedicated team members who guide GEO&apos;s mission.
               </p>
-              {teamMembers && teamMembers.length > 0 ? (
+              {boardMembers && boardMembers.length > 0 ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {teamMembers.slice(0, 8).map((member: any, index: number) => (
+                  {boardMembers.slice(0, 8).map((member: any, index: number) => (
                     <BoardMemberCard
                       key={member._id || index}
                       name={member.name}
