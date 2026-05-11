@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { getImageUrl } from "@/lib/sanity";
@@ -30,11 +31,12 @@ function ImpactCard({
   const imageSrc = getImageUrl(image);
 
   return (
-    <motion.div
-      ref={ref}
-      {...bottomAnimation}
-      className="relative w-full h-[300px] sm:h-[350px] md:h-[445px] rounded-[24px] overflow-hidden"
-    >
+    <Link href="/impact">
+      <motion.div
+        ref={ref}
+        {...bottomAnimation}
+        className="relative w-full h-[300px] sm:h-[350px] md:h-[445px] rounded-[24px] overflow-hidden cursor-pointer"
+      >
       {imageSrc ? (
         <Image
           src={imageSrc}
@@ -55,7 +57,8 @@ function ImpactCard({
           {title}
         </h3>
       </div>
-    </motion.div>
+      </motion.div>
+    </Link>
   );
 }
 

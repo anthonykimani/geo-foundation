@@ -70,7 +70,7 @@ function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
   }, [data]);
 
   const header = {
-    title: jiweData?.headerTitle || jiweData?.header?.title || "",
+    title: jiweData?.headerTitle || jiweData?.header?.title || "Jiwe Kwa Jiwe",
     subtitle: jiweData?.headerSubtitle || jiweData?.header?.subtitle || "",
   };
   const featuredProject = {

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "motion/react";
 import { useRef } from "react";
 import { useInView } from "motion/react";
@@ -31,11 +32,12 @@ function NewsCard({ news, animationIndex = 0 }: NewsCardProps) {
   const imageSrc = getImageUrl(news.image);
 
   return (
-    <motion.div
-      ref={ref}
-      {...bottomAnimation}
-      className="bg-[#f6f6f6] dark:bg-white/5 rounded-[24px] overflow-hidden"
-    >
+    <Link href="/gallery">
+      <motion.div
+        ref={ref}
+        {...bottomAnimation}
+        className="bg-[#f6f6f6] dark:bg-white/5 rounded-[24px] overflow-hidden cursor-pointer hover:shadow-md transition-shadow"
+      >
       <div className="relative w-full h-[200px] sm:h-[250px]">
         {imageSrc ? (
           <Image
@@ -56,7 +58,8 @@ function NewsCard({ news, animationIndex = 0 }: NewsCardProps) {
         </h3>
         <p className="text-sm sm:text-base text-muted-foreground">{news.date}</p>
       </div>
-    </motion.div>
+      </motion.div>
+    </Link>
   );
 }
 

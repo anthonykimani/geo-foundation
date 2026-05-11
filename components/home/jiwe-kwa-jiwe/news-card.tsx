@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "motion/react";
 import { useRef } from "react";
 import { useInView } from "motion/react";
@@ -31,33 +32,33 @@ function NewsCard({ news, animationIndex = 0 }: NewsCardProps) {
   const imageSrc = getImageUrl(news.image);
 
   return (
-    <motion.div
-      ref={ref}
-      {...bottomAnimation}
-      className="bg-[#f6f6f6] dark:bg-white/5 rounded-[24px] overflow-hidden"
-    >
-      <div className="relative w-full h-[200px] sm:h-[250px]">
-        {imageSrc ? (
-          <Image
-            src={imageSrc}
-            alt={news.title}
-            fill
-            className="object-cover"
-          />
-        ) : (
-          <div className="w-full h-full bg-gray-200" />
-        )}
-      </div>
+    <Link href="/gallery">
+      <motion.div
+        ref={ref}
+        {...bottomAnimation}
+        className="bg-[#f6f6f6] dark:bg-white/5 rounded-[24px] overflow-hidden cursor-pointer hover:shadow-md transition-shadow"
+      >
+        <div className="relative w-full h-[200px] sm:h-[250px]">
+          {imageSrc ? (
+            <Image
+              src={imageSrc}
+              alt={news.title}
+              fill
+              className="object-cover"
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-200" />
+          )}
+        </div>
 
-      <div className="p-4 sm:p-6 space-y-3">
-
-        <h3 className="text-xl sm:text-2xl font-normal text-foreground">
-          {news.title}
-        </h3>
-
-        <p className="text-sm sm:text-base text-muted-foreground">{news.date}</p>
-      </div>
-    </motion.div>
+        <div className="p-4 sm:p-6 space-y-3">
+          <h3 className="text-xl sm:text-2xl font-normal text-foreground">
+            {news.title}
+          </h3>
+          <p className="text-sm sm:text-base text-muted-foreground">{news.date}</p>
+        </div>
+      </motion.div>
+    </Link>
   );
 }
 
