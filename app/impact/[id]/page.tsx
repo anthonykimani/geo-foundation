@@ -1,213 +1,98 @@
-"use client";
-
-import { useParams } from "next/navigation";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { motion } from "motion/react";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import ProjectDetails from "@/components/impact/project-details";
-import ProjectProgress from "@/components/impact/project-progress";
-import ProjectCard from "@/components/impact/project-card";
-import DonationModal from "@/components/shared/donation-modal";
-import { HeartIcon } from "@phosphor-icons/react";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { getProjects, getImpactAreas } from "@/lib/sanity/queries";
 import { getImageUrl } from "@/lib/sanity";
+import ImpactDetailClient from "./ImpactDetailClient";
 
-async function getProjectsData() {
-  const { getProjects, getImpactAreas } = await import("@/lib/sanity/queries");
-  const [projects, impactAreas] = await Promise.all([getProjects(), getImpactAreas()]);
-  return { projects, impactAreas };
+type Props = {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const [projects, impactAreas] = await Promise.all([
+    getProjects(),
+    getImpactAreas(),
+  ]);
+
+  const project = projects.find(
+    (p: any) => p._id === id || p.id?.toString() === id
+  );
+  const impactItem = impactAreas?.impacts?.find(
+    (item: any) => item._key === id
+  );
+
+  const title = project?.title || impactItem?.title || "";
+  const description =
+    project?.description || impactItem?.description || "";
+  const imageUrl = project?.imageUrl
+    ? getImageUrl(project.imageUrl)
+    : impactItem?.imageUrl
+      ? getImageUrl(impactItem.imageUrl)
+      : null;
+
+  if (!title) {
+    return { title: "Not Found" };
+  }
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      ...(imageUrl && {
+        images: [{ url: imageUrl, width: 1200, height: 630 }],
+      }),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      ...(imageUrl && { images: [imageUrl] }),
+    },
+  };
 }
 
-function ProjectPage() {
-  const params = useParams();
-  const id = params.id as string;
-  const [data, setData] = useState<{ projects: any[]; impactAreas: any } | null>(null);
-  const [donateOpen, setDonateOpen] = useState(false);
+export default async function Page({ params }: Props) {
+  const { id } = await params;
+  const [projects, impactAreas] = await Promise.all([
+    getProjects(),
+    getImpactAreas(),
+  ]);
 
-  useEffect(() => {
-    getProjectsData()
-      .then(setData)
-      .catch(() => setData({ projects: [], impactAreas: null }));
-  }, []);
-
-  const projects = data?.projects || [];
-  const impactAreas = data?.impactAreas;
-
-  const project = projects.find((p) => p._id === id || p.id?.toString() === id);
-  const impactItem = impactAreas?.impacts?.find((item: any) => item._key === id);
+  const project = projects.find(
+    (p: any) => p._id === id || p.id?.toString() === id
+  );
+  const impactItem = impactAreas?.impacts?.find(
+    (item: any) => item._key === id
+  );
 
   if (!project && !impactItem) {
-    return (
-      <main className="min-h-screen bg-background pt-20">
-        <div className="container px-4 py-12 text-center">
-          <p className="text-muted-foreground">Project not found.</p>
-        </div>
-      </main>
-    );
+    notFound();
   }
 
-  if (impactItem && !project) {
-    const impactImageUrl = getImageUrl(impactItem.imageUrl);
+  const projectImageUrl = project?.imageUrl
+    ? getImageUrl(project.imageUrl)
+    : null;
+  const impactImageUrl = impactItem?.imageUrl
+    ? getImageUrl(impactItem.imageUrl)
+    : null;
 
-    return (
-      <main className="min-h-screen bg-background pt-20">
-        <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
-        <section className="py-12 md:py-16 lg:py-20">
-          <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 lg:items-stretch">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="relative w-full h-[300px] md:h-[400px] lg:h-full rounded-2xl overflow-hidden"
-              >
-                {impactImageUrl ? (
-                  <Image
-                    src={impactImageUrl}
-                    alt={impactItem.title}
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gray-200" />
-                )}
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="flex flex-col justify-between"
-              >
-                <div>
-                  <span className="inline-block px-3 py-1.5 bg-primary text-white text-xs rounded mb-4">
-                    {impactItem.label || "Impact Area"}
-                  </span>
-
-                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-4">
-                    {impactItem.title}
-                  </h1>
-
-                  {impactItem.description && (
-                    <div className="prose prose-lg text-muted-foreground">
-                      {impactItem.description.split("\n").map((paragraph: string, idx: number) => (
-                        <p key={idx} className="mb-4">{paragraph}</p>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                <div className="mt-8 pt-8 border-t border-gray-200">
-                  <Button
-                    className="bg-primary text-white hover:bg-primary/90 h-14 px-8 gap-2 text-lg"
-                    onClick={() => setDonateOpen(true)}
-                  >
-                    <HeartIcon size={24} weight="fill" className="text-white" />
-                    Support This Cause
-                  </Button>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-      </main>
-    );
-  }
-
-  const relatedProjects = projects.filter((p) => p._id !== project._id).slice(0, 3);
+  const relatedProjects = project
+    ? projects.filter((p: any) => p._id !== project._id).slice(0, 3)
+    : [];
 
   return (
-    <main className="min-h-screen bg-background pt-20">
-      <section className="py-8 md:py-12">
-        <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 lg:items-stretch">
-            <div className="relative w-full h-[300px] md:h-[400px] lg:h-full lg:sticky lg:top-24 rounded-lg overflow-hidden">
-              {project.imageUrl ? (
-                <Image
-                  src={getImageUrl(project.imageUrl) || ""}
-                  alt={project.title}
-                  fill
-                  className="object-cover"
-                />
-              ) : null}
-            </div>
-
-            <div className="flex flex-col gap-8 justify-between">
-              <ProjectDetails
-                title={project.title}
-                description={project.description}
-                tag={project.status || "Active"}
-              />
-
-              <div className="h-px bg-gray-200" />
-
-              <ProjectProgress raised={project.raised || 0} goal={project.goal || 0} />
-
-              <div className="flex items-center gap-8 py-2">
-                <span className="text-sm text-muted-foreground">
-                  {project.donations || 0} Donations
-                </span>
-                <span className="text-sm text-muted-foreground">
-                  {project.likes || 0} Likes
-                </span>
-                <span className="text-sm text-muted-foreground ml-auto">{project.date}</span>
-              </div>
-
-              <div className="h-px bg-gray-200" />
-
-              <div className="flex flex-col sm:flex-row gap-4 pt-2 px-4 sm:px-0">
-                <Button className="flex-1 bg-primary text-white hover:bg-primary/90 h-14 px-8 gap-2 text-lg" onClick={() => setDonateOpen(true)}>
-                  <HeartIcon size={24} weight="fill" className="text-white" />
-                  Donate
-                </Button>
-
-                <Button variant="outline" className="flex-1 h-12 px-6">
-                  Share
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
-          <div className="mt-12">
-            <Tabs defaultValue="description">
-              <TabsList variant="line">
-                <TabsTrigger value="description">Description</TabsTrigger>
-                <TabsTrigger value="donations">Donations</TabsTrigger>
-                <TabsTrigger value="comments">Comments</TabsTrigger>
-                <TabsTrigger value="updates">Updates</TabsTrigger>
-              </TabsList>
-              <TabsContent value="description">
-                <p className="mt-4 text-sm text-muted-foreground">{project.description}</p>
-              </TabsContent>
-              <TabsContent value="donations">
-                <p className="mt-4 text-sm text-muted-foreground">No donations yet.</p>
-              </TabsContent>
-              <TabsContent value="comments">
-                <p className="mt-4 text-sm text-muted-foreground">No comments yet.</p>
-              </TabsContent>
-              <TabsContent value="updates">
-                <p className="mt-4 text-sm text-muted-foreground">No updates yet.</p>
-              </TabsContent>
-            </Tabs>
-          </div>
-
-          <div className="mt-16">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground text-center mb-8">
-              Related Campaigns
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {relatedProjects.map((rel, index) => (
-                <ProjectCard key={rel._id || index} project={rel} animationIndex={index} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+    <ImpactDetailClient
+      project={project || null}
+      impactItem={impactItem || null}
+      relatedProjects={relatedProjects}
+      projectImageUrl={projectImageUrl}
+      impactImageUrl={impactImageUrl}
+      notFound={false}
+    />
   );
 }
-
-export default ProjectPage;
