@@ -22,7 +22,11 @@ function Pagination({
       transition={{ duration: 0.8, delay: 0.6 }}
       className="flex items-center justify-center gap-3 mt-10 sm:mt-12"
     >
-      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] bg-white flex items-center justify-center">
+      <button
+        onClick={() => onPageChange?.(Math.max(1, currentPage - 1))}
+        disabled={currentPage <= 1}
+        className="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] bg-white flex items-center justify-center disabled:opacity-30 hover:bg-muted transition-colors"
+      >
         <svg
           width="20"
           height="20"
@@ -38,7 +42,7 @@ function Pagination({
             strokeLinejoin="round"
           />
         </svg>
-      </div>
+      </button>
 
       <div className="flex items-center gap-1 sm:gap-2">
         {pages.map((page) => (
@@ -73,7 +77,11 @@ function Pagination({
         )}
       </div>
 
-      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] bg-white flex items-center justify-center">
+      <button
+        onClick={() => onPageChange?.(Math.min(totalPages, currentPage + 1))}
+        disabled={currentPage >= totalPages}
+        className="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] bg-white flex items-center justify-center disabled:opacity-30 hover:bg-muted transition-colors"
+      >
         <svg
           width="20"
           height="20"
@@ -89,7 +97,7 @@ function Pagination({
             strokeLinejoin="round"
           />
         </svg>
-      </div>
+      </button>
     </motion.div>
   );
 }

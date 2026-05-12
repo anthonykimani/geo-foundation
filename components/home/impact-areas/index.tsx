@@ -70,7 +70,8 @@ function ImpactAreas({ data }: ImpactAreasProps) {
     impacts: []
   };
 
-  const totalPages = 3;
+  const itemsPerPage = 3;
+  const totalPages = Math.ceil((content.impacts || []).length / itemsPerPage) || 1;
 
   return (
     <section className="w-full bg-background">
@@ -90,7 +91,7 @@ function ImpactAreas({ data }: ImpactAreasProps) {
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {(content.impacts || []).slice(0, 3).map((impact: any, index: number) => (
+          {(content.impacts || []).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((impact: any, index: number) => (
             <ImpactCard
               key={impact._key || index}
               id={impact._key || String(index)}
