@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
-import GalleryGrid from "@/components/gallery/gallery-grid";
+import GalleryGrid from "@/components/run/gallery/gallery-grid";
 import { getImageUrl } from "@/lib/sanity";
 import { galleryImages } from "@/data/pages/gallery";
 

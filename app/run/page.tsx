@@ -5,7 +5,7 @@ import Image from "next/image";
 import Hero from "@/components/run/hero";
 import EventHighlights from "@/components/run/event-highlights";
 import EventInfo from "@/components/run/event-info";
-import DonationInfo from "@/components/run/donation-info";
+import JiwePromo from "@/components/run/jiwe-promo";
 import ImpactStats from "@/components/run/impact-stats";
 import GetInvolved from "@/components/run/get-involved";
 import AboutRun from "@/components/run/about-run";
@@ -56,7 +56,7 @@ function RunPage() {
 
       <EventInfo />
 
-      <DonationInfo />
+      <JiwePromo />
 
       <ImpactStats />
 

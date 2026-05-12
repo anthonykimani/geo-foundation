@@ -41,6 +41,12 @@ export default function AboutPage() {
     );
   }
 
+  const valueImages = [
+    "/img/MUM2.jpg.jpeg",
+    "/img/MUM3.jpg.jpeg",
+    "/img/MUM4.jpg.jpeg",
+  ];
+
   const { aboutPage, boardMembers, values, contactPage } = data;
   const organizationName = aboutPage?.organizationName || "THE GLADYS ERUDE ORGANIZATION";
   const organizationSubtitle = aboutPage?.organizationSubtitle || "Empowering communities through education, healthcare, and sustainable development across Kenya.";
@@ -91,32 +97,47 @@ export default function AboutPage() {
 
       <section className="py-12 md:py-16 lg:py-20">
         <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-6">
-              {whyWeAreInspiredTitle}
-            </h2>
-            {whyWeAreInspiredContent.length > 0 ? (
-              whyWeAreInspiredContent.map((content: string, index: number) => (
-                <p key={index} className="text-base text-muted-foreground leading-relaxed mb-4">
-                  {content}
-                </p>
-              ))
-            ) : (
-              <>
-                <p className="text-base text-muted-foreground leading-relaxed mb-4">
-                  Respected Kenyan journalist and community advocate, Gladys Adisa Erude, died in August 2021 after a battle with cancer. Gladys was born in Tigoi, Vihiga County, where she attended Tigoi Primary School and Lugulu Girls High School. She trained as a teacher before making her mark as a celebrated broadcaster.
-                </p>
-                <p className="text-base text-muted-foreground leading-relaxed">
-                  Through GEO, her six sons seek to uphold their mother&apos;s dedication to children&apos;s education and women&apos;s empowerment, and to inspire others and mobilise support.
-                </p>
-              </>
-            )}
-          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-6">
+                {whyWeAreInspiredTitle}
+              </h2>
+              {whyWeAreInspiredContent.length > 0 ? (
+                whyWeAreInspiredContent.map((content: string, index: number) => (
+                  <p key={index} className="text-base text-muted-foreground leading-relaxed mb-4">
+                    {content}
+                  </p>
+                ))
+              ) : (
+                <>
+                  <p className="text-base text-muted-foreground leading-relaxed mb-4">
+                    Respected Kenyan journalist and community advocate, Gladys Adisa Erude, died in August 2021 after a battle with cancer. Gladys was born in Tigoi, Vihiga County, where she attended Tigoi Primary School and Lugulu Girls High School. She trained as a teacher before making her mark as a celebrated broadcaster.
+                  </p>
+                  <p className="text-base text-muted-foreground leading-relaxed">
+                    Through GEO, her six sons seek to uphold their mother&apos;s dedication to children&apos;s education and women&apos;s empowerment, and to inspire others and mobilise support.
+                  </p>
+                </>
+              )}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <img
+                src="/img/MUM.jpg.jpeg"
+                alt="Gladys Erude"
+                className="w-full h-auto rounded-2xl"
+              />
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -154,6 +175,13 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   className="p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10"
                 >
+                  <div className="relative w-full h-[200px] rounded-xl overflow-hidden mb-4">
+                    <img
+                      src={valueImages[index % valueImages.length]}
+                      alt={value.title}
+                      className="w-full h-full object-cover object-center"
+                    />
+                  </div>
                   <h3 className="text-xl font-medium text-foreground mb-3">{value.title}</h3>
                   <p className="text-sm text-muted-foreground">{value.description}</p>
                 </motion.div>
@@ -170,6 +198,13 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   className="p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10"
                 >
+                  <div className="relative w-full h-[200px] rounded-xl overflow-hidden mb-4">
+                    <img
+                      src={valueImages[index % valueImages.length]}
+                      alt={val}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                   <h3 className="text-xl font-medium text-foreground mb-3">{val}</h3>
                   <p className="text-sm text-muted-foreground">Our core value.</p>
                 </motion.div>
