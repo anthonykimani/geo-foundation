@@ -81,12 +81,12 @@ function ImpactPage() {
               href={cta.gofundmeUrl || "https://gofund.me/323c458f"}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-6 py-3 border-2 border-primary text-primary rounded-md hover:bg-primary/5"
+              className="inline-flex items-center justify-center text-lg px-8 py-5 border-2 border-primary text-primary rounded-full hover:bg-primary/5"
             >
               GoFundMe
             </a>
             <Link href={cta.getInvolvedHref || "/get-involved"}>
-              <button className="inline-flex items-center justify-center px-6 py-3 border-2 border-primary text-primary rounded-md hover:bg-primary/5"
+              <button className="inline-flex items-center justify-center text-lg px-8 py-5 border-2 border-primary text-primary rounded-full hover:bg-primary/5"
               >Get Involved</button>
             </Link>
           </div>

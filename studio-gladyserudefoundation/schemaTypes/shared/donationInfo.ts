@@ -16,5 +16,6 @@ export default {
     {name: 'bankAccount', title: 'Bank Account', type: 'string'},
     {name: 'bankAccountName', title: 'Bank Account Name', type: 'string'},
     {name: 'gofundmeUrl', title: 'GoFundMe URL', type: 'url'},
+    {name: 'paypalUrl', title: 'PayPal URL', type: 'url'},
   ],
 }

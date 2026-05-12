@@ -311,6 +311,7 @@ const donationInfo = {
   bankAccount: "1332946089",
   bankAccountName: "GLADYS ADISA ERUDE FOUNDATION",
   gofundmeUrl: "https://gofund.me/323c458f",
+  paypalUrl: "https://www.paypal.com/ncp/payment/G9LWHXJNU2DKQ",
 }
 
 // ============================================================

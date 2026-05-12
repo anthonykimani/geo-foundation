@@ -46,6 +46,7 @@ export function DonationForm({ className = "" }: DonationFormProps) {
   const [ipnId, setIpnId] = useState<string>("");
   const [initialized, setInitialized] = useState(false);
   const [showGoFundMe, setShowGoFundMe] = useState(false);
+  const [showPayPal, setShowPayPal] = useState(false);
 
   useEffect(() => {
     const detected = detectCountry();
@@ -172,6 +173,7 @@ export function DonationForm({ className = "" }: DonationFormProps) {
         onValueChange={(v) => {
           setCountry(v as "kenya" | "us");
           setShowGoFundMe(false);
+          setShowPayPal(false);
           setAmount("");
         }}
         className="w-full"
@@ -309,6 +311,40 @@ export function DonationForm({ className = "" }: DonationFormProps) {
             <p className="text-sm text-center text-muted-foreground mt-4">
               You will be redirected to GoFundMe to complete your donation
             </p>
+
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              {!showPayPal ? (
+                <button
+                  onClick={() => setShowPayPal(true)}
+                  className="flex items-center justify-center gap-2 w-full h-12 bg-[#0070BA] text-white rounded-lg hover:bg-[#005ea6] transition-colors text-base font-semibold"
+                >
+                  <HeartIcon size={20} weight="fill" />
+                  Donate via PayPal
+                </button>
+              ) : (
+                <div className="space-y-4">
+                  <div className="relative w-full aspect-square max-w-[300px] mx-auto">
+                    <img
+                      src="/img/paypal-qr-code.jpeg"
+                      alt="PayPal QR Code"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <a
+                    href="https://www.paypal.com/ncp/payment/G9LWHXJNU2DKQ"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full h-12 bg-[#0070BA] text-white rounded-lg hover:bg-[#005ea6] transition-colors text-base font-semibold"
+                  >
+                    <HeartIcon size={20} weight="fill" />
+                    Open PayPal
+                  </a>
+                  <p className="text-sm text-center text-muted-foreground">
+                    Scan the QR code or click the button to donate via PayPal
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </TabsContent>
       </Tabs>
