@@ -191,136 +191,152 @@ export function DonationForm({ className = "" }: DonationFormProps) {
 
         <TabsContent value="kenya" className="mt-0">
           <div className="bg-white rounded-2xl p-6 shadow-sm">
-            <h3 className="text-xl font-semibold text-foreground mb-6">Donate via Pesapal</h3>
-            <p className="text-sm text-muted-foreground mb-6">
-              Secure payment with card or mobile money (M-PESA)
-            </p>
-
-            <div className="grid grid-cols-3 gap-3 mb-6">
-              {presetAmounts.map((amt) => (
-                <button
-                  key={amt}
-                  type="button"
-                  onClick={() => handleQuickDonate(amt)}
-                  className={`h-12 border-2 rounded-lg transition-colors text-sm font-semibold ${
-                    amount === amt.toString()
-                      ? "bg-primary text-white border-primary"
-                      : "border-input hover:bg-primary/10 hover:border-primary"
-                  }`}
-                >
-                  KES {amt.toLocaleString()}
-                </button>
-              ))}
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              <button
+                onClick={() => setShowTillNumber(false)}
+                className={`h-12 rounded-lg transition-colors text-sm font-semibold ${
+                  !showTillNumber
+                    ? "bg-primary text-white"
+                    : "border-2 border-input hover:bg-primary/10"
+                }`}
+              >
+                Donate via Pesapal
+              </button>
+              <button
+                onClick={() => setShowTillNumber(true)}
+                className={`h-12 rounded-lg transition-colors text-sm font-semibold ${
+                  showTillNumber
+                    ? "bg-[#2C9F45] text-white"
+                    : "border-2 border-input hover:bg-[#2C9F45]/10"
+                }`}
+              >
+                M-PESA Till Number
+              </button>
             </div>
 
-            <form onSubmit={handleDonate} className=" gap-2">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm text-muted-foreground mb-2">First Name *</label>
-                  <input
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required
-                    className="w-full h-12 px-4 text-sm border-2 border-input rounded-lg bg-background"
-                    placeholder="John"
-                  />
+            {!showTillNumber ? (
+              <>
+                <h3 className="text-xl font-semibold text-foreground mb-6">Donate via Pesapal</h3>
+                <p className="text-sm text-muted-foreground mb-6">
+                  Secure payment with card or mobile money (M-PESA)
+                </p>
+
+                <div className="grid grid-cols-3 gap-3 mb-6">
+                  {presetAmounts.map((amt) => (
+                    <button
+                      key={amt}
+                      type="button"
+                      onClick={() => handleQuickDonate(amt)}
+                      className={`h-12 border-2 rounded-lg transition-colors text-sm font-semibold ${
+                        amount === amt.toString()
+                          ? "bg-primary text-white border-primary"
+                          : "border-input hover:bg-primary/10 hover:border-primary"
+                      }`}
+                    >
+                      KES {amt.toLocaleString()}
+                    </button>
+                  ))}
                 </div>
-                <div>
-                  <label className="block text-sm text-muted-foreground mb-2">Last Name *</label>
-                  <input
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    required
-                    className="w-full h-12 px-4 text-sm border-2 border-input rounded-lg bg-background"
-                    placeholder="Doe"
-                  />
-                </div>
-              </div>
 
-              <div>
-                <label className="block text-sm text-muted-foreground mb-2">Email *</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="w-full h-12 px-4 text-sm border-2 border-input rounded-lg bg-background"
-                  placeholder="john@example.com"
-                />
-              </div>
+                <form onSubmit={handleDonate} className=" gap-2">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm text-muted-foreground mb-2">First Name *</label>
+                      <input
+                        type="text"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required
+                        className="w-full h-12 px-4 text-sm border-2 border-input rounded-lg bg-background"
+                        placeholder="John"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-muted-foreground mb-2">Last Name *</label>
+                      <input
+                        type="text"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        required
+                        className="w-full h-12 px-4 text-sm border-2 border-input rounded-lg bg-background"
+                        placeholder="Doe"
+                      />
+                    </div>
+                  </div>
 
-              <div>
-                <label className="block text-sm text-muted-foreground mb-2">Phone (for M-PESA)</label>
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full h-12 px-4 text-sm border-2 border-input rounded-lg bg-background"
-                  placeholder="0722 123456"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-muted-foreground mb-2">Amount (KES) *</label>
-                <input
-                  type="number"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  required
-                  min="10"
-                  className="w-full h-12 px-4 text-sm border-2 border-input rounded-lg bg-background"
-                  placeholder="Enter amount"
-                />
-              </div>
-
-              {error && <p className="text-red-500 text-sm">{error}</p>}
-
-              <button
-                type="submit"
-                disabled={isLoading || !initialized}
-                className="w-full h-12 bg-primary text-white text-base font-semibold rounded-lg hover:bg-primary/90 disabled:opacity-50 flex items-center justify-center gap-2"
-              >
-                <HeartIcon size={20} weight="fill" />
-                {isLoading ? "Processing..." : "Donate via Pesapal"}
-              </button>
-
-              <p className="text-xs text-muted-foreground text-center">
-                Secured by Pesapal
-              </p>
-            </form>
-
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              {!showTillNumber ? (
-                <button
-                  onClick={() => setShowTillNumber(true)}
-                  className="flex items-center justify-center gap-2 w-full h-12 bg-[#2C9F45] text-white rounded-lg hover:bg-[#258a3b] transition-colors text-base font-semibold"
-                >
-                  <HeartIcon size={20} weight="fill" />
-                  Donate via M-PESA Till Number
-                </button>
-              ) : (
-                <div className="space-y-4">
-                  <div className="relative w-full aspect-square max-w-[300px] mx-auto">
-                    <img
-                      src="/img/til-number.jpeg"
-                      alt="M-PESA Till Number"
-                      className="w-full h-full object-contain"
+                  <div>
+                    <label className="block text-sm text-muted-foreground mb-2">Email *</label>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="w-full h-12 px-4 text-sm border-2 border-input rounded-lg bg-background"
+                      placeholder="john@example.com"
                     />
                   </div>
+
+                  <div>
+                    <label className="block text-sm text-muted-foreground mb-2">Phone (for M-PESA)</label>
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="w-full h-12 px-4 text-sm border-2 border-input rounded-lg bg-background"
+                      placeholder="0722 123456"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm text-muted-foreground mb-2">Amount (KES) *</label>
+                    <input
+                      type="number"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      required
+                      min="10"
+                      className="w-full h-12 px-4 text-sm border-2 border-input rounded-lg bg-background"
+                      placeholder="Enter amount"
+                    />
+                  </div>
+
+                  {error && <p className="text-red-500 text-sm">{error}</p>}
+
                   <button
-                    onClick={() => setShowTillNumber(false)}
-                    className="flex items-center justify-center gap-2 w-full h-12 bg-[#2C9F45] text-white rounded-lg hover:bg-[#258a3b] transition-colors text-base font-semibold"
+                    type="submit"
+                    disabled={isLoading || !initialized}
+                    className="w-full h-12 bg-primary text-white text-base font-semibold rounded-lg hover:bg-primary/90 disabled:opacity-50 flex items-center justify-center gap-2"
                   >
-                    Back to Pesapal
+                    <HeartIcon size={20} weight="fill" />
+                    {isLoading ? "Processing..." : "Donate via Pesapal"}
                   </button>
-                  <p className="text-sm text-center text-muted-foreground">
-                    Use the Till Number shown above to donate via M-PESA
+
+                  <p className="text-xs text-muted-foreground text-center">
+                    Secured by Pesapal
                   </p>
+                </form>
+              </>
+            ) : (
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold text-foreground mb-2">M-PESA Till Number</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Use the Till Number shown below to donate via M-PESA
+                </p>
+                <div className="relative w-full aspect-square max-w-[300px] mx-auto">
+                  <img
+                    src="/img/til-number.jpeg"
+                    alt="M-PESA Till Number"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
-              )}
-            </div>
+                <button
+                  onClick={() => setShowTillNumber(false)}
+                  className="flex items-center justify-center gap-2 w-full h-12 border-2 border-input rounded-lg hover:bg-muted transition-colors text-base font-semibold mt-4"
+                >
+                  Back to Pesapal
+                </button>
+              </div>
+            )}
           </div>
         </TabsContent>
 
