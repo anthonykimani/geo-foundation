@@ -291,12 +291,12 @@ const galleryPage = {
 // INVOLVEMENT OPTIONS
 // ============================================================
 const involvementOptions = [
-  { title: "Make a Donation", description: "Support our mission to empower women and children.", buttonText: "Donate Now", variant: "primary", animationIndex: 0 },
-  { title: "Join the Memorial Run", description: "Participate in our annual 5K run.", buttonText: "Register", variant: "secondary", animationIndex: 1 },
-  { title: "Boots on the Ground", description: "Submit your manifest to logistics.", buttonText: "Submit Application", variant: "secondary", animationIndex: 2 },
-  { title: "Corporate Sponsorship", description: "Fund entire milestones.", buttonText: "Request Deal Book", variant: "secondary", animationIndex: 3 },
-  { title: "Become a Partner", description: "Partner with us to expand our impact.", buttonText: "Contact Us", variant: "secondary", animationIndex: 4 },
-  { title: "Spread the Word", description: "Share our mission with your network.", buttonText: "Share", variant: "outline", animationIndex: 5 },
+  { title: "Make a Donation", description: "Support our mission to empower women and children.", buttonText: "Donate Now", variant: "primary", animationIndex: 0, buttonUrl: "" },
+  { title: "Join the Memorial Run", description: "Participate in our annual 5K run.", buttonText: "Register", variant: "secondary", animationIndex: 1, buttonUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdGsGAGpe9EdCwEcHmC2ugxYRHq9EUsaPs5NLffPOtvs57IHw/viewform" },
+  { title: "Boots on the Ground", description: "Submit your manifest to logistics.", buttonText: "Submit Application", variant: "secondary", animationIndex: 2, buttonUrl: "#volunteer" },
+  { title: "Corporate Sponsorship", description: "Fund entire milestones.", buttonText: "Request Deal Book", variant: "secondary", animationIndex: 3, buttonUrl: "#sponsor" },
+  { title: "Become a Partner", description: "Partner with us to expand our impact.", buttonText: "Contact Us", variant: "secondary", animationIndex: 4, buttonUrl: "/contact" },
+  { title: "Spread the Word", description: "Share our mission with your network.", buttonText: "Share", variant: "outline", animationIndex: 5, buttonUrl: "#share" },
 ]
 
 // ============================================================

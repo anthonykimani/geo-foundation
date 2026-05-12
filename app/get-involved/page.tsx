@@ -22,6 +22,8 @@ async function getGetInvolvedPageData() {
 function GetInvolvedPage() {
   const [data, setData] = useState<any>(null);
   const [donateOpen, setDonateOpen] = useState(false);
+  const [volunteerOpen, setVolunteerOpen] = useState(false);
+  const [sponsorOpen, setSponsorOpen] = useState(false);
 
   useEffect(() => {
     getGetInvolvedPageData()
@@ -70,9 +72,17 @@ function GetInvolvedPage() {
                 buttonText={card.buttonText}
                 variant={card.variant || "secondary"}
                 onClick={() => {
-                  if (card.buttonUrl?.startsWith('http')) {
+                  if (card.buttonUrl === "#volunteer") {
+                    setVolunteerOpen(true);
+                  } else if (card.buttonUrl === "#sponsor") {
+                    setSponsorOpen(true);
+                  } else if (card.buttonUrl === "#share") {
+                    shareToSocials();
+                  } else if (card.buttonUrl?.startsWith("http")) {
                     window.open(card.buttonUrl, "_blank");
-                  } else if (card.buttonUrl?.startsWith('mailto:')) {
+                  } else if (card.buttonUrl?.startsWith("mailto:")) {
+                    window.location.href = card.buttonUrl;
+                  } else if (card.buttonUrl?.startsWith("/")) {
                     window.location.href = card.buttonUrl;
                   } else {
                     setDonateOpen(true);
@@ -84,6 +94,42 @@ function GetInvolvedPage() {
           </div>
         </div>
       </section>
+
+      {volunteerOpen && (
+        <section className="py-12 md:py-16 lg:py-20">
+          <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
+            <div className="max-w-xl mx-auto">
+              <VolunteerForm />
+              <div className="text-center mt-6">
+                <button
+                  onClick={() => setVolunteerOpen(false)}
+                  className="text-sm text-muted-foreground hover:text-foreground underline"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {sponsorOpen && (
+        <section className="py-12 md:py-16 lg:py-20">
+          <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
+            <div className="max-w-xl mx-auto">
+              <SponsorForm />
+              <div className="text-center mt-6">
+                <button
+                  onClick={() => setSponsorOpen(false)}
+                  className="text-sm text-muted-foreground hover:text-foreground underline"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="py-12 md:py-16 lg:py-20 bg-primary/5">
         <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto text-center">
