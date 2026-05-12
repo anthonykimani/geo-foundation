@@ -14,30 +14,103 @@ import { HeartIcon } from "@phosphor-icons/react";
 import { getImageUrl } from "@/lib/sanity";
 
 async function getProjectsData() {
-  const { getProjects } = await import("@/lib/sanity/queries");
-  return getProjects();
+  const { getProjects, getImpactAreas } = await import("@/lib/sanity/queries");
+  const [projects, impactAreas] = await Promise.all([getProjects(), getImpactAreas()]);
+  return { projects, impactAreas };
 }
 
 function ProjectPage() {
   const params = useParams();
   const id = params.id as string;
-  const [projects, setProjects] = useState<any[]>([]);
+  const [data, setData] = useState<{ projects: any[]; impactAreas: any } | null>(null);
   const [donateOpen, setDonateOpen] = useState(false);
 
   useEffect(() => {
     getProjectsData()
-      .then(setProjects)
-      .catch(() => setProjects([]));
+      .then(setData)
+      .catch(() => setData({ projects: [], impactAreas: null }));
   }, []);
 
-  const project = projects.find((p) => p._id === id || p.id?.toString() === id) || projects[0];
+  const projects = data?.projects || [];
+  const impactAreas = data?.impactAreas;
 
-  if (!project) {
+  const project = projects.find((p) => p._id === id || p.id?.toString() === id);
+  const impactItem = impactAreas?.impacts?.find((item: any) => item._id === id);
+
+  if (!project && !impactItem) {
     return (
       <main className="min-h-screen bg-background pt-20">
         <div className="container px-4 py-12 text-center">
           <p className="text-muted-foreground">Project not found.</p>
         </div>
+      </main>
+    );
+  }
+
+  if (impactItem && !project) {
+    const impactImageUrl = getImageUrl(impactItem.imageUrl);
+
+    return (
+      <main className="min-h-screen bg-background pt-20">
+        <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
+        <section className="py-12 md:py-16 lg:py-20">
+          <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 lg:items-stretch">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="relative w-full h-[300px] md:h-[400px] lg:h-full rounded-2xl overflow-hidden"
+              >
+                {impactImageUrl ? (
+                  <Image
+                    src={impactImageUrl}
+                    alt={impactItem.title}
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-200" />
+                )}
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="flex flex-col justify-between"
+              >
+                <div>
+                  <span className="inline-block px-3 py-1.5 bg-primary text-white text-xs rounded mb-4">
+                    {impactItem.label || "Impact Area"}
+                  </span>
+
+                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-4">
+                    {impactItem.title}
+                  </h1>
+
+                  {impactItem.description && (
+                    <div className="prose prose-lg text-muted-foreground">
+                      {impactItem.description.split("\n").map((paragraph: string, idx: number) => (
+                        <p key={idx} className="mb-4">{paragraph}</p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-8 pt-8 border-t border-gray-200">
+                  <Button
+                    className="bg-primary text-white hover:bg-primary/90 h-14 px-8 gap-2 text-lg"
+                    onClick={() => setDonateOpen(true)}
+                  >
+                    <HeartIcon size={24} weight="fill" className="text-white" />
+                    Support This Cause
+                  </Button>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
       </main>
     );
   }

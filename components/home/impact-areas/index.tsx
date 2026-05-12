@@ -93,6 +93,7 @@ function ImpactAreas({ data }: ImpactAreasProps) {
           {(content.impacts || []).slice(0, 3).map((impact: any, index: number) => (
             <ImpactCard
               key={impact._id || index}
+              id={impact._id || String(index)}
               label={impact.label || ""}
               title={impact.title || ""}
               image={impact.imageUrl || null}

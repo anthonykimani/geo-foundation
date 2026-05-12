@@ -7,6 +7,7 @@ import { useRef } from "react";
 import { getImageUrl } from "@/lib/sanity";
 
 interface ImpactCardProps {
+  id?: string;
   label: string;
   title: string;
   image?: any;
@@ -14,6 +15,7 @@ interface ImpactCardProps {
 }
 
 function ImpactCard({
+  id,
   label,
   title,
   image,
@@ -31,7 +33,7 @@ function ImpactCard({
   const imageSrc = getImageUrl(image);
 
   return (
-    <Link href="/impact">
+    <Link href={`/impact/${id || "education"}`}>
       <motion.div
         ref={ref}
         {...bottomAnimation}
