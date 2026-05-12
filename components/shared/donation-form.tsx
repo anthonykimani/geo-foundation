@@ -47,6 +47,7 @@ export function DonationForm({ className = "" }: DonationFormProps) {
   const [initialized, setInitialized] = useState(false);
   const [showGoFundMe, setShowGoFundMe] = useState(false);
   const [showPayPal, setShowPayPal] = useState(false);
+  const [showTillNumber, setShowTillNumber] = useState(false);
 
   useEffect(() => {
     const detected = detectCountry();
@@ -174,6 +175,7 @@ export function DonationForm({ className = "" }: DonationFormProps) {
           setCountry(v as "kenya" | "us");
           setShowGoFundMe(false);
           setShowPayPal(false);
+          setShowTillNumber(false);
           setAmount("");
         }}
         className="w-full"
@@ -288,6 +290,37 @@ export function DonationForm({ className = "" }: DonationFormProps) {
                 Secured by Pesapal
               </p>
             </form>
+
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              {!showTillNumber ? (
+                <button
+                  onClick={() => setShowTillNumber(true)}
+                  className="flex items-center justify-center gap-2 w-full h-12 bg-[#2C9F45] text-white rounded-lg hover:bg-[#258a3b] transition-colors text-base font-semibold"
+                >
+                  <HeartIcon size={20} weight="fill" />
+                  Donate via M-PESA Till Number
+                </button>
+              ) : (
+                <div className="space-y-4">
+                  <div className="relative w-full aspect-square max-w-[300px] mx-auto">
+                    <img
+                      src="/img/til-number.jpeg"
+                      alt="M-PESA Till Number"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <button
+                    onClick={() => setShowTillNumber(false)}
+                    className="flex items-center justify-center gap-2 w-full h-12 bg-[#2C9F45] text-white rounded-lg hover:bg-[#258a3b] transition-colors text-base font-semibold"
+                  >
+                    Back to Pesapal
+                  </button>
+                  <p className="text-sm text-center text-muted-foreground">
+                    Use the Till Number shown above to donate via M-PESA
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </TabsContent>
 
