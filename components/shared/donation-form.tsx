@@ -322,11 +322,11 @@ export function DonationForm({ className = "" }: DonationFormProps) {
                 <p className="text-sm text-muted-foreground mb-4">
                   Use the Till Number shown below to donate via M-PESA
                 </p>
-                <div className="relative w-full aspect-square max-w-[300px] mx-auto">
+                <div className="relative w-full h-[400px]">
                   <img
                     src="/img/til-number.jpeg"
                     alt="M-PESA Till Number"
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-cover rounded-lg"
                   />
                 </div>
                 <button
