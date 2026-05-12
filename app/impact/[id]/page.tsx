@@ -35,7 +35,7 @@ function ProjectPage() {
   const impactAreas = data?.impactAreas;
 
   const project = projects.find((p) => p._id === id || p.id?.toString() === id);
-  const impactItem = impactAreas?.impacts?.find((item: any) => item._id === id);
+  const impactItem = impactAreas?.impacts?.find((item: any) => item._key === id);
 
   if (!project && !impactItem) {
     return (

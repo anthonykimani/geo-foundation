@@ -92,8 +92,8 @@ function ImpactAreas({ data }: ImpactAreasProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {(content.impacts || []).slice(0, 3).map((impact: any, index: number) => (
             <ImpactCard
-              key={impact._id || index}
-              id={impact._id || String(index)}
+              key={impact._key || index}
+              id={impact._key || String(index)}
               label={impact.label || ""}
               title={impact.title || ""}
               image={impact.imageUrl || null}
