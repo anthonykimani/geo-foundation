@@ -179,7 +179,7 @@ export default function AboutPage() {
                     <img
                       src={valueImages[index % valueImages.length]}
                       alt={value.title}
-                      className="w-full h-full object-cover object-center"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                   <h3 className="text-xl font-medium text-foreground mb-3">{value.title}</h3>
