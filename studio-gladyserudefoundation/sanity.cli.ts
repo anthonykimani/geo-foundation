@@ -5,5 +5,8 @@ export default defineCliConfig({
     projectId: 'v180y67k',
     dataset: 'production'
   },
-  studioHost: 'gladyserudefoundation'
+  studioHost: 'gladyserudefoundation',
+  deployment: {
+    appId: 'vnkhyte289hpnbx3p0m91ob1',
+  },
 })
