@@ -5,6 +5,15 @@ import { motion } from "motion/react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { HeartIcon } from "@phosphor-icons/react";
 
+async function getDonationUrls() {
+  const { getDonationInfo } = await import("@/lib/sanity/queries");
+  const info = await getDonationInfo();
+  return {
+    gofundmeUrl: info?.gofundmeUrl || "",
+    paypalUrl: info?.paypalUrl || "",
+  };
+}
+
 function detectCountry(): "kenya" | "us" {
   try {
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -48,11 +57,13 @@ export function DonationForm({ className = "" }: DonationFormProps) {
   const [showGoFundMe, setShowGoFundMe] = useState(false);
   const [showPayPal, setShowPayPal] = useState(false);
   const [showTillNumber, setShowTillNumber] = useState(false);
+  const [donationUrls, setDonationUrls] = useState({ gofundmeUrl: "", paypalUrl: "" });
 
   useEffect(() => {
     const detected = detectCountry();
     setCountry(detected);
     initializePesapal();
+    getDonationUrls().then(setDonationUrls).catch(() => {});
   }, []);
 
   async function initializePesapal() {
@@ -348,7 +359,7 @@ export function DonationForm({ className = "" }: DonationFormProps) {
             </p>
 
             <a
-              href="https://gofund.me/323c458f"
+              href={donationUrls.gofundmeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full h-12 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-base font-semibold"
@@ -380,7 +391,7 @@ export function DonationForm({ className = "" }: DonationFormProps) {
                     />
                   </div>
                   <a
-                    href="https://www.paypal.com/ncp/payment/G9LWHXJNU2DKQ"
+                    href={donationUrls.paypalUrl || "https://www.paypal.com/ncp/payment/G9LWHXJNU2DKQ"}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 w-full h-12 bg-[#0070BA] text-white rounded-lg hover:bg-[#005ea6] transition-colors text-base font-semibold"

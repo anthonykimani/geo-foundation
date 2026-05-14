@@ -25,7 +25,6 @@ function DonationInfo() {
       title: "Alternative Payments",
       mpesa: { paybill: "123456", account: "GEO" },
       bank: { name: "Bank", account: "1234567890", accountName: "GEO Foundation" },
-      gofundme: "https://gofund.me/323c458f"
     }
   };
 

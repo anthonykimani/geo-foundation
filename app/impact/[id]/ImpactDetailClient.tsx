@@ -152,7 +152,12 @@ export default function ImpactDetailClient({
                   Donate
                 </Button>
 
-                <Button variant="outline" className="flex-1 h-12 px-6">
+                <Button variant="outline" className="flex-1 h-12 px-6"
+                  onClick={() => {
+                    const url = window.location.href;
+                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "_blank");
+                  }}
+                >
                   Share
                 </Button>
               </div>

@@ -201,7 +201,7 @@ const runPage = {
   cards: [
     { title: "Take Part in the 5K Run", description: "If you are a keen runner or simply want to experience the fun, please take part. Entry is free.", buttonText: "Register Now", buttonUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdGsGAGpe9EdCwEcHmC2ugxYRHq9EUsaPs5NLffPOtvs57IHw/viewform" },
     { title: "Become a Partner", description: "Local businesses, community groups and government agencies are welcome.", buttonText: "Contact Us", buttonUrl: "/contact" },
-    { title: "Make a Donation", description: "GEO will raise funds to stage this community event.", buttonText: "Donate", buttonUrl: "https://gofund.me/323c458f" },
+     { title: "Make a Donation", description: "GEO will raise funds to stage this community event.", buttonText: "Donate", buttonUrl: "https://gofund.me/e0d396f48" },
   ],
   aboutRunTitle: "About the GEM Run",
   aboutRunDescription: [
@@ -220,7 +220,7 @@ const impactPage = {
   ctaTitle: "Make a Difference Today",
   ctaDescription: "Your donation directly impacts the lives of women and children in underserved communities. Every contribution brings us closer to our goal of transforming education across Kenya.",
   donateText: "Donate Now",
-  gofundmeUrl: "https://gofund.me/323c458f",
+  gofundmeUrl: "https://gofund.me/e0d396f48",
   getInvolvedHref: "/get-involved",
 }
 
@@ -310,7 +310,7 @@ const donationInfo = {
   bankName: "Kenya Commercial Bank",
   bankAccount: "1332946089",
   bankAccountName: "GLADYS ADISA ERUDE FOUNDATION",
-  gofundmeUrl: "https://gofund.me/323c458f",
+  gofundmeUrl: "https://gofund.me/e0d396f48",
   paypalUrl: "https://www.paypal.com/ncp/payment/G9LWHXJNU2DKQ",
 }
 

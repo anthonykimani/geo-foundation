@@ -78,7 +78,7 @@ function ImpactPage() {
               {cta.donateText || "Donate Now"}
             </button>
             <a
-              href={cta.gofundmeUrl || "https://gofund.me/323c458f"}
+              href={cta.gofundmeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center text-lg px-8 py-5 border-2 border-primary text-primary rounded-full hover:bg-primary/5"
