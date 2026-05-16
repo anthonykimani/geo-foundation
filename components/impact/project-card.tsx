@@ -26,9 +26,10 @@ interface ProjectCardData {
 interface ProjectCardProps {
   project: ProjectCardData;
   animationIndex?: number;
+  linkPrefix?: string;
 }
 
-function ProjectCard({ project, animationIndex = 0 }: ProjectCardProps) {
+function ProjectCard({ project, animationIndex = 0, linkPrefix = "/impact" }: ProjectCardProps) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -43,7 +44,7 @@ function ProjectCard({ project, animationIndex = 0 }: ProjectCardProps) {
   const projectId = project._id || project.id?.toString() || "0";
 
   return (
-    <Link href={`/impact/${projectId}`}>
+    <Link href={`${linkPrefix}/${projectId}`}>
       <motion.div
         ref={ref}
         {...bottomAnimation}

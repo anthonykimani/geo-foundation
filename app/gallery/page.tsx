@@ -5,6 +5,12 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import GalleryGrid from "@/components/gallery/gallery-grid";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 import { getImageUrl } from "@/lib/sanity";
 import { galleryImages } from "@/data/pages/gallery";
 
@@ -37,6 +43,26 @@ export default function GalleryPage() {
   const pageTitle = galleryPage?.pageTitle || "Gallery & News";
   const pageDescription = galleryPage?.pageDescription || "Stay updated with the latest news and events from the Gladys Erude Organization";
 
+  function extractYear(dateStr: string): string | null {
+    const match = dateStr?.match(/\b(20\d{2})\b/);
+    return match ? match[1] : null;
+  }
+
+  const grouped: Record<string, any[]> = {};
+  (news || []).forEach((item: any) => {
+    const year = extractYear(item.date) || "Unknown";
+    if (!grouped[year]) grouped[year] = [];
+    grouped[year].push(item);
+  });
+
+  const years = Object.keys(grouped).sort((a, b) => {
+    if (a === "Unknown") return 1;
+    if (b === "Unknown") return -1;
+    return Number(b) - Number(a);
+  });
+
+  const defaultYear = years[0] || "";
+
   return (
     <main className="min-h-screen bg-background pt-20">
       <section className="py-12 md:py-16">
@@ -60,42 +86,68 @@ export default function GalleryPage() {
               <p className="text-muted-foreground">No news items yet. Check back soon!</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {news.map((item: any, index: number) => (
-                <motion.div
-                  key={item._id || index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+            <Accordion
+              type="single"
+              defaultValue={defaultYear}
+              collapsible
+              className="space-y-4"
+            >
+              {years.map((year) => (
+                <AccordionItem
+                  key={year}
+                  value={year}
+                  className="border rounded-xl overflow-hidden"
                 >
-                  <Link href={`/gallery/${item._id || index + 1}`}>
-                    <article className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                      <div className="relative h-[200px] w-full">
-                        {(() => {
-                          const imgUrl = getImageUrl(item.imageUrl);
-                          if (imgUrl) {
-                            return <img src={imgUrl} alt={item.title} className="w-full h-full object-cover" />;
-                          }
-                          return <div className="w-full h-full bg-gray-200 flex items-center justify-center"><span className="text-gray-400">No image</span></div>;
-                        })()}
-                        <span className="absolute top-4 left-4 px-3 py-1 bg-primary text-white text-xs rounded">
-                          {item.category || "News"}
-                        </span>
-                      </div>
-                      <div className="p-6">
-                        <p className="text-sm text-muted-foreground mb-2">{item.date}</p>
-                        <h2 className="text-lg font-medium text-foreground mb-2 group-hover:text-primary transition-colors">
-                          {item.title}
-                        </h2>
-                        <p className="text-muted-foreground text-sm line-clamp-2">
-                          {item.excerpt}
-                        </p>
-                      </div>
-                    </article>
-                  </Link>
-                </motion.div>
+                  <AccordionTrigger className="px-6 py-4 hover:no-underline">
+                    <span className="text-xl font-medium">
+                      {year === "Unknown" ? "Earlier" : year}
+                    </span>
+                    <span className="text-sm text-muted-foreground ml-auto mr-4">
+                      {grouped[year].length} article
+                      {grouped[year].length !== 1 ? "s" : ""}
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {grouped[year].map((item: any, index: number) => (
+                        <motion.div
+                          key={item._id || index}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.6, delay: index * 0.1 }}
+                        >
+                          <Link href={`/gallery/${item._id || index + 1}`}>
+                            <article className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                              <div className="relative h-[200px] w-full">
+                                {(() => {
+                                  const imgUrl = getImageUrl(item.imageUrl);
+                                  if (imgUrl) {
+                                    return <img src={imgUrl} alt={item.title} className="w-full h-full object-cover" />;
+                                  }
+                                  return <div className="w-full h-full bg-gray-200 flex items-center justify-center"><span className="text-gray-400">No image</span></div>;
+                                })()}
+                                <span className="absolute top-4 left-4 px-3 py-1 bg-primary text-white text-xs rounded">
+                                  {item.category || "News"}
+                                </span>
+                              </div>
+                              <div className="p-6">
+                                <p className="text-sm text-muted-foreground mb-2">{item.date}</p>
+                                <h2 className="text-lg font-medium text-foreground mb-2 group-hover:text-primary transition-colors">
+                                  {item.title}
+                                </h2>
+                                <p className="text-muted-foreground text-sm line-clamp-2">
+                                  {item.excerpt}
+                                </p>
+                              </div>
+                            </article>
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
               ))}
-            </div>
+            </Accordion>
           )}
         </div>
       </section>
