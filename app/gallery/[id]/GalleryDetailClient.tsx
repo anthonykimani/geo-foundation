@@ -44,8 +44,6 @@ export default function GalleryDetailClient({
     );
   }
 
-  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
-
   return (
     <main className="min-h-screen bg-background pt-20">
       <section className="py-12 md:py-16 lg:py-20">
@@ -99,33 +97,36 @@ export default function GalleryDetailClient({
 
                 <div className="flex items-center gap-3 mt-6">
                   <span className="text-xs text-muted-foreground">Share:</span>
-                  <a
-                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    onClick={() => {
+                      const url = window.location.href;
+                      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "_blank");
+                    }}
                     className="inline-flex items-center justify-center size-9 rounded-full border border-border bg-input/30 hover:bg-input/50 transition-colors"
                     aria-label="Share on Facebook"
                   >
                     <FacebookLogoIcon className="size-4" />
-                  </a>
-                  <a
-                    href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(newsItem.title)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  </button>
+                  <button
+                    onClick={() => {
+                      const url = window.location.href;
+                      window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(newsItem.title)}`, "_blank");
+                    }}
                     className="inline-flex items-center justify-center size-9 rounded-full border border-border bg-input/30 hover:bg-input/50 transition-colors"
                     aria-label="Share on Twitter"
                   >
                     <TwitterLogoIcon className="size-4" />
-                  </a>
-                  <a
-                    href={`https://wa.me/?text=${encodeURIComponent(`${newsItem.title} ${shareUrl}`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  </button>
+                  <button
+                    onClick={() => {
+                      const url = window.location.href;
+                      window.open(`https://wa.me/?text=${encodeURIComponent(`${newsItem.title} ${url}`)}`, "_blank");
+                    }}
                     className="inline-flex items-center justify-center size-9 rounded-full border border-border bg-input/30 hover:bg-input/50 transition-colors"
                     aria-label="Share on WhatsApp"
                   >
                     <WhatsappLogoIcon className="size-4" />
-                  </a>
+                  </button>
                 </div>
               </div>
 
