@@ -11,6 +11,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
+import { FacebookLogoIcon, TwitterLogoIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
 import { getImageUrl } from "@/lib/sanity";
 import { galleryImages } from "@/data/pages/gallery";
 
@@ -141,6 +142,46 @@ export default function GalleryPage() {
                               </div>
                             </article>
                           </Link>
+
+                          <div className="flex items-center gap-1 px-6 pb-4">
+                            <span className="text-xs text-muted-foreground mr-1">Share:</span>
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                const articleUrl = `${window.location.origin}/gallery/${item._id || index + 1}`;
+                                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(articleUrl)}`, "_blank");
+                              }}
+                              className="inline-flex items-center justify-center size-7 rounded-full hover:bg-muted transition-colors"
+                              aria-label="Share on Facebook"
+                            >
+                              <FacebookLogoIcon className="size-3.5" />
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                const articleUrl = `${window.location.origin}/gallery/${item._id || index + 1}`;
+                                window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(articleUrl)}&text=${encodeURIComponent(item.title)}`, "_blank");
+                              }}
+                              className="inline-flex items-center justify-center size-7 rounded-full hover:bg-muted transition-colors"
+                              aria-label="Share on Twitter"
+                            >
+                              <TwitterLogoIcon className="size-3.5" />
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                const articleUrl = `${window.location.origin}/gallery/${item._id || index + 1}`;
+                                window.open(`https://wa.me/?text=${encodeURIComponent(`${item.title} ${articleUrl}`)}`, "_blank");
+                              }}
+                              className="inline-flex items-center justify-center size-7 rounded-full hover:bg-muted transition-colors"
+                              aria-label="Share on WhatsApp"
+                            >
+                              <WhatsappLogoIcon className="size-3.5" />
+                            </button>
+                          </div>
                         </motion.div>
                       ))}
                     </div>

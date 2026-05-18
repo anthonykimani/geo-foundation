@@ -9,7 +9,7 @@ import ProjectDetails from "@/components/impact/project-details";
 import ProjectProgress from "@/components/impact/project-progress";
 import ProjectCard from "@/components/impact/project-card";
 import DonationModal from "@/components/shared/donation-modal";
-import { HeartIcon } from "@phosphor-icons/react";
+import { HeartIcon, FacebookLogoIcon, TwitterLogoIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
 import { getImageUrl } from "@/lib/sanity";
 
 interface ImpactDetailClientProps {
@@ -158,8 +158,32 @@ export default function ImpactDetailClient({
                     window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "_blank");
                   }}
                 >
+                  <FacebookLogoIcon className="size-4" />
                   Share
                 </Button>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      const url = window.location.href;
+                      window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(project.title)}`, "_blank");
+                    }}
+                    className="inline-flex items-center justify-center size-10 rounded-full border border-border bg-input/30 hover:bg-input/50 transition-colors"
+                    aria-label="Share on Twitter"
+                  >
+                    <TwitterLogoIcon className="size-4" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      const url = window.location.href;
+                      window.open(`https://wa.me/?text=${encodeURIComponent(`${project.title} ${url}`)}`, "_blank");
+                    }}
+                    className="inline-flex items-center justify-center size-10 rounded-full border border-border bg-input/30 hover:bg-input/50 transition-colors"
+                    aria-label="Share on WhatsApp"
+                  >
+                    <WhatsappLogoIcon className="size-4" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
