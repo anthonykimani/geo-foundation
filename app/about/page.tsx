@@ -265,8 +265,8 @@ export default function AboutPage() {
                 Meet our dedicated team members who guide GEO&apos;s mission.
               </p>
               {boardMembers && boardMembers.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {boardMembers.slice(0, 8).map((member: any, index: number) => (
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  {boardMembers.map((member: any, index: number) => (
                     <BoardMemberCard
                       key={member._id || index}
                       name={member.name}
@@ -278,7 +278,7 @@ export default function AboutPage() {
                   ))}
                 </div>
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {[1,2,3,4].map((i) => (
                     <div key={i} className="aspect-square bg-gray-200 rounded-lg" />
                   ))}
