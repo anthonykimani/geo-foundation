@@ -5,6 +5,7 @@ import Link from "next/link";
 import ProjectCard from "@/components/impact/project-card";
 import { Button } from "@/components/ui/button";
 import { DonationModal } from "@/components/shared/donation-modal";
+import { getFileUrl } from "@/lib/sanity";
 import {
   Accordion,
   AccordionItem,
@@ -49,6 +50,7 @@ export default function ProjectsPage() {
 
   const { projects, impactPage } = data;
   const cta = impactPage || {};
+  const projectFormUrl = getFileUrl(impactPage?.projectFormUrl);
 
   const grouped: Record<string, any[]> = {};
   projects.forEach((p: any) => {
@@ -71,14 +73,25 @@ export default function ProjectsPage() {
 
       <section className="py-12 md:py-16 lg:py-20">
         <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal text-foreground mb-6">
-              Our Projects
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Transparent and accountable use of your donations across every
-              initiative we undertake.
-            </p>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-12">
+            <div>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal text-foreground mb-2">
+                Our Projects
+              </h1>
+              <p className="text-lg text-muted-foreground max-w-2xl">
+                Transparent and accountable use of your donations across every
+                initiative we undertake.
+              </p>
+            </div>
+            {projectFormUrl ? (
+              <a href={projectFormUrl} target="_blank" rel="noopener noreferrer" download>
+                <Button>Start a Project</Button>
+              </a>
+            ) : (
+              <Link href="/get-involved">
+                <Button>Start a Project</Button>
+              </Link>
+            )}
           </div>
 
           {projects.length === 0 ? (
@@ -107,7 +120,7 @@ export default function ProjectsPage() {
                       {grouped[year].length !== 1 ? "s" : ""}
                     </span>
                   </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-6">
+                  <AccordionContent className="px-6 pb-6 [&_a]:no-underline">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {grouped[year].map((project: any, index: number) => (
                         <ProjectCard

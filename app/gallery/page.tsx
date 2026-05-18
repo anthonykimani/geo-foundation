@@ -107,7 +107,7 @@ export default function GalleryPage() {
                       {grouped[year].length !== 1 ? "s" : ""}
                     </span>
                   </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-6">
+                  <AccordionContent className="px-6 pb-6 [&_a]:no-underline">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {grouped[year].map((item: any, index: number) => (
                         <motion.div
