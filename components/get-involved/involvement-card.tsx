@@ -13,6 +13,7 @@ interface InvolvementCardProps {
   variant?: "primary" | "secondary" | "outline";
   onClick?: () => void;
   animationIndex?: number;
+  downloadUrl?: string;
 }
 
 function InvolvementCard({
@@ -23,6 +24,7 @@ function InvolvementCard({
   variant = "primary",
   onClick,
   animationIndex = 0,
+  downloadUrl,
 }: InvolvementCardProps) {
   const imageSrc = getImageUrl(image);
 
@@ -62,6 +64,16 @@ function InvolvementCard({
         <Button onClick={onClick} variant="outline" className="w-full">
           {buttonText}
         </Button>
+      )}
+      {downloadUrl && (
+        <a
+          href={downloadUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-2 w-full h-10 mt-2 text-sm text-primary hover:underline"
+        >
+          Download Document
+        </a>
       )}
     </motion.div>
   );

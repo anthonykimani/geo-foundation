@@ -8,6 +8,7 @@ import ProjectCard from "@/components/impact/project-card";
 import ImpactAreas from "@/components/home/impact-areas";
 import { Button } from "@/components/ui/button";
 import { DonationModal } from "@/components/shared/donation-modal";
+import { getFileUrl } from "@/lib/sanity";
 import { HeartIcon } from "@phosphor-icons/react";
 
 async function getImpactPageData() {
@@ -28,6 +29,7 @@ function ImpactPage() {
 
   const projects = data?.projects || [];
   const cta = data?.impactPage || {};
+  const projectFormUrl = getFileUrl(cta?.projectFormUrl);
   const statsBanner = (data?.stats || [])
     .filter((s: any) => s.type === "organization")
     .map((s: any) => ({ value: s.value, label: s.label }));
@@ -51,9 +53,15 @@ function ImpactPage() {
                 Transparent and accountable use of your donations
               </p>
             </div>
-            <Link href="/get-involved">
-              <Button>Start a Project</Button>
-            </Link>
+            {projectFormUrl ? (
+              <a href={projectFormUrl} target="_blank" rel="noopener noreferrer" download>
+                <Button>Start a Project</Button>
+              </a>
+            ) : (
+              <Link href="/get-involved">
+                <Button>Start a Project</Button>
+              </Link>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

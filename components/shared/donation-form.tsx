@@ -191,7 +191,7 @@ export function DonationForm({ className = "" }: DonationFormProps) {
         }}
         className="w-full"
       >
-        <TabsList className="w-full grid grid-cols-2 mb-4 rounded-xl m-6">
+        <TabsList className="w-full grid grid-cols-2 mb-4 rounded-xl">
           <TabsTrigger value="kenya" className="gap-2">
             🇰🇪 Kenya (KES)
           </TabsTrigger>

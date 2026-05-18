@@ -8,7 +8,7 @@ import VolunteerForm from "@/components/get-involved/volunteer-form";
 import SponsorForm from "@/components/get-involved/sponsor-form";
 import { DonationModal } from "@/components/shared/donation-modal";
 import { HeartIcon } from "@phosphor-icons/react";
-import { urlFor } from "@/lib/sanity";
+import { urlFor, getFileUrl } from "@/lib/sanity";
 
 async function getGetInvolvedPageData() {
   const { getGetInvolvedPage, getInvolvementOptions } = await import("@/lib/sanity/queries");
@@ -88,6 +88,7 @@ function GetInvolvedPage() {
                     setDonateOpen(true);
                   }
                 }}
+                downloadUrl={getFileUrl(card.downloadUrl) || undefined}
                 animationIndex={index}
               />
             ))}

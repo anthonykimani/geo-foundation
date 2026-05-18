@@ -311,7 +311,7 @@ export default function AboutPage() {
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Email</p>
-                      <p className="text-foreground">{contactPage?.generalEmail || "gemrunkenya@gmail.com"}</p>
+                       <p className="text-foreground">{contactPage?.generalEmail || "info@gladyserudeorganization.org"}</p>
                     </div>
                   </>
                 )}

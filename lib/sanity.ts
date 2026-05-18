@@ -24,3 +24,15 @@ export function getImageUrl(source: any): string | null {
   }
   return null;
 }
+
+export function getFileUrl(source: any): string | null {
+  if (!source) return null;
+  if (typeof source === "string" && source.trim() !== "") return source;
+  if (source._type === "file" && source.asset?._ref) {
+    const [, id, extension] = source.asset._ref.match(/^file-(.+?)-(.+)$/) || [];
+    if (id && extension) {
+      return `https://cdn.sanity.io/files/v180y67k/production/${id}.${extension}`;
+    }
+  }
+  return null;
+}

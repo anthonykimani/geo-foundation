@@ -22,4 +22,4 @@ export const contacts: ContactInfo[] = [
 
 export const generalEmail = "info@gladyserudeorganization.org";
 
-export const mailingAddress = "gemrunkenya@gmail.com";
+export const mailingAddress = "";
