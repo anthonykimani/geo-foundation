@@ -117,7 +117,7 @@ export default function GalleryPage() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6, delay: index * 0.1 }}
                         >
-                          <Link href={`/gallery/${item._id}`}>
+                          <Link href={`/gallery/${item._id || item.id}`}>
                             <article className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                               <div className="relative h-[200px] w-full">
                                 {(() => {
@@ -149,7 +149,7 @@ export default function GalleryPage() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                const articleUrl = `${window.location.origin}/gallery/${item._id}`;
+                                const articleUrl = `${window.location.origin}/gallery/${item._id || item.id}`;
                                 window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(articleUrl)}`, "_blank");
                               }}
                               className="inline-flex items-center justify-center size-7 rounded-full hover:bg-muted transition-colors"
@@ -161,7 +161,7 @@ export default function GalleryPage() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                const articleUrl = `${window.location.origin}/gallery/${item._id}`;
+                                const articleUrl = `${window.location.origin}/gallery/${item._id || item.id}`;
                                 window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(articleUrl)}&text=${encodeURIComponent(item.title)}`, "_blank");
                               }}
                               className="inline-flex items-center justify-center size-7 rounded-full hover:bg-muted transition-colors"
@@ -173,7 +173,7 @@ export default function GalleryPage() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                const articleUrl = `${window.location.origin}/gallery/${item._id}`;
+                                const articleUrl = `${window.location.origin}/gallery/${item._id || item.id}`;
                                 window.open(`https://wa.me/?text=${encodeURIComponent(`${item.title} ${articleUrl}`)}`, "_blank");
                               }}
                               className="inline-flex items-center justify-center size-7 rounded-full hover:bg-muted transition-colors"
