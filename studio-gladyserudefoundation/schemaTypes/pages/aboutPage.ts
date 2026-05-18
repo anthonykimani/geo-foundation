@@ -17,6 +17,7 @@ export default {
       type: 'array',
       of: [{type: 'text'}],
     },
+    {name: 'inspiredImage', title: 'Why We Are Inspired Image', type: 'image', options: {hotspot: true}},
     {name: 'howWeWorkTitle', title: 'How We Work Title', type: 'string'},
     {name: 'howWeWorkContent', title: 'How We Work Content', type: 'text'},
     {name: 'ctaTitle', title: 'CTA Title', type: 'string'},

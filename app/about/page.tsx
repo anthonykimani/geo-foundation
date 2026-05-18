@@ -41,13 +41,14 @@ export default function AboutPage() {
     );
   }
 
-  const valueImages = [
+  const valueImageFallbacks = [
     "/img/MUM2.jpg.jpeg",
     "/img/MUM3.jpg.jpeg",
     "/img/MUM4.jpg.jpeg",
   ];
 
   const { aboutPage, boardMembers, values, contactPage } = data;
+  const inspiredImageUrl = getImageUrl(aboutPage?.inspiredImage) || "/img/MUM.jpg.jpeg";
   const organizationName = aboutPage?.organizationName || "THE GLADYS ERUDE ORGANIZATION";
   const organizationSubtitle = aboutPage?.organizationSubtitle || "Empowering communities through education, healthcare, and sustainable development across Kenya.";
   const whyWeAreInspiredTitle = aboutPage?.whyWeAreInspiredTitle || "Why We Are Inspired";
@@ -132,7 +133,7 @@ export default function AboutPage() {
               viewport={{ once: true }}
             >
               <img
-                src="/img/MUM.jpg.jpeg"
+                src={inspiredImageUrl}
                 alt="Gladys Erude"
                 className="w-full h-auto rounded-2xl"
               />
@@ -177,7 +178,7 @@ export default function AboutPage() {
                 >
                   <div className="relative w-full h-[200px] rounded-xl overflow-hidden mb-4">
                     <img
-                      src={valueImages[index % valueImages.length]}
+                      src={getImageUrl(value.imageUrl) || valueImageFallbacks[index % valueImageFallbacks.length]}
                       alt={value.title}
                       className="w-full h-full object-cover"
                     />
@@ -200,7 +201,7 @@ export default function AboutPage() {
                 >
                   <div className="relative w-full h-[200px] rounded-xl overflow-hidden mb-4">
                     <img
-                      src={valueImages[index % valueImages.length]}
+                      src={valueImageFallbacks[index % valueImageFallbacks.length]}
                       alt={val}
                       className="w-full h-full object-cover"
                     />
