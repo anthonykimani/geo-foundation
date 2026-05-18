@@ -112,12 +112,12 @@ export default function GalleryPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {grouped[year].map((item: any, index: number) => (
                         <motion.div
-                          key={item._id || index}
-                          initial={{ opacity: 0, y: 20 }}
+          key={item._id}
+          initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6, delay: index * 0.1 }}
                         >
-                          <Link href={`/gallery/${item._id || index + 1}`}>
+                          <Link href={`/gallery/${item._id}`}>
                             <article className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                               <div className="relative h-[200px] w-full">
                                 {(() => {
@@ -149,7 +149,7 @@ export default function GalleryPage() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                const articleUrl = `${window.location.origin}/gallery/${item._id || index + 1}`;
+                                const articleUrl = `${window.location.origin}/gallery/${item._id}`;
                                 window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(articleUrl)}`, "_blank");
                               }}
                               className="inline-flex items-center justify-center size-7 rounded-full hover:bg-muted transition-colors"
@@ -161,7 +161,7 @@ export default function GalleryPage() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                const articleUrl = `${window.location.origin}/gallery/${item._id || index + 1}`;
+                                const articleUrl = `${window.location.origin}/gallery/${item._id}`;
                                 window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(articleUrl)}&text=${encodeURIComponent(item.title)}`, "_blank");
                               }}
                               className="inline-flex items-center justify-center size-7 rounded-full hover:bg-muted transition-colors"
@@ -173,7 +173,7 @@ export default function GalleryPage() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                const articleUrl = `${window.location.origin}/gallery/${item._id || index + 1}`;
+                                const articleUrl = `${window.location.origin}/gallery/${item._id}`;
                                 window.open(`https://wa.me/?text=${encodeURIComponent(`${item.title} ${articleUrl}`)}`, "_blank");
                               }}
                               className="inline-flex items-center justify-center size-7 rounded-full hover:bg-muted transition-colors"
