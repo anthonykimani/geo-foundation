@@ -25,7 +25,7 @@ export function DonationModal({ open = false, onOpenChange }: DonationModalProps
   return (
     <>
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetContent className="w-full sm:max-w-md overflow-x-hidden">
+        <SheetContent className="w-full sm:max-w-md overflow-y-auto">
           <SheetHeader>
             <SheetTitle className="flex items-center gap-2">
               Support Our Cause

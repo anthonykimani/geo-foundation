@@ -11,9 +11,9 @@ import { DonationModal } from "@/components/shared/donation-modal";
 import { HeartIcon } from "@phosphor-icons/react";
 
 async function getImpactPageData() {
-  const { getImpactPage, getProjects } = await import("@/lib/sanity/queries");
-  const [impactPage, projects] = await Promise.all([getImpactPage(), getProjects()]);
-  return { impactPage, projects };
+  const { getImpactPage, getProjects, getStats } = await import("@/lib/sanity/queries");
+  const [impactPage, projects, stats] = await Promise.all([getImpactPage(), getProjects(), getStats()]);
+  return { impactPage, projects, stats };
 }
 
 function ImpactPage() {
@@ -28,12 +28,15 @@ function ImpactPage() {
 
   const projects = data?.projects || [];
   const cta = data?.impactPage || {};
+  const statsBanner = (data?.stats || [])
+    .filter((s: any) => s.type === "organization")
+    .map((s: any) => ({ value: s.value, label: s.label }));
 
   return (
     <main className="min-h-screen bg-background pt-20">
       <Hero />
       <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
-      <StatsBanner stats={[]} />
+      <StatsBanner stats={statsBanner} />
       
       <ImpactAreas />
 
