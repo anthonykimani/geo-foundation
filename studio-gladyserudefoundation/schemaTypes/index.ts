@@ -10,6 +10,7 @@ import donationInfo from './shared/donationInfo'
 import involvementOption from './shared/involvementOption'
 import value from './shared/value'
 import stat from './shared/stat'
+import certificate from './shared/certificate'
 
 // ============================================================
 // SITE - Global settings
@@ -64,4 +65,5 @@ export const schemaTypes = [
   testimonial,
   involvementOption,
   donationInfo,
+  certificate,
 ]

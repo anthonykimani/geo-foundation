@@ -127,7 +127,7 @@ export const structure = (S: StructureBuilder) =>
                     ])
                 ),
 
-              // Contact
+               // Contact
               S.listItem()
                 .title('Contact Page')
                 .child(
@@ -136,6 +136,7 @@ export const structure = (S: StructureBuilder) =>
                     .items([
                       S.documentTypeListItem('contactPage').title('Contact Configuration'),
                       S.documentTypeListItem('boardMember').title('Board Members'),
+                      S.documentTypeListItem('certificate').title('Certificates & Permits'),
                     ])
                 ),
             ])

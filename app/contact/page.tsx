@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import BoardMemberCard from "@/components/shared/board-member-card";
+import CertificateCard from "@/components/shared/certificate-card";
 import {
   Accordion,
   AccordionItem,
@@ -11,12 +12,13 @@ import {
 } from "@/components/ui/accordion";
 
 async function getContactPageData() {
-  const { getContactPage, getBoardMembers } = await import("@/lib/sanity/queries");
-  const [contactPage, boardMembers] = await Promise.all([
+  const { getContactPage, getBoardMembers, getCertificates } = await import("@/lib/sanity/queries");
+  const [contactPage, boardMembers, certificates] = await Promise.all([
     getContactPage(),
     getBoardMembers(),
+    getCertificates(),
   ]);
-  return { contactPage, boardMembers };
+  return { contactPage, boardMembers, certificates };
 }
 
 const sectionLabels: Record<string, string> = {
@@ -46,6 +48,7 @@ export default function ContactPage() {
 
   const contacts = data?.contactPage?.contacts || [];
   const boardMembers = data?.boardMembers || [];
+  const certificates = data?.certificates || [];
 
   const grouped: Record<string, Record<string, any[]>> = {};
   boardMembers.forEach((m: any) => {
@@ -139,6 +142,40 @@ export default function ContactPage() {
                 </AccordionItem>
               ))}
             </Accordion>
+          )}
+
+          {certificates.length > 0 && (
+            <div className="mt-16">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="text-center mb-10"
+              >
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-4">
+                  Certificates & Permits
+                </h2>
+                <p className="text-muted-foreground max-w-xl mx-auto">
+                  Official documentation and regulatory approvals for the
+                  Gladys Erude Organization.
+                </p>
+              </motion.div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {certificates.map((cert: any, index: number) => (
+                  <CertificateCard
+                    key={cert._id || index}
+                    title={cert.title}
+                    issuer={cert.issuer}
+                    year={cert.year}
+                    image={cert.imageUrl}
+                    file={cert.fileUrl}
+                    description={cert.description}
+                    animationIndex={index}
+                  />
+                ))}
+              </div>
+            </div>
           )}
         </div>
       </section>

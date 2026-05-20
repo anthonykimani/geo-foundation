@@ -104,3 +104,8 @@ export async function getTestimonials() {
   const query = `*[_type == "testimonial"]`;
   return client.fetch(query, {}, { cache: "no-store" });
 }
+
+export async function getCertificates() {
+  const query = `*[_type == "certificate"] | order(year desc)`;
+  return client.fetch(query, {}, { cache: "no-store" });
+}
