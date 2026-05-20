@@ -11,7 +11,11 @@ export default {
   fields: [
     {name: 'title', title: 'Title', type: 'string'},
     {name: 'issuer', title: 'Issuing Authority', type: 'string'},
-    {name: 'year', title: 'Year', type: 'string'},
+    {name: 'year', title: 'Year', type: 'string', options: {list: [
+      {title: 'NYAYO', value: 'NYAYO'},
+      {title: 'SIMBA', value: 'SIMBA'},
+      {title: 'SHUJAA', value: 'SHUJAA'},
+    ]}},
     {name: 'imageUrl', title: 'Preview Image', type: 'image', description: 'Thumbnail or scan of the certificate'},
     {name: 'fileUrl', title: 'Downloadable Document', type: 'file', description: 'Optional full PDF version'},
     {name: 'description', title: 'Description', type: 'text'},

@@ -23,7 +23,7 @@ async function getContactPageData() {
 
 const sectionLabels: Record<string, string> = {
   board: "Board Members",
-  members: "Members",
+  members: "Team Members",
   volunteers: "Volunteers",
 };
 

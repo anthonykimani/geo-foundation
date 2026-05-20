@@ -13,19 +13,19 @@ const client = createClient({
 });
 
 const assignments = {
-  "Dr. Victor Erude Lidaywa": { year: "2026", section: "board" },
-  "Julius Ngombo": { year: "2026", section: "board" },
-  "Martha Valentine Masila": { year: "2026", section: "board" },
-  "Jackson Adembesa, Eng.": { year: "2026", section: "board" },
-  "Chrispin Ng'ang'a": { year: "2026", section: "board" },
-  "Roy Oduor": { year: "2026", section: "board" },
-  "Tony Erude Kirigano": { year: "2026", section: "board" },
-  "Gloria Miseri": { year: "2026", section: "board" },
-  "Rev. Byron Erude": { year: "2025", section: "members" },
-  "Max K Erude": { year: "2025", section: "members" },
-  "Silvester Erude": { year: "2025", section: "members" },
-  "Alex Gonzo": { year: "2024", section: "volunteers" },
-  "Emily Sang": { year: "2024", section: "volunteers" },
+  "Dr. Victor Erude Lidaywa": { year: "NYAYO", section: "board" },
+  "Julius Ngombo": { year: "NYAYO", section: "board" },
+  "Martha Valentine Masila": { year: "NYAYO", section: "board" },
+  "Jackson Adembesa, Eng.": { year: "NYAYO", section: "board" },
+  "Chrispin Ng'ang'a": { year: "NYAYO", section: "board" },
+  "Roy Oduor": { year: "NYAYO", section: "board" },
+  "Tony Erude Kirigano": { year: "NYAYO", section: "board" },
+  "Gloria Miseri": { year: "NYAYO", section: "board" },
+  "Rev. Byron Erude": { year: "SIMBA", section: "members" },
+  "Max K Erude": { year: "SIMBA", section: "members" },
+  "Silvester Erude": { year: "SIMBA", section: "members" },
+  "Alex Gonzo": { year: "SHUJAA", section: "volunteers" },
+  "Emily Sang": { year: "SHUJAA", section: "volunteers" },
 };
 
 async function patch() {
@@ -35,11 +35,7 @@ async function patch() {
     if (a) {
       await client
         .patch(m._id)
-        .set({
-          year: a.year,
-          section: a.section,
-          description: m.description || undefined,
-        })
+        .set({ year: a.year, section: a.section })
         .commit();
       console.log("Patched:", m.name, "->", a.year, a.section);
     }
