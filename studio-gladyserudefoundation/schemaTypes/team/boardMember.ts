@@ -14,7 +14,7 @@ export default {
     {name: 'title', title: 'Title', type: 'string'},
     {name: 'bio', title: 'Short Bio', type: 'text', description: 'Brief bio shown on listing cards'},
     {name: 'description', title: 'Full Description', type: 'text', description: 'Extended description shown on detail page'},
-    {name: 'order', title: 'Display Order', type: 'number', description: 'Lower numbers appear first'},
+    {name: 'orderRank', title: 'Order', type: 'string', hidden: true},
     {name: 'year', title: 'Year', type: 'string', options: {list: [
       {title: 'NYAYO', value: 'NYAYO'},
       {title: 'SIMBA', value: 'SIMBA'},

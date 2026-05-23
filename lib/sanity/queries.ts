@@ -21,7 +21,7 @@ export async function getTeamMembers() {
 }
 
 export async function getBoardMembers() {
-  const query = `*[_type == "boardMember"] | order(order)`;
+  const query = `*[_type == "boardMember"] | order(orderRank)`;
   return client.fetch(query, {}, { cache: "no-store" });
 }
 

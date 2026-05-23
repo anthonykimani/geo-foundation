@@ -1,6 +1,7 @@
 import { StructureBuilder } from 'sanity/structure'
+import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 
-export const structure = (S: StructureBuilder) =>
+export const structure = (S: StructureBuilder, context: any) =>
   S.list()
     .title('Website Content')
     .items([
@@ -30,7 +31,7 @@ export const structure = (S: StructureBuilder) =>
                     .title('Team')
                     .items([
                       S.documentTypeListItem('teamMember').title('Team Members'),
-                      S.documentTypeListItem('boardMember').title('Board Members'),
+                      orderableDocumentListDeskItem({ type: 'boardMember', title: 'Board Members', S, context }),
                     ])
                 ),
 
@@ -123,7 +124,7 @@ export const structure = (S: StructureBuilder) =>
                       S.documentTypeListItem('aboutPage').title('About Configuration'),
                       S.documentTypeListItem('value').title('Values'),
                       S.documentTypeListItem('teamMember').title('Team Members'),
-                      S.documentTypeListItem('boardMember').title('Board Members'),
+                      orderableDocumentListDeskItem({ type: 'boardMember', title: 'Board Members', S, context }),
                     ])
                 ),
 
@@ -135,7 +136,7 @@ export const structure = (S: StructureBuilder) =>
                     .title('Contact Page')
                     .items([
                       S.documentTypeListItem('contactPage').title('Contact Configuration'),
-                      S.documentTypeListItem('boardMember').title('Board Members'),
+                      orderableDocumentListDeskItem({ type: 'boardMember', title: 'Board Members', S, context }),
                       S.documentTypeListItem('certificate').title('Certificates & Permits'),
                     ])
                 ),
