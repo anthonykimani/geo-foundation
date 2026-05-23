@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import BoardMemberCard from "@/components/shared/board-member-card";
 import CertificateCard from "@/components/shared/certificate-card";
+import PartnersPromo from "@/components/shared/partners-promo";
 import {
   Accordion,
   AccordionItem,
@@ -179,6 +180,8 @@ export default function ContactPage() {
           )}
         </div>
       </section>
+
+      <PartnersPromo />
 
       <section className="py-12 md:py-16 lg:py-20 bg-muted/30">
         <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
