@@ -11,6 +11,7 @@ import involvementOption from './shared/involvementOption'
 import value from './shared/value'
 import stat from './shared/stat'
 import certificate from './shared/certificate'
+import brickEntry from './shared/brickEntry'
 
 // ============================================================
 // SITE - Global settings
@@ -66,4 +67,5 @@ export const schemaTypes = [
   involvementOption,
   donationInfo,
   certificate,
+  brickEntry,
 ]

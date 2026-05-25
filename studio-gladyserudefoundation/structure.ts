@@ -157,6 +157,7 @@ export const structure = (S: StructureBuilder, context: any) =>
             .items([
               S.documentTypeListItem('siteSettings').title('Site Settings'),
               S.documentTypeListItem('socialLink').title('Social Links'),
+              S.documentTypeListItem('brickEntry').title('Brick Entries'),
             ])
         ),
     ])
