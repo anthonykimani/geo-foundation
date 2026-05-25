@@ -57,6 +57,7 @@ export function DonationForm({ className = "" }: DonationFormProps) {
   const [showGoFundMe, setShowGoFundMe] = useState(false);
   const [showPayPal, setShowPayPal] = useState(false);
   const [showTillNumber, setShowTillNumber] = useState(false);
+  const [paypalAmount, setPaypalAmount] = useState(10);
   const [donationUrls, setDonationUrls] = useState({ gofundmeUrl: "", paypalUrl: "" });
 
   useEffect(() => {
@@ -383,25 +384,57 @@ export function DonationForm({ className = "" }: DonationFormProps) {
                 </button>
               ) : (
                 <div className="space-y-4">
-                  <div className="relative w-full aspect-square max-w-[300px] mx-auto">
-                    <img
-                      src="/img/paypal-qr-code.jpeg"
-                      alt="PayPal QR Code"
-                      className="w-full h-full object-contain"
+                  <p className="text-sm text-muted-foreground">
+                    Make a secure donation via PayPal. Enter an amount and click below to proceed to PayPal.
+                  </p>
+                  <div className="flex gap-3">
+                    <input
+                      type="number"
+                      min="5"
+                      placeholder="Amount (USD)"
+                      className="flex-1 h-12 px-4 text-sm border-2 border-input rounded-lg bg-background"
+                      value={paypalAmount}
+                      onChange={(e) => setPaypalAmount(Number(e.target.value))}
                     />
+                    <button
+                      onClick={async () => {
+                        try {
+                          const res = await fetch("/api/paypal/order", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ amount: paypalAmount, currency: "USD" }),
+                          });
+                          const data = await res.json();
+                          if (data.links) {
+                            const approve = data.links.find((l: any) => l.rel === "payer-action" || l.rel === "approve");
+                            if (approve?.href) window.location.href = approve.href;
+                          } else if (data.id) {
+                            window.open(`https://www.paypal.com/checkoutnow?token=${data.id}`, "_blank");
+                          }
+                        } catch {
+                          window.open(donationUrls.paypalUrl || "https://www.paypal.com/ncp/payment/G9LWHXJNU2DKQ", "_blank");
+                        }
+                      }}
+                      className="bg-[#0070BA] text-white px-6 py-3 rounded-lg hover:bg-[#005ea6] transition-colors text-sm font-semibold"
+                    >
+                      Pay with PayPal
+                    </button>
                   </div>
                   <a
                     href={donationUrls.paypalUrl || "https://www.paypal.com/ncp/payment/G9LWHXJNU2DKQ"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full h-12 bg-[#0070BA] text-white rounded-lg hover:bg-[#005ea6] transition-colors text-base font-semibold"
+                    className="flex items-center justify-center gap-2 w-full h-12 border-2 border-input rounded-lg hover:bg-muted transition-colors text-base font-semibold"
                   >
                     <HeartIcon size={20} weight="fill" />
-                    Open PayPal
+                    Open PayPal Directly
                   </a>
-                  <p className="text-sm text-center text-muted-foreground">
-                    Scan the QR code or click the button to donate via PayPal
-                  </p>
+                  <button
+                    onClick={() => setShowPayPal(false)}
+                    className="text-sm text-muted-foreground hover:text-foreground underline w-full text-center"
+                  >
+                    Back
+                  </button>
                 </div>
               )}
             </div>
