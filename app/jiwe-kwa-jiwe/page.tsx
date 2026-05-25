@@ -41,7 +41,7 @@ function JiweKwaJiwePage() {
 
   const stats = [
     { value: (data.bricksRaised || 0).toLocaleString(), label: "Bricks Raised", variant: "primary" as const },
-    { value: (data.targetBricks || 660000).toLocaleString(), label: "Target Bricks", variant: "default" as const },
+    { value: (data.targetBricks || 0).toLocaleString(), label: "Target Bricks", variant: "default" as const },
     { value: "100%", label: "Transparent", variant: "default" as const },
   ];
 
@@ -49,7 +49,7 @@ function JiweKwaJiwePage() {
     title: data.featuredProjectTitle || "THE TIGOI PRIMARY CLASSROOM BUILD",
     subtitle: data.featuredProjectSubtitle || "We are mobilizing the community to construct new permanent educational structures in Kilifi.",
     bricksRaised: data.bricksRaised || 0,
-    targetBricks: data.targetBricks || 660000,
+    targetBricks: data.targetBricks || 0,
     image: data.featuredProjectImage,
   };
 

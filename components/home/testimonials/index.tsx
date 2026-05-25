@@ -51,7 +51,7 @@ function Testimonials({ data }: TestimonialsProps) {
   }, [data]);
 
   const headerTitle = data?.header?.title || "Real stories, real impact";
-  const headerSubtitle = data?.header?.subtitle || "Discover how the Glady's Erude Foundation has transformed lives and the community through real experiences";
+  const headerSubtitle = data?.header?.subtitle || "Discover how the Gladys Erude Organization has transformed lives and the community through real experiences";
 
   const cardWidth = 507;
   const gap = 24;

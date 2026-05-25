@@ -64,7 +64,7 @@ function HeroSection() {
   const [jiweData, setJiweData] = useState<any>(null);
   
   const bricksRaised = homePageData?.bricksRaised || 0;
-  const targetBricks = homePageData?.targetBricks || 15000;
+  const targetBricks = homePageData?.targetBricks || 0;
   const heroBackgroundImage = homePageData?.heroBackgroundImage;
 
   const progressPercentage = Math.min(
@@ -126,11 +126,11 @@ function HeroSection() {
     const fetchSanityData = async () => {
       try {
         const data = await getHomePageData();
-        setHomePageData(data.homePage || { bricksRaised: 0, targetBricks: 15000 });
+        setHomePageData(data.homePage || { bricksRaised: 0, targetBricks: 0 });
         setJiweData(data.jiwePage);
       } catch (error) {
         console.error("Error fetching sanity data:", error);
-        setHomePageData({ bricksRaised: 0, targetBricks: 15000 });
+        setHomePageData({ bricksRaised: 0, targetBricks: 0 });
       }
     };
 

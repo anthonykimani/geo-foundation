@@ -21,7 +21,7 @@ function EventInfo() {
 
   const title = data?.eventDetailsTitle || "Event Details";
   const description = data?.eventDetailsDescription || [];
-  const hashtags = data?.runHashtags || "#GERun2025";
+  const hashtags = data?.runHashtags || "";
   const eventImage = data?.eventImage;
   const eventImageUrl = getImageUrl(eventImage);
 

@@ -20,7 +20,7 @@ function AboutRun() {
   const aboutRun = data || {
     aboutRunTitle: "About the Run",
     aboutRunDescription: ["Join us for our annual memorial run to support education initiatives in Kenya."],
-    runHashtags: "#GERun2025"
+    runHashtags: ""
   };
 
   return (
@@ -44,7 +44,7 @@ function AboutRun() {
             </p>
           ))}
           <p className="text-lg text-primary font-medium">
-            {aboutRun.runHashtags || "#GERun2025"}
+            {aboutRun.runHashtags || ""}
           </p>
         </motion.div>
       </div>

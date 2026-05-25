@@ -78,7 +78,7 @@ function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
     subtitle: jiweData?.featuredProjectSubtitle || jiweData?.featuredProject?.subtitle || "",
     image: jiweData?.featuredProjectImage || jiweData?.featuredProject?.image,
     bricksRaised: bricksRaised || jiweData?.bricksRaised || 0,
-    targetBricks: jiweData?.targetBricks || 12000,
+    targetBricks: jiweData?.targetBricks || 0,
   };
   const news = jiweData?.news || [];
 

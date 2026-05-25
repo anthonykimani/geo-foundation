@@ -81,19 +81,19 @@ function Footer() {
                 ))
               ) : (
                 <>
-                  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
+                  <a href="https://www.facebook.com/thegladyserudeorganization" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
                     <FacebookLogoIcon size={20} />
                   </a>
-                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
+                  <a href="https://www.instagram.com/thegladyserudeorganization" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
                     <InstagramLogoIcon size={20} />
                   </a>
-                  <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
+                  <a href="https://www.tiktok.com/@g.e.o_01" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
                     <TiktokLogoIcon size={20} />
                   </a>
-                  <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
+                  <a href="https://youtube.com/@GladysErudeOrganization" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
                     <YoutubeLogoIcon size={20} />
                   </a>
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
+                  <a href="https://www.linkedin.com/in/the-gladys-erude-organization-geo" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
                     <LinkedinLogoIcon size={20} />
                   </a>
                 </>
