@@ -6,17 +6,19 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import BoardMemberCard from "@/components/shared/board-member-card";
+import CertificateCard from "@/components/shared/certificate-card";
 import { getImageUrl } from "@/lib/sanity";
 
 async function getPageData() {
-  const { getAboutPage, getBoardMembers, getValues, getContactPage } = await import("@/lib/sanity/queries");
-  const [aboutPage, boardMembers, values, contactPage] = await Promise.all([
+  const { getAboutPage, getBoardMembers, getValues, getContactPage, getCertificates } = await import("@/lib/sanity/queries");
+  const [aboutPage, boardMembers, values, contactPage, certificates] = await Promise.all([
     getAboutPage(),
     getBoardMembers(),
     getValues(),
-    getContactPage()
+    getContactPage(),
+    getCertificates(),
   ]);
-  return { aboutPage, boardMembers, values, contactPage };
+  return { aboutPage, boardMembers, values, contactPage, certificates };
 }
 
 export default function AboutPage() {
@@ -25,6 +27,7 @@ export default function AboutPage() {
     boardMembers: any[];
     values: any[];
     contactPage: any;
+    certificates: any[];
   } | null>(null);
 
   useEffect(() => {
@@ -47,7 +50,7 @@ export default function AboutPage() {
     "/img/MUM4.jpg.jpeg",
   ];
 
-  const { aboutPage, boardMembers, values, contactPage } = data;
+  const { aboutPage, boardMembers, values, contactPage, certificates } = data;
   const inspiredImageUrl = getImageUrl(aboutPage?.inspiredImage) || "/img/MUM.jpg.jpeg";
   const organizationName = aboutPage?.organizationName || "THE GLADYS ERUDE ORGANIZATION";
   const organizationSubtitle = aboutPage?.organizationSubtitle || "Empowering communities through education, healthcare, and sustainable development across Kenya.";
@@ -254,6 +257,41 @@ export default function AboutPage() {
           </motion.div>
         </div>
       </section>
+
+      {certificates.length > 0 && (
+        <section className="py-12 md:py-16 lg:py-20">
+          <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1240px] mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center mb-10"
+            >
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-4">
+                Certificates & Compliance
+              </h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                Official documentation and regulatory approvals for the Gladys Erude Organization.
+              </p>
+            </motion.div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {certificates.map((cert: any, index: number) => (
+                <CertificateCard
+                  key={cert._id || index}
+                  title={cert.title}
+                  issuer={cert.issuer}
+                  year={cert.year}
+                  image={cert.imageUrl}
+                  file={cert.fileUrl}
+                  description={cert.description}
+                  animationIndex={index}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="py-12 md:py-16 lg:py-20">
         <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1240px] mx-auto">

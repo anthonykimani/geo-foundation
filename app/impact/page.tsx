@@ -27,6 +27,16 @@ function ImpactPage() {
       .catch(() => setData(null));
   }, []);
 
+  if (!data) {
+    return (
+      <main className="min-h-screen bg-background pt-20">
+        <div className="container px-4 py-12 text-center">
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </main>
+    );
+  }
+
   const projects = data?.projects || [];
   const cta = data?.impactPage || {};
   const projectFormUrl = getFileUrl(cta?.projectFormUrl);

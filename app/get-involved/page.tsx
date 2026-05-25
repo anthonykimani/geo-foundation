@@ -26,9 +26,16 @@ function GetInvolvedPage() {
   const [sponsorOpen, setSponsorOpen] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
+    const timer = setTimeout(() => {
+      if (!cancelled) setData({ options: [], pageData: null });
+    }, 15000);
+
     getGetInvolvedPageData()
-      .then(setData)
-      .catch(() => setData(null));
+      .then((d) => { if (!cancelled) { clearTimeout(timer); setData(d); } })
+      .catch(() => { if (!cancelled) { clearTimeout(timer); setData(null); } });
+
+    return () => { cancelled = true; clearTimeout(timer); };
   }, []);
 
   const shareToSocials = () => {

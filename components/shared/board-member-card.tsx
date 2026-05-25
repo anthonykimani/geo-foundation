@@ -47,7 +47,7 @@ function BoardMemberCard({
           src={imageSrc}
           alt={name}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
+          className="object-cover object-[center_20%] group-hover:scale-105 transition-transform duration-500"
         />
       ) : (
         <div className="w-full h-full bg-gray-200 flex items-center justify-center">

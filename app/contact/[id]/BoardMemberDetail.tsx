@@ -44,7 +44,7 @@ export default function BoardMemberDetail({
                 <img
                   src={imageUrl}
                   alt={name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-[center_15%]"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gray-200">
