@@ -77,5 +77,16 @@ export default {
     },
     {name: 'runHashtags', title: 'Run Hashtags', type: 'string'},
     {name: 'registrationUrl', title: 'Registration URL', type: 'url'},
+    {
+      name: 'mediaContacts',
+      title: 'Media Contacts',
+      type: 'array',
+      of: [{type: 'object', fields: [
+        {name: 'name', title: 'Name', type: 'string'},
+        {name: 'country', title: 'Country', type: 'string'},
+        {name: 'phone', title: 'Phone', type: 'string'},
+        {name: 'email', title: 'Email', type: 'string'},
+      ]}],
+    },
   ],
 }
