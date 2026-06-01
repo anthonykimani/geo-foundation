@@ -123,7 +123,7 @@ export default function ContactPage() {
                           <h3 className="text-base font-medium text-muted-foreground uppercase tracking-wide mb-4">
                             {sectionLabels[section] || section}
                           </h3>
-                          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
                             {members.map((member: any, index: number) => (
                               <BoardMemberCard
                                 key={member._id || index}

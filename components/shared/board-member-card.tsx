@@ -40,28 +40,29 @@ function BoardMemberCard({
     <motion.div
       ref={ref}
       {...bottomAnimation}
-      className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer group bg-gray-100"
+      className="w-full rounded-xl overflow-hidden bg-white border border-gray-200 shadow-sm"
     >
-      {imageSrc ? (
-        <Image
-          src={imageSrc}
-          alt={name}
-          fill
-          className="object-cover object-[center_20%] group-hover:scale-105 transition-transform duration-500"
-        />
-      ) : (
-        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-          <span className="text-4xl text-gray-400">{name.charAt(0)}</span>
-        </div>
-      )}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 p-5">
-        <p className="text-base font-semibold text-white mb-1">{name}</p>
+      <div className="relative w-full h-[280px] overflow-hidden">
+        {imageSrc ? (
+          <Image
+            src={imageSrc}
+            alt={name}
+            fill
+            className="object-cover object-[center_20%] group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+            <span className="text-4xl text-gray-400">{name.charAt(0)}</span>
+          </div>
+        )}
+      </div>
+      <div className="p-4">
+        <p className="text-base font-semibold text-foreground mb-1">{name}</p>
         {title && (
-          <p className="text-sm text-white/80 line-clamp-2">{title}</p>
+          <p className="text-sm text-muted-foreground">{title}</p>
         )}
         {bio && (
-          <p className="text-xs text-white/60 mt-2 line-clamp-2">{bio}</p>
+          <p className="text-xs text-muted-foreground/60 mt-2 line-clamp-2">{bio}</p>
         )}
       </div>
     </motion.div>

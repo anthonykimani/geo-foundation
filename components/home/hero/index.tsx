@@ -203,9 +203,7 @@ function HeroSection() {
                       {...bottomAnimation}
                       className="max-w-2xl text-base sm:text-lg md:text-xl text-white/90"
                     >
-                      We believe that sustainable impact is built through
-                      transparency, participation, and measurable action one brick
-                      at a time.
+                      Honoring the legacy of Gladys Erude by transforming schools, empowering women, and creating opportunities for vulnerable children across Kenya. Your $1 donation builds 1 brick toward this future.
                     </motion.p>
                   </div>
 

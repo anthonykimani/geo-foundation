@@ -14,10 +14,10 @@ function ProjectProgress({ raised, goal }: ProjectProgressProps) {
     <div className="space-y-4">
       <div className="flex justify-between text-sm">
         <span className="text-muted-foreground">
-          Raised: {raised.toLocaleString()}KES
+          {raised.toLocaleString()} Bricks Raised
         </span>
         <span className="text-muted-foreground">
-          Goal: {goal.toLocaleString()}KES
+          {goal.toLocaleString()} Target Bricks
         </span>
       </div>
 

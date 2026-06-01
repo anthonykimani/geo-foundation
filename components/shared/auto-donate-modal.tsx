@@ -13,7 +13,7 @@ function AutoDonateModal() {
     const timer = setTimeout(() => {
       setOpen(true);
       setHasShown(true);
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, [hasShown]);

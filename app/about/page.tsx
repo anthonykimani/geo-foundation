@@ -293,71 +293,71 @@ export default function AboutPage() {
         </section>
       )}
 
-      <section className="py-12 md:py-16 lg:py-20">
-        <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1240px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-6">
-                Our Team
-              </h2>
-              <p className="text-muted-foreground mb-6">
-                Meet our dedicated team members who guide GEO&apos;s mission.
-              </p>
-              {boardMembers && boardMembers.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {boardMembers.map((member: any, index: number) => (
-                    <BoardMemberCard
-                      key={member._id || index}
-                      name={member.name}
-                      image={member.imageUrl}
-                      title={member.title}
-                      bio={member.bio}
-                      animationIndex={index}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {[1,2,3,4].map((i) => (
-                    <div key={i} className="aspect-square bg-gray-200 rounded-lg" />
-                  ))}
-                </div>
-              )}
+      <section className="py-12 md:py-16 lg:py-20 bg-gray-50">
+        <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-6">
+            Our Team
+          </h2>
+          <p className="text-muted-foreground mb-8">
+            Meet our dedicated team members who guide GEO&apos;s mission.
+          </p>
+          {boardMembers && boardMembers.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+              {boardMembers.map((member: any, index: number) => (
+                <BoardMemberCard
+                  key={member._id || index}
+                  name={member.name}
+                  image={member.imageUrl}
+                  title={member.title}
+                  bio={member.bio}
+                  animationIndex={index}
+                />
+              ))}
             </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+              {[1,2,3,4].map((i) => (
+                <div key={i} className="aspect-square bg-gray-200 rounded-lg" />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
 
-            <div>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-6">
-                Contact Us
-              </h2>
-              <div className="space-y-4 mb-6">
-                {contactPage?.contacts && contactPage.contacts.length > 0 ? (
-                  contactPage.contacts.map((contact: any, index: number) => (
-                    <div key={index}>
-                      <p className="text-sm text-muted-foreground">{contact.country}</p>
-                      <p className="text-foreground">{contact.name} {contact.phone}</p>
-                    </div>
-                  ))
-                ) : (
-                  <>
-                    <div>
-                      <p className="text-sm text-muted-foreground">USA</p>
-                      <p className="text-foreground">Sylvester Erude +1 (309) 569 1606</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">Kenya</p>
-                      <p className="text-foreground">Byron Erude +254 718 069 393</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">Email</p>
-                       <p className="text-foreground">{contactPage?.generalEmail || "info@gladyserudeorganization.org"}</p>
-                    </div>
-                  </>
-                )}
-              </div>
-              <Link href="/contact" className="bg-primary text-white hover:bg-primary/90 px-6 py-2 rounded-full inline-flex items-center">
-                Connect With Us
-              </Link>
-            </div>
+      <section className="py-12 md:py-16 lg:py-20">
+        <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-foreground mb-8 text-center">
+            Contact Us
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
+            {contactPage?.contacts && contactPage.contacts.length > 0 ? (
+              contactPage.contacts.map((contact: any, index: number) => (
+                <div key={index} className="text-center p-6 bg-white rounded-xl shadow-sm">
+                  <h3 className="text-lg font-medium text-foreground mb-3">{contact.country}</h3>
+                  <p className="text-muted-foreground">{contact.name} {contact.phone}</p>
+                </div>
+              ))
+            ) : (
+              <>
+                <div className="text-center p-6 bg-white rounded-xl shadow-sm">
+                  <h3 className="text-lg font-medium text-foreground mb-3">USA</h3>
+                  <p className="text-muted-foreground">Sylvester Erude +1 (309) 569 1606</p>
+                </div>
+                <div className="text-center p-6 bg-white rounded-xl shadow-sm">
+                  <h3 className="text-lg font-medium text-foreground mb-3">Kenya</h3>
+                  <p className="text-muted-foreground">Byron Erude +254 718 069 393</p>
+                </div>
+                <div className="text-center p-6 bg-white rounded-xl shadow-sm">
+                  <h3 className="text-lg font-medium text-foreground mb-3">Email</h3>
+                  <p className="text-muted-foreground">{contactPage?.generalEmail || "info@gladyserudeorganization.org"}</p>
+                </div>
+              </>
+            )}
+          </div>
+          <div className="text-center">
+            <Link href="/contact" className="bg-primary text-white hover:bg-primary/90 px-8 py-3 rounded-full inline-flex items-center text-base font-medium">
+              Connect With Us
+            </Link>
           </div>
         </div>
       </section>

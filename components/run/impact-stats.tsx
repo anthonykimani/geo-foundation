@@ -8,6 +8,13 @@ async function getRunPageData() {
   return getRunPage();
 }
 
+function parseDollarAmount(amount: string): number {
+  if (!amount) return 0;
+  const cleaned = amount.replace(/[$,\s]/g, "");
+  const parsed = parseFloat(cleaned);
+  return isNaN(parsed) ? 0 : parsed;
+}
+
 function ImpactStats() {
   const [data, setData] = useState<any>(null);
 
@@ -72,7 +79,7 @@ function ImpactStats() {
                     : "text-2xl font-bold text-foreground"
                 }
               >
-                {yearData.amount}
+                {parseDollarAmount(yearData.amount).toLocaleString()} Bricks
               </p>
             </motion.div>
           ))}
