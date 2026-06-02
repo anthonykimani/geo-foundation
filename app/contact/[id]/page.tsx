@@ -61,8 +61,6 @@ export default async function Page({ params }: Props) {
     <BoardMemberDetail
       name={member.name}
       title={member.title}
-      bio={member.bio}
-      description={member.description}
       imageUrl={imageUrl}
       gallery={gallery}
     />
