@@ -100,7 +100,7 @@ export default function ContactPage() {
                   value={year}
                   className="border rounded-xl overflow-hidden"
                 >
-                  <AccordionTrigger className="px-6 py-4 hover:no-underline">
+                  <AccordionTrigger className="px-6 py-4 no-underline">
                     <span className="text-xl font-medium">{year}</span>
                     <span className="text-sm text-muted-foreground ml-auto mr-4">
                       {Object.values(grouped[year]).flat().length} member
