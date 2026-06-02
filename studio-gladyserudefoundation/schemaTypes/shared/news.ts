@@ -15,6 +15,10 @@ export default {
     {name: 'date', title: 'Date', type: 'string'},
     {name: 'category', title: 'Category', type: 'string'},
     {name: 'imageUrl', title: 'Image', type: 'image'},
+    {name: 'gallery', title: 'Gallery Images', type: 'array', of: [{type: 'object', fields: [
+      {name: 'image', title: 'Image', type: 'image', options: {hotspot: true}},
+      {name: 'caption', title: 'Caption', type: 'string'},
+    ]}]},
     {name: 'excerpt', title: 'Excerpt', type: 'text'},
     {name: 'content', title: 'Content', type: 'array', of: [{type: 'block'}]},
   ],

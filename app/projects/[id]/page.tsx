@@ -58,6 +58,13 @@ export default async function Page({ params }: Props) {
 
   const projectImageUrl = getImageUrl(project.imageUrl);
 
+  const projectGallery = project?.gallery
+    ?.map((g: any) => {
+      const url = getImageUrl(g.image);
+      return url ? { url, caption: g.caption } : null;
+    })
+    .filter(Boolean) || [];
+
   const relatedProjects = projects
     .filter((p: any) => p._id !== project._id)
     .slice(0, 3);
@@ -68,6 +75,7 @@ export default async function Page({ params }: Props) {
       impactItem={null}
       relatedProjects={relatedProjects}
       projectImageUrl={projectImageUrl}
+      projectGallery={projectGallery}
       impactImageUrl={null}
       notFound={false}
     />

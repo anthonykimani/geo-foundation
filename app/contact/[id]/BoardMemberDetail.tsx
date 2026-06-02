@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon } from "@phosphor-icons/react";
+import ImageGallery from "@/components/shared/image-gallery";
 
 interface BoardMemberDetailProps {
   name: string;
@@ -11,6 +12,7 @@ interface BoardMemberDetailProps {
   bio: string;
   description?: string;
   imageUrl: string | null;
+  gallery?: { url: string; caption?: string }[];
 }
 
 export default function BoardMemberDetail({
@@ -19,6 +21,7 @@ export default function BoardMemberDetail({
   bio,
   description,
   imageUrl,
+  gallery = [],
 }: BoardMemberDetailProps) {
   const fullText = description || bio;
 
@@ -34,24 +37,23 @@ export default function BoardMemberDetail({
           </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 lg:items-start">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="relative w-full aspect-[3/4] lg:sticky lg:top-24 rounded-2xl overflow-hidden bg-gray-100"
-            >
-              {imageUrl ? (
-                <img
-                  src={imageUrl}
-                  alt={name}
-                  className="w-full h-full object-cover object-[center_15%]"
-                />
+            <div className="rounded-2xl overflow-hidden bg-gray-100">
+              {gallery.length > 0 ? (
+                <ImageGallery images={gallery} />
+              ) : imageUrl ? (
+                <div className="relative w-full aspect-[3/4]">
+                  <img
+                    src={imageUrl}
+                    alt={name}
+                    className="w-full h-full object-cover object-[center_15%]"
+                  />
+                </div>
               ) : (
-                <div className="w-full h-full flex items-center justify-center bg-gray-200">
+                <div className="w-full aspect-[3/4] flex items-center justify-center bg-gray-200">
                   <span className="text-6xl text-gray-400">{name.charAt(0)}</span>
                 </div>
               )}
-            </motion.div>
+            </div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -74,6 +76,12 @@ export default function BoardMemberDetail({
               </div>
             </motion.div>
           </div>
+
+          {gallery.length > 0 && (
+            <div className="mt-4">
+              <ImageGallery images={gallery} />
+            </div>
+          )}
         </div>
       </section>
     </main>

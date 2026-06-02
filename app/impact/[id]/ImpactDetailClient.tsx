@@ -11,12 +11,14 @@ import ProjectCard from "@/components/impact/project-card";
 import DonationModal from "@/components/shared/donation-modal";
 import { HeartIcon, FacebookLogoIcon, TwitterLogoIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
 import { getImageUrl } from "@/lib/sanity";
+import ImageGallery from "@/components/shared/image-gallery";
 
 interface ImpactDetailClientProps {
   project: any | null;
   impactItem: any | null;
   relatedProjects: any[];
   projectImageUrl: string | null;
+  projectGallery?: { url: string; caption?: string }[];
   impactImageUrl: string | null;
   notFound: boolean;
 }
@@ -26,6 +28,7 @@ export default function ImpactDetailClient({
   impactItem,
   relatedProjects,
   projectImageUrl,
+  projectGallery = [],
   impactImageUrl,
   notFound,
 }: ImpactDetailClientProps) {
@@ -112,14 +115,18 @@ export default function ImpactDetailClient({
       <section className="py-8 md:py-12">
         <div className="container px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 lg:items-stretch">
-            <div className="relative w-full h-[300px] md:h-[400px] lg:h-full lg:sticky lg:top-24 rounded-lg overflow-hidden">
-              {projectImageUrl ? (
-                <Image
-                  src={projectImageUrl}
-                  alt={project.title}
-                  fill
-                  className="object-cover"
-                />
+            <div className="relative w-full rounded-lg overflow-hidden">
+              {projectGallery.length > 0 ? (
+                <ImageGallery images={projectGallery} />
+              ) : projectImageUrl ? (
+                <div className="relative w-full h-[300px] md:h-[400px] lg:h-full lg:min-h-[500px]">
+                  <Image
+                    src={projectImageUrl}
+                    alt={project.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
               ) : null}
             </div>
 
@@ -187,6 +194,12 @@ export default function ImpactDetailClient({
               </div>
             </div>
           </div>
+
+          {projectGallery.length > 0 && (
+            <div className="mt-4">
+              <ImageGallery images={projectGallery} />
+            </div>
+          )}
 
           <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
           <div className="mt-12">

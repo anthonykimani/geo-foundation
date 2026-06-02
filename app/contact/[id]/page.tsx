@@ -50,6 +50,12 @@ export default async function Page({ params }: Props) {
   }
 
   const imageUrl = getImageUrl(member.imageUrl);
+  const gallery = member?.gallery
+    ?.map((g: any) => {
+      const url = getImageUrl(g.image);
+      return url ? { url, caption: g.caption } : null;
+    })
+    .filter(Boolean) || [];
 
   return (
     <BoardMemberDetail
@@ -58,6 +64,7 @@ export default async function Page({ params }: Props) {
       bio={member.bio}
       description={member.description}
       imageUrl={imageUrl}
+      gallery={gallery}
     />
   );
 }

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
+import ImageGallery from "@/components/shared/image-gallery";
 import { FacebookLogoIcon, TwitterLogoIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
 
 interface NewsItem {
@@ -21,6 +22,7 @@ interface GalleryDetailClientProps {
   prevItem: NewsItem | null;
   nextItem: NewsItem | null;
   imageUrl: string | null;
+  gallery?: { url: string; caption?: string }[];
 }
 
 export default function GalleryDetailClient({
@@ -28,6 +30,7 @@ export default function GalleryDetailClient({
   prevItem,
   nextItem,
   imageUrl,
+  gallery = [],
 }: GalleryDetailClientProps) {
   if (!newsItem) {
     return (
@@ -55,20 +58,19 @@ export default function GalleryDetailClient({
           </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 lg:items-stretch">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="relative w-full h-[300px] md:h-[400px] lg:h-full rounded-2xl overflow-hidden"
-            >
-              {imageUrl && (
-                <img
-                  src={imageUrl}
-                  alt={newsItem.title}
-                  className="w-full h-full object-cover"
-                />
-              )}
-            </motion.div>
+            <div className="relative w-full rounded-2xl overflow-hidden">
+              {gallery.length > 0 ? (
+                <ImageGallery images={gallery} />
+              ) : imageUrl ? (
+                <div className="relative w-full h-[300px] md:h-[400px] lg:h-full lg:min-h-[500px]">
+                  <img
+                    src={imageUrl}
+                    alt={newsItem.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : null}
+            </div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -153,6 +155,12 @@ export default function GalleryDetailClient({
               </div>
             </motion.div>
           </div>
+
+          {gallery.length > 0 && (
+            <div className="mt-4">
+              <ImageGallery images={gallery} />
+            </div>
+          )}
         </div>
       </section>
     </main>

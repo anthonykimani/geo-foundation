@@ -215,7 +215,7 @@ export default function ContactPage() {
                     {contact.email && (
                       <a
                         href={`mailto:${contact.email}`}
-                        className="text-primary hover:underline text-sm"
+                        className="text-primary text-sm"
                       >
                         {contact.email}
                       </a>
@@ -234,7 +234,7 @@ export default function ContactPage() {
                     <h3 className="text-lg font-medium text-foreground mb-3">USA</h3>
                     <p className="text-muted-foreground">Sylvester Erude</p>
                     <p className="text-muted-foreground">+1 (309) 569 1606</p>
-                    <a href="mailto:info@gladyserudeorganization.org" className="text-primary hover:underline text-sm">
+                    <a href="mailto:info@gladyserudeorganization.org" className="text-primary text-sm">
                       info@gladyserudeorganization.org
                     </a>
                   </motion.div>
@@ -248,7 +248,7 @@ export default function ContactPage() {
                     <h3 className="text-lg font-medium text-foreground mb-3">Kenya</h3>
                     <p className="text-muted-foreground">Byron Erude</p>
                     <p className="text-muted-foreground">+254 718 069 393</p>
-                    <a href="mailto:info@gladyserudeorganization.org" className="text-primary hover:underline text-sm">
+                    <a href="mailto:info@gladyserudeorganization.org" className="text-primary text-sm">
                       info@gladyserudeorganization.org
                     </a>
                   </motion.div>
@@ -264,7 +264,7 @@ export default function ContactPage() {
               <h3 className="text-lg font-medium text-foreground mb-3">General</h3>
               <a
                 href={`mailto:${data?.contactPage?.generalEmail || "info@gladyserudeorganization.org"}`}
-                className="text-primary hover:underline text-sm"
+                className="text-primary text-sm"
               >
                 {data?.contactPage?.generalEmail || "info@gladyserudeorganization.org"}
               </a>
