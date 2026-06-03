@@ -11,7 +11,6 @@ interface BoardMemberCardProps {
   name: string;
   image?: string | any;
   title?: string;
-  bio?: string;
   animationIndex?: number;
   linkPrefix?: string;
 }
@@ -21,7 +20,6 @@ function BoardMemberCard({
   name,
   image,
   title,
-  bio,
   animationIndex = 0,
   linkPrefix = "/contact",
 }: BoardMemberCardProps) {
@@ -60,9 +58,6 @@ function BoardMemberCard({
         <p className="text-base font-semibold text-foreground mb-1">{name}</p>
         {title && (
           <p className="text-sm text-muted-foreground">{title}</p>
-        )}
-        {bio && (
-          <p className="text-xs text-muted-foreground/60 mt-2 line-clamp-2">{bio}</p>
         )}
       </div>
     </motion.div>

@@ -309,7 +309,6 @@ export default function AboutPage() {
                   name={member.name}
                   image={member.imageUrl}
                   title={member.title}
-                  bio={member.bio}
                   animationIndex={index}
                 />
               ))}

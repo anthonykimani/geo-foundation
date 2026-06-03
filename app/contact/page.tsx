@@ -131,7 +131,6 @@ export default function ContactPage() {
                                 name={member.name}
                                 image={member.imageUrl}
                                 title={member.title}
-                                bio={member.bio}
                                 animationIndex={index}
                                 linkPrefix="/contact"
                               />

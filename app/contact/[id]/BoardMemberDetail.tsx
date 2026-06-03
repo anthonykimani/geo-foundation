@@ -9,6 +9,8 @@ import ImageGallery from "@/components/shared/image-gallery";
 interface BoardMemberDetailProps {
   name: string;
   title: string;
+  bio?: string;
+  description?: string;
   imageUrl: string | null;
   gallery?: { url: string; caption?: string }[];
 }
@@ -16,9 +18,12 @@ interface BoardMemberDetailProps {
 export default function BoardMemberDetail({
   name,
   title,
+  bio,
+  description,
   imageUrl,
   gallery = [],
 }: BoardMemberDetailProps) {
+  const fullText = description || bio;
 
   return (
     <main className="min-h-screen bg-background pt-20">
@@ -60,7 +65,16 @@ export default function BoardMemberDetail({
                 {name}
               </h1>
               {title && (
-                <p className="text-lg text-primary">{title}</p>
+                <p className="text-lg text-primary mb-6">{title}</p>
+              )}
+              {fullText && (
+                <div className="prose prose-lg text-muted-foreground">
+                  {fullText.split("\n").map((paragraph: string, idx: number) =>
+                    paragraph.trim() ? (
+                      <p key={idx} className="mb-4">{paragraph}</p>
+                    ) : null
+                  )}
+                </div>
               )}
             </motion.div>
           </div>
