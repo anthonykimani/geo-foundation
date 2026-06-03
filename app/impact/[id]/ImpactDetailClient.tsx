@@ -195,12 +195,6 @@ export default function ImpactDetailClient({
             </div>
           </div>
 
-          {projectGallery.length > 0 && (
-            <div className="mt-4">
-              <ImageGallery images={projectGallery} />
-            </div>
-          )}
-
           <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
           <div className="mt-12">
             <Tabs defaultValue="description">

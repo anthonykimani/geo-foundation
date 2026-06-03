@@ -64,12 +64,6 @@ export default function BoardMemberDetail({
               )}
             </motion.div>
           </div>
-
-          {gallery.length > 0 && (
-            <div className="mt-4">
-              <ImageGallery images={gallery} />
-            </div>
-          )}
         </div>
       </section>
     </main>
