@@ -143,6 +143,17 @@ export const structure = (S: StructureBuilder, context: any) =>
             ])
         ),
 
+      // Coming Soon Page
+      S.listItem()
+        .title('Coming Soon Page')
+        .child(
+          S.list()
+            .title('Coming Soon Page')
+            .items([
+              S.documentTypeListItem('comingSoonPage').title('Coming Soon Configuration'),
+            ])
+        ),
+
       // Divider
       S.divider(),
 
