@@ -46,7 +46,7 @@ export default function Countdown() {
       {items.map((item, i) => (
         <div key={item.label} className="flex items-center gap-3 sm:gap-5">
           <div className="flex flex-col items-center">
-            <span className="text-3xl sm:text-5xl md:text-6xl font-bold text-amber-400 tabular-nums leading-none">
+            <span className="text-3xl sm:text-5xl md:text-6xl font-bold text-white tabular-nums leading-none">
               {String(item.value).padStart(2, "0")}
             </span>
             <span className="text-xs sm:text-sm text-white/60 mt-1 uppercase tracking-widest">
@@ -54,7 +54,7 @@ export default function Countdown() {
             </span>
           </div>
           {i < items.length - 1 && (
-            <span className="text-3xl sm:text-5xl md:text-6xl font-bold text-amber-400/40 leading-none">
+            <span className="text-3xl sm:text-5xl md:text-6xl font-bold text-white/40 leading-none">
               :
             </span>
           )}

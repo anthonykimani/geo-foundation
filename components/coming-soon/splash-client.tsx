@@ -8,6 +8,7 @@ import {
   YoutubeLogoIcon,
   LinkedinLogoIcon,
 } from "@phosphor-icons/react";
+import Logo from "@/components/header/Logo";
 import Countdown from "./countdown";
 
 const socialLinks = [
@@ -36,19 +37,15 @@ export default function SplashContent({
 
       <div className="relative z-10 flex flex-col items-center px-4 text-center text-white">
         <div className="flex flex-col items-center gap-8 max-w-2xl">
-          <img
-            src="/svg/logo.svg"
-            alt="Gladys Erude Organization"
-            className="h-14 sm:h-20 w-auto"
-          />
+          <Logo />
 
           <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight">
             Launching Soon
           </h1>
 
-          <div className="w-16 h-px bg-amber-400/60" />
+          <div className="w-16 h-px bg-white/30" />
 
-          <p className="text-base sm:text-lg text-white/80 max-w-md">
+          <p className="text-base sm:text-lg text-white max-w-md">
             Build a Classroom. Brick by Brick.
           </p>
 
@@ -61,7 +58,7 @@ export default function SplashContent({
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white/60 hover:text-amber-400 transition-colors duration-300"
+                className="text-white/80 hover:text-white transition-colors duration-300"
                 aria-label={label}
               >
                 <Icon size={22} />
@@ -69,7 +66,7 @@ export default function SplashContent({
             ))}
           </div>
 
-          <p className="text-xs text-white/40 mt-6">
+          <p className="text-xs text-white/60 mt-6">
             &copy; {new Date().getFullYear()} Gladys Erude Organization
           </p>
         </div>
