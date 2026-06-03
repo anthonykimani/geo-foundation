@@ -5,11 +5,10 @@ import { useState, useEffect } from "react";
 export default function Countdown({
   targetDateTime,
 }: {
-  targetDateTime?: string;
+  targetDateTime?: string | null;
 }) {
-  const target = targetDateTime
-    ? new Date(targetDateTime).getTime()
-    : new Date("2026-06-04T16:00:00+03:00").getTime();
+  if (!targetDateTime) return null;
+  const target = new Date(targetDateTime).getTime();
 
   const [timeLeft, setTimeLeft] = useState<{
     d: number;

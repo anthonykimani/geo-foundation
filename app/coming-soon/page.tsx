@@ -11,8 +11,8 @@ export default async function ComingSoonPage() {
   return (
     <SplashContent
       heroImageUrl={heroImage}
-      heading={page?.heading || "Launching Soon"}
-      tagline={page?.tagline || "Build a Classroom. Brick by Brick."}
+      heading={page?.heading}
+      tagline={page?.tagline}
       launchDateTime={page?.launchDateTime}
     />
   );

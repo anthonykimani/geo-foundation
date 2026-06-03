@@ -27,9 +27,9 @@ export default function SplashContent({
   launchDateTime,
 }: {
   heroImageUrl: string | null;
-  heading: string;
-  tagline: string;
-  launchDateTime?: string;
+  heading: string | null | undefined;
+  tagline: string | null | undefined;
+  launchDateTime?: string | null;
 }) {
   return (
     <div className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center">
@@ -50,15 +50,19 @@ export default function SplashContent({
             className="h-14 sm:h-20 w-auto"
           />
 
-          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white">
-            {heading}
-          </h1>
+          {heading && (
+            <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white">
+              {heading}
+            </h1>
+          )}
 
-          <div className="w-16 h-px bg-white/30" />
+          {heading && <div className="w-16 h-px bg-white/30" />}
 
-          <p className="text-base sm:text-lg text-white max-w-md">
-            {tagline}
-          </p>
+          {tagline && (
+            <p className="text-base sm:text-lg text-white max-w-md">
+              {tagline}
+            </p>
+          )}
 
           <Countdown targetDateTime={launchDateTime} />
 
