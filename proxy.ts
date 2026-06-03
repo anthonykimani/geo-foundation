@@ -5,7 +5,7 @@ export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const now = Date.now();
-  const start = new Date("2026-06-04T00:00:00+03:00").getTime();
+  const start = new Date("2026-06-03T23:00:00+03:00").getTime();
   const end = new Date("2026-06-04T16:00:00+03:00").getTime();
 
   if (now >= start && now < end) {
