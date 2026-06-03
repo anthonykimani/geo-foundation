@@ -8,6 +8,7 @@ import {
   YoutubeLogoIcon,
   LinkedinLogoIcon,
 } from "@phosphor-icons/react";
+import { WhiteLogo } from "@/constants/svg";
 import Countdown from "./countdown";
 
 const socialLinks = [
@@ -37,7 +38,7 @@ export default function SplashContent({
       <div className="relative z-10 flex flex-col items-center px-4 text-center text-white">
         <div className="flex flex-col items-center gap-8 max-w-2xl">
           <img
-            src="/svg/white-logo.svg"
+            src={WhiteLogo}
             alt="Gladys Erude Organization"
             className="h-14 sm:h-20 w-auto"
           />
