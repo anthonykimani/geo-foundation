@@ -10,6 +10,7 @@ import {
 } from "@phosphor-icons/react";
 import { WhiteLogo } from "@/constants/svg";
 import Countdown from "./countdown";
+import Image from "next/image";
 
 const socialLinks = [
   { icon: FacebookLogoIcon, href: "https://www.facebook.com/thegladyserudeorganization", label: "Facebook" },
@@ -37,14 +38,14 @@ export default function SplashContent({
 
       <div className="relative z-10 flex flex-col items-center px-4 text-center text-white">
         <div className="flex flex-col items-center gap-8 max-w-2xl">
-          <img
+          <Image
             src={WhiteLogo}
             alt="Gladys Erude Organization"
             className="h-14 sm:h-20 w-auto"
           />
 
           <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white">
-            Launching Soon
+            A New Chapter of Impact Begins Soon
           </h1>
 
           <div className="w-16 h-px bg-white/30" />
