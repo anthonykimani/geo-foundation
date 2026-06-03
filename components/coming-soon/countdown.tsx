@@ -2,9 +2,15 @@
 
 import { useState, useEffect } from "react";
 
-const TARGET = new Date("2026-06-04T16:00:00+03:00").getTime();
+export default function Countdown({
+  targetDateTime,
+}: {
+  targetDateTime?: string;
+}) {
+  const target = targetDateTime
+    ? new Date(targetDateTime).getTime()
+    : new Date("2026-06-04T16:00:00+03:00").getTime();
 
-export default function Countdown() {
   const [timeLeft, setTimeLeft] = useState<{
     d: number;
     h: number;
@@ -14,7 +20,7 @@ export default function Countdown() {
 
   useEffect(() => {
     function tick() {
-      const diff = TARGET - Date.now();
+      const diff = target - Date.now();
       if (diff <= 0) {
         setTimeLeft({ d: 0, h: 0, m: 0, s: 0 });
         return;
@@ -30,7 +36,7 @@ export default function Countdown() {
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, []);
+  }, [target]);
 
   if (!timeLeft) return null;
 

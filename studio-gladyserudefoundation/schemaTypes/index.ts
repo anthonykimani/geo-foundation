@@ -36,6 +36,7 @@ import jiwePage from './pages/jiwePage'
 import getInvolvedPage from './pages/getInvolvedPage'
 import contactPage from './pages/contactPage'
 import galleryPage from './pages/galleryPage'
+import comingSoonPage from './pages/comingSoonPage'
 
 export const schemaTypes = [
   // Site Settings
@@ -52,6 +53,7 @@ export const schemaTypes = [
   homePage,
   aboutPage,
   runPage,
+  comingSoonPage,
   impactPage,
   jiwePage,
   getInvolvedPage,

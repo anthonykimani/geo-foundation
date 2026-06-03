@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   FacebookLogoIcon,
   InstagramLogoIcon,
@@ -10,7 +11,6 @@ import {
 } from "@phosphor-icons/react";
 import { WhiteLogo } from "@/constants/svg";
 import Countdown from "./countdown";
-import Image from "next/image";
 
 const socialLinks = [
   { icon: FacebookLogoIcon, href: "https://www.facebook.com/thegladyserudeorganization", label: "Facebook" },
@@ -22,8 +22,14 @@ const socialLinks = [
 
 export default function SplashContent({
   heroImageUrl,
+  heading,
+  tagline,
+  launchDateTime,
 }: {
   heroImageUrl: string | null;
+  heading: string;
+  tagline: string;
+  launchDateTime?: string;
 }) {
   return (
     <div className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center">
@@ -45,16 +51,16 @@ export default function SplashContent({
           />
 
           <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white">
-            A New Chapter of Impact Begins Soon
+            {heading}
           </h1>
 
           <div className="w-16 h-px bg-white/30" />
 
           <p className="text-base sm:text-lg text-white max-w-md">
-            Build a Classroom. Brick by Brick.
+            {tagline}
           </p>
 
-          <Countdown />
+          <Countdown targetDateTime={launchDateTime} />
 
           <div className="flex items-center gap-4 mt-4">
             {socialLinks.map(({ icon: Icon, href, label }) => (

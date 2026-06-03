@@ -109,3 +109,8 @@ export async function getCertificates() {
   const query = `*[_type == "certificate"] | order(year desc)`;
   return client.fetch(query, {}, { cache: "no-store" });
 }
+
+export async function getComingSoonPage() {
+  const query = `*[_type == "comingSoonPage"][0]`;
+  return client.fetch(query, {}, { cache: "no-store" });
+}
