@@ -3,6 +3,7 @@
 import Image, { type StaticImageData } from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowLeftIcon, ArrowRightIcon, XIcon } from "@phosphor-icons/react";
+import { trackEvent } from "@/lib/track";
 
 interface GalleryLightboxProps {
   image: StaticImageData;
@@ -46,7 +47,10 @@ export default function GalleryLightbox({
       >
         <button
           className="absolute inset-0 z-10 cursor-default bg-black/80 backdrop-blur-xl"
-          onClick={onClose}
+          onClick={() => {
+            onClose();
+            trackEvent("gallery_lightbox_close_backdrop");
+          }}
           aria-label="Close gallery"
         />
 
@@ -79,7 +83,10 @@ export default function GalleryLightbox({
         <div className="absolute inset-x-0 bottom-0 z-30 flex items-center justify-center pb-8">
           <div className="flex items-center gap-4 rounded-full bg-black/60 px-6 py-3 backdrop-blur-lg">
             <button
-              onClick={() => onChange(-1)}
+              onClick={() => {
+                onChange(-1);
+                trackEvent("gallery_lightbox_prev", { currentIndex: index });
+              }}
               disabled={index === 0}
               className="rounded-full p-2 text-white/75 transition hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
               aria-label="Previous image"
@@ -92,7 +99,10 @@ export default function GalleryLightbox({
             </span>
 
             <button
-              onClick={() => onChange(1)}
+              onClick={() => {
+                onChange(1);
+                trackEvent("gallery_lightbox_next", { currentIndex: index });
+              }}
               disabled={index === total - 1}
               className="rounded-full p-2 text-white/75 transition hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
               aria-label="Next image"
@@ -103,7 +113,10 @@ export default function GalleryLightbox({
         </div>
 
         <button
-          onClick={onClose}
+          onClick={() => {
+            onClose();
+            trackEvent("gallery_lightbox_close_x");
+          }}
           className="absolute top-6 right-6 z-30 rounded-full bg-black/60 p-3 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
           aria-label="Close gallery"
         >

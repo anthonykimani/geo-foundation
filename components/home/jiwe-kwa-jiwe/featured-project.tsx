@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import DonationModal from "@/components/shared/donation-modal";
 import { HeartIcon } from "@phosphor-icons/react";
 import { getImageUrl } from "@/lib/sanity";
+import { trackEvent } from "@/lib/track";
 
 interface Project {
   title: string;
@@ -119,7 +120,10 @@ function FeaturedProject({ project, animationIndex = 0 }: FeaturedProjectProps) 
             </div>
           </div>
           <Button
-            onClick={() => setDonateOpen(true)}
+            onClick={() => {
+              setDonateOpen(true);
+              trackEvent("featured_project_donate_click", { project: project.title });
+            }}
             className="bg-primary text-white rounded-full text-lg px-8 py-6 gap-2"
           >
             <HeartIcon size={24} weight="fill" className="text-white" />

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
+import { trackEvent } from "@/lib/track";
 
 async function getNewsData() {
   const { getNews } = await import("@/lib/sanity/queries");
@@ -38,7 +39,7 @@ function News() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {newsItems.slice(0, 3).map((item: any, index: number) => (
-            <Link key={item._id || index} href="/gallery">
+            <Link key={item._id || index} href="/gallery" onClick={() => trackEvent("home_news_click", { title: item.title, date: item.date })}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { trackEvent } from "@/lib/track";
 
 export interface FAQItem {
   question: string;
@@ -94,7 +95,10 @@ function FAQ({ data }: FAQProps) {
             {content.tabs?.map((tab: any, index: number) => (
               <button
                 key={index}
-                onClick={() => setActiveTab(index)}
+                onClick={() => {
+                  setActiveTab(index);
+                  trackEvent("faq_tab_switch", { tab: tab.label, tabIndex: index });
+                }}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeTab === index
                     ? "bg-foreground text-white"
                     : "bg-transparent text-foreground"
@@ -106,7 +110,13 @@ function FAQ({ data }: FAQProps) {
           </div>
 
           <div className="flex-1">
-            <Accordion type="single" defaultValue="item-0" collapsible>
+            <Accordion type="single" defaultValue="item-0" collapsible onValueChange={(value) => {
+              if (value) {
+                const idx = parseInt(value.replace("item-", ""));
+                const q = content.faqs?.[idx]?.question;
+                trackEvent("faq_item_expand", { question: q, index: idx });
+              }
+            }}>
               {(content.faqs || []).map((faq: any, index: number) => (
                 <AccordionItem key={index} value={`item-${index}`}>
                   <AccordionTrigger className="text-lg text-foreground hover:no-underline">

@@ -15,6 +15,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { getImageUrl } from "@/lib/sanity";
+import { trackEvent } from "@/lib/track";
 
 const heroImages = [
   { src: null, alt: "GEO community work" },
@@ -239,7 +240,7 @@ function HeroSection() {
                     {...bottomAnimation}
                     className="flex flex-col md:flex-row gap-8"
                   >
-                    <Link href="/get-involved">
+                    <Link href="/get-involved" onClick={() => trackEvent("hero_join_movement_click")}>
                       <Button className="relative text-sm font-medium rounded-full h-12 p-1 ps-6 pe-14 group transition-all duration-500 hover:ps-14 hover:pe-6 w-fit overflow-hidden">
                         <span className="relative z-10 transition-all duration-500">
                           Join the Movement
@@ -260,7 +261,10 @@ function HeroSection() {
           {displayImages.map((_, index) => (
             <button
               key={index}
-              onClick={() => api?.scrollTo(index)}
+              onClick={() => {
+                api?.scrollTo(index);
+                trackEvent("hero_slide_nav_click", { slide: index });
+              }}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 current === index
                   ? "bg-white w-8"

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { trackEvent } from "@/lib/track";
 
 function SponsorForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -11,6 +12,7 @@ function SponsorForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
+    trackEvent("sponsor_form_submit");
   };
 
   if (submitted) {

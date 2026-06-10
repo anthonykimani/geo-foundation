@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import TestimonialCard from "./testimonial-card";
+import { trackEvent } from "@/lib/track";
 
 export interface Testimonial {
   _id?: string;
@@ -79,6 +80,7 @@ function Testimonials({ data }: TestimonialsProps) {
         ? cardWidth + gap 
         : -(cardWidth + gap);
       scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      trackEvent("testimonial_scroll", { direction });
     }
   };
 
@@ -87,6 +89,7 @@ function Testimonials({ data }: TestimonialsProps) {
       const scrollPosition = index * (cardWidth + gap);
       scrollRef.current.scrollTo({ left: scrollPosition, behavior: "smooth" });
       setCurrentIndex(index);
+      trackEvent("testimonial_dot_click", { index });
     }
   };
 

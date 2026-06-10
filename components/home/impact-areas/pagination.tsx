@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { trackEvent } from "@/lib/track";
 
 interface PaginationProps {
   currentPage: number;
@@ -23,7 +24,10 @@ function Pagination({
       className="flex items-center justify-center gap-3 mt-10 sm:mt-12"
     >
       <button
-        onClick={() => onPageChange?.(Math.max(1, currentPage - 1))}
+        onClick={() => {
+          onPageChange?.(Math.max(1, currentPage - 1));
+          trackEvent("impact_pagination_click", { direction: "prev", page: currentPage - 1 });
+        }}
         disabled={currentPage <= 1}
         className="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] bg-white flex items-center justify-center disabled:opacity-30 hover:bg-muted transition-colors"
       >
@@ -48,7 +52,10 @@ function Pagination({
         {pages.map((page) => (
           <button
             key={page}
-            onClick={() => onPageChange?.(page)}
+            onClick={() => {
+              onPageChange?.(page);
+              trackEvent("impact_pagination_click", { page });
+            }}
             className={`w-6 h-6 sm:w-8 sm:h-8 rounded-[4px] text-sm flex items-center justify-center transition-colors ${
               currentPage === page
                 ? "bg-foreground text-white"
@@ -65,7 +72,10 @@ function Pagination({
 
         {totalPages > 3 && (
           <button
-            onClick={() => onPageChange?.(totalPages)}
+            onClick={() => {
+              onPageChange?.(totalPages);
+              trackEvent("impact_pagination_click", { page: totalPages });
+            }}
             className={`w-6 h-6 sm:w-8 sm:h-8 rounded-[4px] text-sm flex items-center justify-center transition-colors ${
               currentPage === totalPages
                 ? "bg-foreground text-white"
@@ -78,7 +88,10 @@ function Pagination({
       </div>
 
       <button
-        onClick={() => onPageChange?.(Math.min(totalPages, currentPage + 1))}
+        onClick={() => {
+          onPageChange?.(Math.min(totalPages, currentPage + 1));
+          trackEvent("impact_pagination_click", { direction: "next", page: currentPage + 1 });
+        }}
         disabled={currentPage >= totalPages}
         className="w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] bg-white flex items-center justify-center disabled:opacity-30 hover:bg-muted transition-colors"
       >

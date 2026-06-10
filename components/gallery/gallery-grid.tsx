@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from "react";
 import Image, { type StaticImageData } from "next/image";
 import { motion } from "motion/react";
 import GalleryLightbox from "./gallery-lightbox";
+import { trackEvent } from "@/lib/track";
 
 interface GalleryGridProps {
   images: StaticImageData[];
@@ -36,9 +37,18 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (selectedIndex === null) return;
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowLeft") changeIndex(-1);
-      if (e.key === "ArrowRight") changeIndex(1);
+      if (e.key === "Escape") {
+        closeLightbox();
+        trackEvent("gallery_lightbox_close_keyboard");
+      }
+      if (e.key === "ArrowLeft") {
+        changeIndex(-1);
+        trackEvent("gallery_lightbox_keyboard_nav", { direction: "prev" });
+      }
+      if (e.key === "ArrowRight") {
+        changeIndex(1);
+        trackEvent("gallery_lightbox_keyboard_nav", { direction: "next" });
+      }
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -57,7 +67,10 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: (index % 8) * 0.05 }}
             viewport={{ once: true }}
-            onClick={() => openLightbox(index)}
+            onClick={() => {
+              openLightbox(index);
+              trackEvent("gallery_thumbnail_click", { imageIndex: index });
+            }}
             className="group relative mb-4 block w-full cursor-zoom-in overflow-hidden rounded-xl after:pointer-events-none after:absolute after:inset-0 after:rounded-xl after:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]"
             aria-label={`View gallery photo ${index + 1}`}
           >

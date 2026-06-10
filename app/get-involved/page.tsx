@@ -9,6 +9,7 @@ import SponsorForm from "@/components/get-involved/sponsor-form";
 import { DonationModal } from "@/components/shared/donation-modal";
 import { HeartIcon } from "@phosphor-icons/react";
 import { urlFor, getFileUrl } from "@/lib/sanity";
+import { trackEvent } from "@/lib/track";
 
 async function getGetInvolvedPageData() {
   const { getGetInvolvedPage, getInvolvementOptions } = await import("@/lib/sanity/queries");
@@ -49,6 +50,7 @@ function GetInvolvedPage() {
       whatsapp: `https://wa.me/?text=${encodeURIComponent(text + " " + url)}`,
     };
 
+    trackEvent("get_involved_share_facebook");
     window.open(shareUrls.facebook, "_blank");
   };
 
@@ -81,18 +83,25 @@ function GetInvolvedPage() {
                 onClick={() => {
                   if (card.buttonUrl === "#volunteer") {
                     setVolunteerOpen(true);
+                    trackEvent("get_involved_card_action", { action: "volunteer", title: card.title });
                   } else if (card.buttonUrl === "#sponsor") {
                     setSponsorOpen(true);
+                    trackEvent("get_involved_card_action", { action: "sponsor", title: card.title });
                   } else if (card.buttonUrl === "#share") {
                     shareToSocials();
+                    trackEvent("get_involved_card_action", { action: "share", title: card.title });
                   } else if (card.buttonUrl?.startsWith("http")) {
                     window.open(card.buttonUrl, "_blank");
+                    trackEvent("get_involved_card_action", { action: "external_link", url: card.buttonUrl, title: card.title });
                   } else if (card.buttonUrl?.startsWith("mailto:")) {
                     window.location.href = card.buttonUrl;
+                    trackEvent("get_involved_card_action", { action: "mailto", title: card.title });
                   } else if (card.buttonUrl?.startsWith("/")) {
                     window.location.href = card.buttonUrl;
+                    trackEvent("get_involved_card_action", { action: "internal_link", path: card.buttonUrl, title: card.title });
                   } else {
                     setDonateOpen(true);
+                    trackEvent("get_involved_card_action", { action: "donate", title: card.title });
                   }
                 }}
                 downloadUrl={getFileUrl(card.downloadUrl) || undefined}
@@ -110,7 +119,10 @@ function GetInvolvedPage() {
               <VolunteerForm />
               <div className="text-center mt-6">
                 <button
-                  onClick={() => setVolunteerOpen(false)}
+                  onClick={() => {
+                    setVolunteerOpen(false);
+                    trackEvent("volunteer_form_close");
+                  }}
                   className="text-sm text-muted-foreground hover:text-foreground underline"
                 >
                   Close
@@ -128,7 +140,10 @@ function GetInvolvedPage() {
               <SponsorForm />
               <div className="text-center mt-6">
                 <button
-                  onClick={() => setSponsorOpen(false)}
+                  onClick={() => {
+                    setSponsorOpen(false);
+                    trackEvent("sponsor_form_close");
+                  }}
                   className="text-sm text-muted-foreground hover:text-foreground underline"
                 >
                   Close
@@ -148,7 +163,10 @@ function GetInvolvedPage() {
             {data.ctaDescription || "Your support helps us empower women and children in underserved communities across Kenya."}
           </p>
           <button 
-            onClick={() => setDonateOpen(true)}
+            onClick={() => {
+              setDonateOpen(true);
+              trackEvent("get_involved_cta_donate");
+            }}
             className="bg-primary text-white text-lg px-8 py-5 rounded-full hover:bg-primary/90 transition-colors inline-flex items-center gap-2 mx-auto"
           >
             <HeartIcon size={24} weight="fill" className="text-white" />

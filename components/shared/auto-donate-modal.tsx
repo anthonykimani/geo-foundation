@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import DonationModal from "@/components/shared/donation-modal";
+import { trackEvent } from "@/lib/track";
 
 function AutoDonateModal() {
   const [open, setOpen] = useState(false);
@@ -13,6 +14,7 @@ function AutoDonateModal() {
     const timer = setTimeout(() => {
       setOpen(true);
       setHasShown(true);
+      trackEvent("auto_donate_modal_shown");
     }, 5000);
 
     return () => clearTimeout(timer);

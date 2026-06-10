@@ -4,6 +4,7 @@ import { useState } from "react";
 import HeaderLink from "./Navigation/HeaderLink";
 import Logo from "./Logo";
 import MobileHeader from "./Navigation/MobileHeader";
+import { trackEvent } from "@/lib/track";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -51,7 +52,10 @@ const Header = () => {
                 <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
 
                 <Button
-                  onClick={() => setDonateOpen(true)}
+                  onClick={() => {
+                    setDonateOpen(true);
+                    trackEvent("header_donate_click");
+                  }}
                   className="bg-primary text-white rounded-full text-lg px-6 py-6 gap-2"
                 >
                   <HeartIcon size={24} weight="fill" className="text-white" />
@@ -60,7 +64,10 @@ const Header = () => {
               </div>
 
               <div className="hidden max-lg:flex">
-                <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+                <Sheet open={sidebarOpen} onOpenChange={(open) => {
+                  setSidebarOpen(open);
+                  if (open) trackEvent("header_mobile_menu_open");
+                }}>
                   <SheetTrigger render={<button />}>
                     <ListIcon size={24} />
                   </SheetTrigger>
@@ -87,7 +94,10 @@ const Header = () => {
                         ))}
                         <div className="flex flex-col gap-3 px-2 mt-2">
                           <Button
-                            onClick={() => setDonateOpen(true)}
+                            onClick={() => {
+                              setDonateOpen(true);
+                              trackEvent("header_mobile_donate_click");
+                            }}
                             className="bg-primary text-white rounded-full text-lg px-6 py-6 gap-2"
                           >
                             <HeartIcon size={24} weight="fill" className="text-white" />

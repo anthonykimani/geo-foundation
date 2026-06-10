@@ -11,6 +11,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
+import { trackEvent } from "@/lib/track";
 
 async function getContactPageData() {
   const { getContactPage, getBoardMembers, getCertificates } = await import("@/lib/sanity/queries");
@@ -92,6 +93,9 @@ export default function ContactPage() {
               type="single"
               defaultValue={defaultYear}
               collapsible
+              onValueChange={(value) => {
+                if (value) trackEvent("contact_team_year_toggle", { year: value });
+              }}
               className="space-y-4"
             >
               {years.map((year) => (
@@ -214,6 +218,7 @@ export default function ContactPage() {
                     {contact.email && (
                       <a
                         href={`mailto:${contact.email}`}
+                        onClick={() => trackEvent("contact_email_click", { email: contact.email, country: contact.country })}
                         className="text-primary text-sm"
                       >
                         {contact.email}
@@ -233,7 +238,7 @@ export default function ContactPage() {
                     <h3 className="text-lg font-medium text-foreground mb-3">USA</h3>
                     <p className="text-muted-foreground">Sylvester Erude</p>
                     <p className="text-muted-foreground">+1 (309) 569 1606</p>
-                    <a href="mailto:info@gladyserudeorganization.org" className="text-primary text-sm">
+                    <a href="mailto:info@gladyserudeorganization.org" onClick={() => trackEvent("contact_email_click", { email: "info@gladyserudeorganization.org", country: "USA" })} className="text-primary text-sm">
                       info@gladyserudeorganization.org
                     </a>
                   </motion.div>
@@ -247,7 +252,7 @@ export default function ContactPage() {
                     <h3 className="text-lg font-medium text-foreground mb-3">Kenya</h3>
                     <p className="text-muted-foreground">Byron Erude</p>
                     <p className="text-muted-foreground">+254 718 069 393</p>
-                    <a href="mailto:info@gladyserudeorganization.org" className="text-primary text-sm">
+                    <a href="mailto:info@gladyserudeorganization.org" onClick={() => trackEvent("contact_email_click", { email: "info@gladyserudeorganization.org", country: "Kenya" })} className="text-primary text-sm">
                       info@gladyserudeorganization.org
                     </a>
                   </motion.div>
@@ -263,6 +268,7 @@ export default function ContactPage() {
               <h3 className="text-lg font-medium text-foreground mb-3">General</h3>
               <a
                 href={`mailto:${data?.contactPage?.generalEmail || "info@gladyserudeorganization.org"}`}
+                onClick={() => trackEvent("contact_email_click", { email: data?.contactPage?.generalEmail || "info@gladyserudeorganization.org", country: "General" })}
                 className="text-primary text-sm"
               >
                 {data?.contactPage?.generalEmail || "info@gladyserudeorganization.org"}

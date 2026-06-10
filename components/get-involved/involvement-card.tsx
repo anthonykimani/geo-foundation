@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { getImageUrl } from "@/lib/sanity";
+import { trackEvent } from "@/lib/track";
 
 interface InvolvementCardProps {
   image?: any;
@@ -51,17 +52,26 @@ function InvolvementCard({
       <h3 className="text-xl md:text-2xl font-normal text-foreground mb-3">{title}</h3>
       <p className="text-sm text-muted-foreground mb-6 flex-grow">{description}</p>
       {variant === "primary" && (
-        <Button onClick={onClick} className="w-full bg-primary text-white hover:bg-primary/90">
+        <Button onClick={() => {
+          onClick?.();
+          trackEvent("involvement_card_cta_click", { title, buttonText, variant: "primary" });
+        }} className="w-full bg-primary text-white hover:bg-primary/90">
           {buttonText}
         </Button>
       )}
       {variant === "secondary" && (
-        <Button onClick={onClick} variant="outline" className="w-full">
+        <Button onClick={() => {
+          onClick?.();
+          trackEvent("involvement_card_cta_click", { title, buttonText, variant: "secondary" });
+        }} variant="outline" className="w-full">
           {buttonText}
         </Button>
       )}
       {variant === "outline" && (
-        <Button onClick={onClick} variant="outline" className="w-full">
+        <Button onClick={() => {
+          onClick?.();
+          trackEvent("involvement_card_cta_click", { title, buttonText, variant: "outline" });
+        }} variant="outline" className="w-full">
           {buttonText}
         </Button>
       )}
@@ -70,6 +80,7 @@ function InvolvementCard({
           href={downloadUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackEvent("involvement_card_download", { title, downloadUrl })}
           className="inline-flex items-center justify-center gap-2 w-full h-10 mt-2 text-sm text-primary hover:underline"
         >
           Download Document

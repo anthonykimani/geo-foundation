@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { FacebookLogoIcon, InstagramLogoIcon, LinkedinLogoIcon, YoutubeLogoIcon, TiktokLogoIcon } from "@phosphor-icons/react";
 import Logo from "@/components/header/Logo";
+import { trackEvent } from "@/lib/track";
 
 const footerNavLinks = [
   { label: "Home", href: "/" },
@@ -75,25 +76,25 @@ function Footer() {
             <div className="flex gap-4">
               {socialLinks.length > 0 ? (
                 socialLinks.map((link: any, index: number) => (
-                  <a key={index} href={link.href} target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
+                  <a key={index} href={link.href} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("footer_social_click", { platform: link.icon, href: link.href })} className="hover:opacity-60">
                     {getIcon(link.icon)}
                   </a>
                 ))
               ) : (
                 <>
-                  <a href="https://www.facebook.com/thegladyserudeorganization" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
+                  <a href="https://www.facebook.com/thegladyserudeorganization" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("footer_social_click", { platform: "facebook" })} className="hover:opacity-60">
                     <FacebookLogoIcon size={20} />
                   </a>
-                  <a href="https://www.instagram.com/thegladyserudeorganization" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
+                  <a href="https://www.instagram.com/thegladyserudeorganization" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("footer_social_click", { platform: "instagram" })} className="hover:opacity-60">
                     <InstagramLogoIcon size={20} />
                   </a>
-                  <a href="https://www.tiktok.com/@g.e.o_01" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
+                  <a href="https://www.tiktok.com/@g.e.o_01" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("footer_social_click", { platform: "tiktok" })} className="hover:opacity-60">
                     <TiktokLogoIcon size={20} />
                   </a>
-                  <a href="https://youtube.com/@GladysErudeOrganization" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
+                  <a href="https://youtube.com/@GladysErudeOrganization" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("footer_social_click", { platform: "youtube" })} className="hover:opacity-60">
                     <YoutubeLogoIcon size={20} />
                   </a>
-                  <a href="https://www.linkedin.com/in/the-gladys-erude-organization-geo" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
+                  <a href="https://www.linkedin.com/in/the-gladys-erude-organization-geo" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("footer_social_click", { platform: "linkedin" })} className="hover:opacity-60">
                     <LinkedinLogoIcon size={20} />
                   </a>
                 </>
@@ -107,7 +108,7 @@ function Footer() {
               <ul className="flex flex-col gap-3">
                 {footerNavLinks.map((link, index) => (
                   <li key={index}>
-                    <Link href={link.href} className="text-muted-foreground hover:text-foreground">
+                    <Link href={link.href} onClick={() => trackEvent("footer_nav_click", { label: link.label, href: link.href })} className="text-muted-foreground hover:text-foreground">
                       {link.label}
                     </Link>
                   </li>
@@ -127,7 +128,7 @@ function Footer() {
                 ) : (
                   <p>Kenya: +254 712 345 678</p>
                 )}
-                <a href={`mailto:${generalEmail}`} className="hover:text-foreground">
+                <a href={`mailto:${generalEmail}`} onClick={() => trackEvent("footer_email_click", { email: generalEmail })} className="hover:text-foreground">
                   {generalEmail}
                 </a>
               </div>

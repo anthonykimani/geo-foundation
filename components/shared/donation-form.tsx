@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { HeartIcon } from "@phosphor-icons/react";
+import { trackEvent } from "@/lib/track";
 
 async function getDonationUrls() {
   const { getDonationInfo } = await import("@/lib/sanity/queries");
@@ -121,17 +122,21 @@ export function DonationForm({ className = "" }: DonationFormProps) {
     if (!amount || !firstName || !lastName || !email) {
       setError("Please fill in all required fields");
       setIsLoading(false);
+      trackEvent("donation_pesapal_validation_error", { reason: "missing_fields" });
       return;
     }
 
     if (!token || !ipnId) {
       setError("Payment system not ready. Please refresh the page and try again.");
       setIsLoading(false);
+      trackEvent("donation_pesapal_error", { reason: "payment_system_not_ready" });
       return;
     }
 
     try {
       const orderId = `GEO-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+      trackEvent("donation_pesapal_form_submit", { amount, currency });
 
       const response = await fetch("/api/pesapal/submit-order", {
         method: "POST",
@@ -154,13 +159,16 @@ export function DonationForm({ className = "" }: DonationFormProps) {
       const data = await response.json();
 
       if (data.redirect_url) {
+        trackEvent("donation_pesapal_redirect", { amount, currency });
         window.location.href = data.redirect_url;
       } else {
         setError("Failed to create payment. Please try again.");
+        trackEvent("donation_pesapal_error", { reason: "no_redirect_url" });
       }
     } catch (err) {
       setError("An error occurred. Please try again.");
       console.error(err);
+      trackEvent("donation_pesapal_error", { reason: "exception" });
     } finally {
       setIsLoading(false);
     }
@@ -168,6 +176,7 @@ export function DonationForm({ className = "" }: DonationFormProps) {
 
   const handleQuickDonate = (quickAmount: number) => {
     setAmount(quickAmount.toString());
+    trackEvent("donation_quick_amount_preset", { amount: quickAmount, currency });
   };
 
   const presetAmounts = country === "kenya" ? kenyaPresetAmounts : [25, 50, 100, 250, 500];
@@ -189,6 +198,7 @@ export function DonationForm({ className = "" }: DonationFormProps) {
           setShowPayPal(false);
           setShowTillNumber(false);
           setAmount("");
+          trackEvent("donation_country_switch", { country: v });
         }}
         className="w-full"
       >
@@ -205,7 +215,10 @@ export function DonationForm({ className = "" }: DonationFormProps) {
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <div className="grid grid-cols-2 gap-3 mb-6">
               <button
-                onClick={() => setShowTillNumber(false)}
+                onClick={() => {
+                  setShowTillNumber(false);
+                  trackEvent("donation_pesapal_tab_click");
+                }}
                 className={`h-12 rounded-lg transition-colors text-sm font-semibold ${
                   !showTillNumber
                     ? "bg-primary text-white"
@@ -215,7 +228,10 @@ export function DonationForm({ className = "" }: DonationFormProps) {
                 Donate via Pesapal
               </button>
               <button
-                onClick={() => setShowTillNumber(true)}
+                onClick={() => {
+                  setShowTillNumber(true);
+                  trackEvent("donation_mpesa_till_click");
+                }}
                 className={`h-12 rounded-lg transition-colors text-sm font-semibold ${
                   showTillNumber
                     ? "bg-[#2C9F45] text-white"
@@ -342,7 +358,10 @@ export function DonationForm({ className = "" }: DonationFormProps) {
                   />
                 </div>
                 <button
-                  onClick={() => setShowTillNumber(false)}
+                  onClick={() => {
+                    setShowTillNumber(false);
+                    trackEvent("donation_back_to_pesapal");
+                  }}
                   className="flex items-center justify-center gap-2 w-full h-12 border-2 border-input rounded-lg hover:bg-muted transition-colors text-base font-semibold mt-4"
                 >
                   Back to Pesapal
@@ -363,6 +382,7 @@ export function DonationForm({ className = "" }: DonationFormProps) {
               href={donationUrls.gofundmeUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("donation_gofundme_click")}
               className="flex items-center justify-center gap-2 w-full h-12 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-base font-semibold"
             >
               <HeartIcon size={20} weight="fill" />
@@ -376,7 +396,10 @@ export function DonationForm({ className = "" }: DonationFormProps) {
             <div className="mt-6 pt-6 border-t border-gray-200">
               {!showPayPal ? (
                 <button
-                  onClick={() => setShowPayPal(true)}
+                  onClick={() => {
+                    setShowPayPal(true);
+                    trackEvent("donation_paypal_reveal");
+                  }}
                   className="flex items-center justify-center gap-2 w-full h-12 bg-[#0070BA] text-white rounded-lg hover:bg-[#005ea6] transition-colors text-base font-semibold"
                 >
                   <HeartIcon size={20} weight="fill" />
@@ -398,6 +421,7 @@ export function DonationForm({ className = "" }: DonationFormProps) {
                     />
                     <button
                       onClick={async () => {
+                        trackEvent("donation_paypal_order_start", { amount: paypalAmount });
                         try {
                           const res = await fetch("/api/paypal/order", {
                             method: "POST",
@@ -424,13 +448,17 @@ export function DonationForm({ className = "" }: DonationFormProps) {
                     href={donationUrls.paypalUrl || "https://www.paypal.com/ncp/payment/G9LWHXJNU2DKQ"}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackEvent("donation_paypal_direct_link")}
                     className="flex items-center justify-center gap-2 w-full h-12 border-2 border-input rounded-lg hover:bg-muted transition-colors text-base font-semibold"
                   >
                     <HeartIcon size={20} weight="fill" />
                     Open PayPal Directly
                   </a>
                   <button
-                    onClick={() => setShowPayPal(false)}
+                    onClick={() => {
+                      setShowPayPal(false);
+                      trackEvent("donation_paypal_back");
+                    }}
                     className="text-sm text-muted-foreground hover:text-foreground underline w-full text-center"
                   >
                     Back

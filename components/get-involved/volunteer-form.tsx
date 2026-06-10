@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { trackEvent } from "@/lib/track";
 
 function VolunteerForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -12,6 +13,7 @@ function VolunteerForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
+    trackEvent("volunteer_form_submit");
   };
 
   if (submitted) {

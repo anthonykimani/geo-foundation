@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { trackEvent } from "@/lib/track";
 
 interface RegistrationFormProps {
   onSuccess?: () => void;
@@ -21,6 +22,7 @@ function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     e.preventDefault();
     setSubmitted(true);
     onSuccess?.();
+    trackEvent("run_registration_form_submit");
   };
 
   if (submitted) {
@@ -42,7 +44,10 @@ function RegistrationForm({ onSuccess }: RegistrationFormProps) {
         <Button
           variant="outline"
           className="mt-6"
-          onClick={() => setSubmitted(false)}
+          onClick={() => {
+            setSubmitted(false);
+            trackEvent("run_registration_register_another");
+          }}
         >
           Register Another Runner
         </Button>

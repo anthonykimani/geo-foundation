@@ -2,6 +2,7 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { trackEvent } from "@/lib/track";
 
 const OFFSET = 100;
 
@@ -33,6 +34,7 @@ const MobileHeaderContent: React.FC<{ item: any }> = ({ item }) => {
   useActiveLink(setActiveLink);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    trackEvent("mobile_nav_link_click", { label: item.label, href: item.href });
     if (item.href.startsWith("#") || item.href.includes("#")) {
       const targetId = item.href.split("#")[1];
       const element = document.getElementById(targetId);

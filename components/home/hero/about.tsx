@@ -7,6 +7,7 @@ import { useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import { TextGenerateEffect } from "@/components/shared/text-generate-effect";
+import { trackEvent } from "@/lib/track";
 
 const features = [
   {
@@ -48,7 +49,7 @@ function AboutHero() {
           {...bottomAnimation(0)}
           className="space-y-4 sm:space-y-6 mb-10 sm:mb-12 md:mb-16"
         >
-          <Link href="/about">
+          <Link href="/about" onClick={() => trackEvent("about_hero_cta_click")}>
           <Button
             variant="outline"
             className="rounded-full h-10.75 px-5 border-navy text-navy hover:bg-navy hover:text-white"

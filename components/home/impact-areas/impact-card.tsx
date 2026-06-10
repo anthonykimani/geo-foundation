@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { getImageUrl } from "@/lib/sanity";
+import { trackEvent } from "@/lib/track";
 
 interface ImpactCardProps {
   id?: string;
@@ -33,7 +34,7 @@ function ImpactCard({
   const imageSrc = getImageUrl(image);
 
   return (
-    <Link href={`/impact/${id || "education"}`}>
+    <Link href={`/impact/${id || "education"}`} onClick={() => trackEvent("impact_card_click", { label, title })}>
       <motion.div
         ref={ref}
         {...bottomAnimation}

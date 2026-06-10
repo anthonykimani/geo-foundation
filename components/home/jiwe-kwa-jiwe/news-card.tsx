@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import { useRef } from "react";
 import { useInView } from "motion/react";
 import { getImageUrl } from "@/lib/sanity";
+import { trackEvent } from "@/lib/track";
 
 interface NewsItem {
   label: string;
@@ -32,7 +33,7 @@ function NewsCard({ news, animationIndex = 0 }: NewsCardProps) {
   const imageSrc = getImageUrl(news.image);
 
   return (
-    <Link href="/gallery">
+    <Link href="/gallery" onClick={() => trackEvent("jiwe_news_card_click", { title: news.title })}>
       <motion.div
         ref={ref}
         {...bottomAnimation}

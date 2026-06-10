@@ -3,6 +3,7 @@ import React, { useEffect, useState, Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { NavigationMenuLink } from "@/components/ui/navigation-menu";
+import { trackEvent } from "@/lib/track";
 
 const OFFSET = 100; // Adjust this value based on your fixed header height
 
@@ -36,6 +37,7 @@ const HeaderLinkContent: React.FC<{ item: any }> = ({ item }) => {
   useActiveLink(setActiveLink);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    trackEvent("nav_link_click", { label: item.label, href: item.href });
     if (item.href.startsWith("#") || item.href.includes("#")) {
       const targetId = item.href.split("#")[1];
       const element = document.getElementById(targetId);
