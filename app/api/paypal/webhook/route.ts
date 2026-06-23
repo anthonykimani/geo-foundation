@@ -1,5 +1,5 @@
 import { captureOrder, verifyWebhookSignature } from "@/lib/api/paypal";
-import { getSupabaseAdmin } from "@/lib/supabase";
+import { query } from "@/lib/db";
 
 export async function POST(request: Request) {
   try {
@@ -21,16 +21,19 @@ export async function POST(request: Request) {
         const unit = capture.purchase_units[0];
         const payment = unit.payments?.captures?.[0];
 
-        const supabase = getSupabaseAdmin();
-        await supabase.from("brick_transactions").insert({
-          donor_name: unit.shipping?.name?.full_name || undefined,
-          donor_email: payment?.payee?.email_address || undefined,
-          amount: parseFloat(unit.amount.value),
-          currency: unit.amount.currency_code,
-          payment_method: "paypal",
-          payment_ref: orderId,
-          status: "completed",
-        });
+        await query(
+          `INSERT INTO brick_transactions (donor_name, donor_email, amount, currency, payment_method, payment_ref, status)
+           VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+          [
+            unit.shipping?.name?.full_name || null,
+            payment?.payee?.email_address || null,
+            parseFloat(unit.amount.value),
+            unit.amount.currency_code,
+            "paypal",
+            orderId,
+            "completed",
+          ]
+        );
       }
     }
 

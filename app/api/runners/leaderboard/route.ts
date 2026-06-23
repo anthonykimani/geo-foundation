@@ -1,26 +1,33 @@
-import { getSupabase } from "@/lib/supabase";
+import { query } from "@/lib/db";
 
 export async function GET() {
   try {
-    const supabase = getSupabase();
-    const { data } = await supabase
-      .from("runners")
-      .select(`
-        id,
-        name,
-        country,
-        runs(distance_km)
-      `)
-      .limit(20);
+    const rows = await query<{
+      id: string;
+      name: string;
+      country: string;
+      total_km: number;
+      total_runs: number;
+    }>(
+      `SELECT 
+        r.id, r.name, r.country,
+        COALESCE(SUM(ru.distance_km), 0) as total_km,
+        COUNT(ru.id)::int as total_runs
+      FROM runners r
+      LEFT JOIN runs ru ON ru.runner_id = r.id
+      GROUP BY r.id, r.name, r.country
+      ORDER BY total_km DESC
+      LIMIT 20`
+    );
 
-    const leaderboard = (data || []).map((r) => ({
+    const leaderboard = rows.map((r) => ({
       id: r.id,
       name: r.name,
       country: r.country,
-      totalKm: r.runs?.reduce((sum: number, run: any) => sum + (run.distance_km || 0), 0) || 0,
-      totalBricks: r.runs?.reduce((sum: number, run: any) => sum + Math.floor((run.distance_km || 0) / 5), 0) || 0,
-      totalRuns: r.runs?.length || 0,
-    })).sort((a, b) => b.totalKm - a.totalKm);
+      totalKm: r.total_km,
+      totalBricks: Math.floor(r.total_km / 5),
+      totalRuns: r.total_runs,
+    }));
 
     return Response.json(leaderboard);
   } catch (error: any) {

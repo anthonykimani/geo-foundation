@@ -1,5 +1,5 @@
 import { getTransactionStatus } from "@/lib/api/pesapal";
-import { getSupabaseAdmin } from "@/lib/supabase";
+import { query } from "@/lib/db";
 
 export async function POST(request: Request) {
   try {
@@ -23,16 +23,19 @@ export async function POST(request: Request) {
         donor_name: `${status.first_name || ""} ${status.last_name || ""}`.trim(),
       };
 
-      const supabase = getSupabaseAdmin();
-      await supabase.from("brick_transactions").insert({
-        donor_name: payment.donor_name || undefined,
-        donor_email: payment.donor_email || undefined,
-        amount: payment.amount,
-        currency: payment.currency,
-        payment_method: "pesapal",
-        payment_ref: payment.payment_ref,
-        status: "completed",
-      });
+      await query(
+        `INSERT INTO brick_transactions (donor_name, donor_email, amount, currency, payment_method, payment_ref, status)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [
+          payment.donor_name || null,
+          payment.donor_email || null,
+          payment.amount,
+          payment.currency,
+          "pesapal",
+          payment.payment_ref,
+          "completed",
+        ]
+      );
     }
 
     return Response.json({ status: "received" });

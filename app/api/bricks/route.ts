@@ -1,4 +1,4 @@
-import { getSupabase } from "@/lib/supabase";
+import { query } from "@/lib/db";
 import { client } from "@/lib/sanity";
 
 export async function GET() {
@@ -6,13 +6,10 @@ export async function GET() {
   let sanityTotal = 0;
 
   try {
-    const supabase = getSupabase();
-    const { data } = await supabase
-      .from("brick_transactions")
-      .select("bricks")
-      .eq("status", "completed");
-
-    liveTotal = data?.reduce((sum: number, r: any) => sum + r.bricks, 0) ?? 0;
+    const rows = await query<{ bricks: number }>(
+      "SELECT bricks FROM brick_transactions WHERE status = 'completed'"
+    );
+    liveTotal = rows.reduce((sum, r) => sum + r.bricks, 0);
   } catch {
     liveTotal = 0;
   }
