@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS brick_transactions (
          WHEN currency = 'KES' THEN FLOOR(amount / 130)::INT
     END
   ) STORED,
-  payment_method TEXT CHECK (payment_method IN ('pesapal', 'paypal', 'gofundme', 'manual', 'run')),
+  payment_method TEXT CHECK (payment_method IN ('paypal', 'gofundme', 'manual', 'run')),
   payment_ref TEXT,
   status TEXT DEFAULT 'completed' CHECK (status IN ('pending', 'completed', 'failed')),
   anonymous BOOLEAN DEFAULT false,

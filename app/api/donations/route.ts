@@ -6,7 +6,7 @@ const DONATIONS_FILE = join(process.cwd(), "data", "donations.json");
 
 interface Donation {
   id: string;
-  source: "pesapal" | "gofundme" | "manual";
+  source: "gofundme" | "manual";
   amount: number;
   currency: string;
   date: string;
