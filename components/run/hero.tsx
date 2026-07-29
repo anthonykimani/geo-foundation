@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { getImageUrl } from "@/lib/sanity";
+import VideoEmbed from "@/components/shared/video-embed";
 
 function getTimeRemaining(targetDate: string) {
   const total = new Date(targetDate).getTime() - new Date().getTime();
@@ -72,6 +73,7 @@ function Hero() {
   const heroDescription = data?.heroDescription || "";
   const heroImage = data?.heroImage;
   const heroImageUrl = getImageUrl(heroImage);
+  const eventVideoUrl = data?.eventVideoUrl;
   const dateFormatted = data?.dateFormatted || "";
   const timeValue = data?.time || "";
   const locationShort = data?.locationShort || "";
@@ -142,7 +144,13 @@ function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative w-full h-[680px] md:h-[800px] lg:h-[1080px] rounded-xl overflow-hidden"
           >
-            {heroImageUrl ? (
+            {eventVideoUrl ? (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/5">
+                <div className="w-full max-w-2xl">
+                  <VideoEmbed url={eventVideoUrl} title="Event video" />
+                </div>
+              </div>
+            ) : heroImageUrl ? (
               <Image
                 src={heroImageUrl}
                 alt="5KM Run"

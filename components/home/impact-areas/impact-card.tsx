@@ -6,12 +6,14 @@ import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { getImageUrl } from "@/lib/sanity";
 import { trackEvent } from "@/lib/track";
+import VideoEmbed from "@/components/shared/video-embed";
 
 interface ImpactCardProps {
   id?: string;
   label: string;
   title: string;
   image?: any;
+  videoUrl?: string;
   animationIndex?: number;
 }
 
@@ -20,6 +22,7 @@ function ImpactCard({
   label,
   title,
   image,
+  videoUrl,
   animationIndex = 0,
 }: ImpactCardProps) {
   const ref = useRef(null);
@@ -40,13 +43,10 @@ function ImpactCard({
         {...bottomAnimation}
         className="relative w-full h-[300px] sm:h-[350px] md:h-[445px] rounded-[24px] overflow-hidden cursor-pointer"
       >
-      {imageSrc ? (
-        <Image
-          src={imageSrc}
-          alt={title}
-          fill
-          className="object-cover"
-        />
+      {videoUrl ? (
+        <VideoEmbed url={videoUrl} title={title} className="absolute inset-0" />
+      ) : imageSrc ? (
+        <Image src={imageSrc} alt={title} fill className="object-cover" />
       ) : (
         <div className="w-full h-full bg-gray-200" />
       )}

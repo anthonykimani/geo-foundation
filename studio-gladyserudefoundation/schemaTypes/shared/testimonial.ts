@@ -13,5 +13,6 @@ export default {
     {name: 'detail', title: 'Detail', type: 'text'},
     {name: 'author', title: 'Author', type: 'string'},
     {name: 'image', title: 'Image', type: 'image', options: {hotspot: true}},
+    {name: 'videoUrl', title: 'Video (YouTube/Vimeo URL)', type: 'url', description: 'Replaces image when set — plays inline'},
   ],
 }

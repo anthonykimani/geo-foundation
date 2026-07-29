@@ -6,6 +6,7 @@ import Header from "@/components/header";
 import Footer from "@/components/home/footer";
 import AutoDonateModal from "@/components/shared/auto-donate-modal";
 import { PostHogProvider } from "@/provider/posthog";
+import AuthProvider from "@/provider/auth";
 
 const figtree = Figtree({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -29,9 +30,11 @@ export default function RootLayout({
     <html lang="en" className={cn("font-sans", figtree.variable)}>
       <body className="font-dm-sans antialiased">
         <PostHogProvider>
-          <Header />
-          {children}
-          <Footer />
+          <AuthProvider>
+            <Header />
+            {children}
+            <Footer />
+          </AuthProvider>
         </PostHogProvider>
         <AutoDonateModal />
       </body>

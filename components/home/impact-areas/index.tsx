@@ -87,6 +87,7 @@ function ImpactAreas({ data }: ImpactAreasProps) {
           title={content.featuredImpact?.title || ""}
           description={content.featuredImpact?.description || ""}
           image={content.featuredImpact?.image}
+          videoUrl={impactData?.featuredVideoUrl}
           animationIndex={1}
         />
 
@@ -98,6 +99,7 @@ function ImpactAreas({ data }: ImpactAreasProps) {
               label={impact.label || ""}
               title={impact.title || ""}
               image={impact.imageUrl || null}
+              videoUrl={impact.videoUrl}
               animationIndex={2 + index}
             />
           ))}

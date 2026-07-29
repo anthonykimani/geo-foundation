@@ -1,6 +1,7 @@
 export const headerData = [
   { label: "Home", href: "/" },
   { label: "5km Run", href: "/run" },
+  { label: "Run Journey", href: "/journey" },
   { label: "About", href: "/about" },
   { label: "Gallery & News", href: "/gallery" },
   { label: "Projects", href: "/projects" },

@@ -4,12 +4,14 @@ import Image from "next/image";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { getImageUrl } from "@/lib/sanity";
+import VideoEmbed from "@/components/shared/video-embed";
 
 interface FeaturedImpactProps {
   label: string;
   title: string;
   description: string;
   image?: any;
+  videoUrl?: string;
   animationIndex?: number;
 }
 
@@ -18,6 +20,7 @@ function FeaturedImpact({
   title,
   description,
   image,
+  videoUrl,
   animationIndex = 0,
 }: FeaturedImpactProps) {
   const ref = useRef(null);
@@ -37,13 +40,10 @@ function FeaturedImpact({
       {...bottomAnimation}
       className="relative w-full h-[350px] sm:h-[400px] md:h-[445px] rounded-[24px] overflow-hidden mb-10 sm:mb-12 md:mb-16"
     >
-      {imageSrc ? (
-        <Image
-          src={imageSrc}
-          alt={title}
-          fill
-          className="object-cover object-top"
-        />
+      {videoUrl ? (
+        <VideoEmbed url={videoUrl} title={title} className="absolute inset-0" />
+      ) : imageSrc ? (
+        <Image src={imageSrc} alt={title} fill className="object-cover object-top" />
       ) : (
         <div className="w-full h-full bg-gray-200" />
       )}

@@ -13,6 +13,7 @@ export interface Testimonial {
   detail: string;
   author: string;
   image?: any;
+  videoUrl?: string;
 }
 
 export interface TestimonialsData {
@@ -163,6 +164,7 @@ function Testimonials({ data }: TestimonialsProps) {
                 detail={testimonial.detail}
                 author={testimonial.author}
                 image={testimonial.image}
+                videoUrl={testimonial.videoUrl}
                 animationIndex={index}
               />
             </div>

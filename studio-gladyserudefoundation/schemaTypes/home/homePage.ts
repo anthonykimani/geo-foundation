@@ -14,6 +14,7 @@ export default {
     {name: 'targetDate', title: 'Countdown Target Date', type: 'string'},
     {name: 'countdownTitle', title: 'Countdown Title', type: 'string'},
     {name: 'heroBackgroundImage', title: 'Hero Background Image', type: 'image', options: {hotspot: true}},
+    {name: 'heroVideoUrl', title: 'Hero Background Video (YouTube/Vimeo URL)', type: 'url', description: 'Replaces hero image when set'},
     {
       name: 'features',
       title: 'Features',
@@ -37,6 +38,7 @@ export default {
         {name: 'excerpt', title: 'Excerpt', type: 'text'},
         {name: 'content', title: 'Content', type: 'text'},
         {name: 'image', title: 'Image', type: 'image', options: {hotspot: true}},
+        {name: 'videoUrl', title: 'Video URL (YouTube/Vimeo)', type: 'url', description: 'Replaces image when set'},
       ]}],
     },
   ],

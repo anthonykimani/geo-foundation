@@ -4,12 +4,14 @@ import Image from "next/image";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { getImageUrl } from "@/lib/sanity";
+import VideoEmbed from "@/components/shared/video-embed";
 
 interface TestimonialCardProps {
   quote: string;
   detail: string;
   author: string;
   image?: string | any;
+  videoUrl?: string;
   animationIndex?: number;
 }
 
@@ -18,6 +20,7 @@ function TestimonialCard({
   detail,
   author,
   image,
+  videoUrl,
   animationIndex = 0,
 }: TestimonialCardProps) {
   const ref = useRef(null);
@@ -38,7 +41,9 @@ function TestimonialCard({
       className="bg-[#f6f6f6] rounded-[24px] overflow-hidden h-full"
     >
       <div className="relative w-full aspect-[507/335] shrink-0">
-        {imageSrc ? (
+        {videoUrl ? (
+          <VideoEmbed url={videoUrl} title={author} />
+        ) : imageSrc ? (
           <Image src={imageSrc} alt={author} fill className="object-cover" />
         ) : null}
       </div>

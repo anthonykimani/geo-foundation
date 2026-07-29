@@ -18,6 +18,7 @@ export default {
         {name: 'title', title: 'Image Title', type: 'string'},
         {name: 'description', title: 'Description', type: 'string'},
         {name: 'image', title: 'Image', type: 'image', options: {hotspot: true}},
+        {name: 'videoUrl', title: 'Video URL (YouTube/Vimeo)', type: 'url', description: 'Replaces image when set'},
       ]}],
     },
   ],

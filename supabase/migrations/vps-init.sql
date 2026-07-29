@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS runners (
   name TEXT NOT NULL,
   email TEXT UNIQUE,
   country TEXT DEFAULT 'Kenya',
+  avatar_url TEXT,
   created_at TIMESTAMPTZ DEFAULT now()
 );
 

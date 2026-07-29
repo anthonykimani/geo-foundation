@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/accordion";
 import { FacebookLogoIcon, TwitterLogoIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
 import { getImageUrl } from "@/lib/sanity";
+import VideoEmbed from "@/components/shared/video-embed";
 import { galleryImages } from "@/data/pages/gallery";
 
 async function getPageData() {
@@ -120,7 +121,9 @@ export default function GalleryPage() {
                           <Link href={`/gallery/${item._id || item.id}`}>
                             <article className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                               <div className="relative h-[200px] w-full">
-                                {(() => {
+                                {item.videoUrl ? (
+                                  <VideoEmbed url={item.videoUrl} title={item.title} />
+                                ) : (() => {
                                   const imgUrl = getImageUrl(item.imageUrl);
                                   if (imgUrl) {
                                     return <img src={imgUrl} alt={item.title} className="w-full h-full object-cover" />;
