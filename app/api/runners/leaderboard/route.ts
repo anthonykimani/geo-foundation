@@ -11,7 +11,7 @@ export async function GET() {
     }>(
       `SELECT 
         r.id, r.name, r.country,
-        COALESCE(SUM(ru.distance_km), 0) as total_km,
+        COALESCE(SUM(ru.distance_km)::float, 0) as total_km,
         COUNT(ru.id)::int as total_runs
       FROM runners r
       LEFT JOIN runs ru ON ru.runner_id = r.id

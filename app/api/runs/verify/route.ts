@@ -12,7 +12,7 @@ export async function PUT(request: Request) {
     }
 
     const rows = await query(
-      `UPDATE runs SET verified = true WHERE id = ANY($1) RETURNING *`,
+      `UPDATE runs SET verified = true WHERE id = ANY($1) RETURNING id, runner_id, distance_km::float, run_date, verified, source, created_at`,
       [run_ids]
     );
 

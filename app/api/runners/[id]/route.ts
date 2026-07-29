@@ -31,7 +31,7 @@ export async function GET(
       source: string;
       created_at: string;
     }>(
-      "SELECT distance_km, run_date, verified, source, created_at FROM runs WHERE runner_id = $1 ORDER BY created_at DESC",
+      "SELECT distance_km::float, run_date, verified, source, created_at FROM runs WHERE runner_id = $1 ORDER BY created_at DESC",
       [runner.id]
     );
 
