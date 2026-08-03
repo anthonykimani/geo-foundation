@@ -12,6 +12,10 @@ interface VideoEmbedProps {
 
 type VideoPlatform = "youtube" | "vimeo" | null;
 
+export function isShortVideoUrl(url: string): boolean {
+  return /\/shorts\//.test(url);
+}
+
 export function parseVideoUrl(url: string): { platform: VideoPlatform; id: string | null } {
   const youtubeMatch =
     url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/) ||

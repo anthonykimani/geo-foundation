@@ -122,7 +122,11 @@ export default function GalleryPage() {
                             <article className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                               <div className="relative h-[200px] w-full">
                                 {item.videoUrl && parseVideoUrl(item.videoUrl).id ? (
-                                  <VideoEmbed url={item.videoUrl} title={item.title} />
+                                  <VideoEmbed
+                                    url={item.videoUrl}
+                                    title={item.title}
+                                    background
+                                  />
                                 ) : (() => {
                                   const imgUrl = getImageUrl(item.imageUrl);
                                   if (imgUrl) {
