@@ -5,6 +5,8 @@ import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import ImageGallery from "@/components/shared/image-gallery";
 import { FacebookLogoIcon, TwitterLogoIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
+import { parseVideoUrl } from "@/components/shared/video-embed";
+import VideoEmbed from "@/components/shared/video-embed";
 
 interface NewsItem {
   _id?: string;
@@ -22,6 +24,7 @@ interface GalleryDetailClientProps {
   prevItem: NewsItem | null;
   nextItem: NewsItem | null;
   imageUrl: string | null;
+  videoUrl?: string | null;
   gallery?: { url: string; caption?: string }[];
 }
 
@@ -30,6 +33,7 @@ export default function GalleryDetailClient({
   prevItem,
   nextItem,
   imageUrl,
+  videoUrl,
   gallery = [],
 }: GalleryDetailClientProps) {
   if (!newsItem) {
@@ -61,6 +65,10 @@ export default function GalleryDetailClient({
             <div className="relative w-full rounded-2xl overflow-hidden">
               {gallery.length > 0 ? (
                 <ImageGallery images={gallery} />
+              ) : videoUrl && parseVideoUrl(videoUrl).id ? (
+                <div className="relative w-full aspect-video lg:h-full lg:min-h-[500px]">
+                  <VideoEmbed url={videoUrl} title={newsItem.title} />
+                </div>
               ) : imageUrl ? (
                 <div className="relative w-full h-[300px] md:h-[400px] lg:h-full lg:min-h-[500px]">
                   <img

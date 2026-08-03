@@ -12,9 +12,9 @@ interface VideoEmbedProps {
 
 type VideoPlatform = "youtube" | "vimeo" | null;
 
-function parseVideoUrl(url: string): { platform: VideoPlatform; id: string | null } {
+export function parseVideoUrl(url: string): { platform: VideoPlatform; id: string | null } {
   const youtubeMatch =
-    url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]+)/) ||
+    url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/) ||
     url.match(/^([a-zA-Z0-9_-]{11})$/);
   if (youtubeMatch) return { platform: "youtube", id: youtubeMatch[1] };
 

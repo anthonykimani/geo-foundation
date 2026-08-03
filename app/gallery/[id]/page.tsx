@@ -56,6 +56,7 @@ export default async function Page({ params }: Props) {
   const nextItem =
     currentIndex < news.length - 1 ? news[currentIndex + 1] : null;
   const imageUrl = getImageUrl(newsItem.imageUrl);
+  const videoUrl = newsItem?.videoUrl || null;
   const gallery = newsItem?.gallery
     ?.map((g: any) => {
       const url = getImageUrl(g.image);
@@ -69,6 +70,7 @@ export default async function Page({ params }: Props) {
       prevItem={prevItem}
       nextItem={nextItem}
       imageUrl={imageUrl}
+      videoUrl={videoUrl}
       gallery={gallery}
     />
   );
