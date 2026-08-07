@@ -53,7 +53,6 @@ function VideoEmbed({ url, title = "Video", className, background }: VideoEmbedP
         )}
         allow="autoplay; encrypted-media"
         allowFullScreen
-        playsInline
         onLoad={() => setLoaded(true)}
       />
     );
@@ -68,7 +67,6 @@ function VideoEmbed({ url, title = "Video", className, background }: VideoEmbedP
         className="absolute inset-0 w-full h-full"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
-        playsInline
       />
     </div>
   );
