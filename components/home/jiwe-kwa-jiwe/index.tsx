@@ -36,20 +36,9 @@ interface JiweKwaJiweProps {
 const GOLF_OUTING_ID = "437fc816-2f25-4da3-8183-d1071cc7d850";
 
 async function getJiwePageData() {
-  const { getJiwePage } = await import("@/lib/sanity/queries");
-  return getJiwePage();
-}
-
-async function getDonationData() {
-  try {
-    const res = await fetch("/api/donations");
-    if (res.ok) {
-      return await res.json();
-    }
-  } catch (error) {
-    console.error("Error fetching donations:", error);
-  }
-  return { totalBricks: 0 };
+  const { getJiwePage, getHomePage } = await import("@/lib/sanity/queries");
+  const [jiwe, homePage] = await Promise.all([getJiwePage(), getHomePage()]);
+  return { jiwe, homePage };
 }
 
 async function getGolfOuting() {
@@ -65,19 +54,17 @@ async function getGolfOuting() {
 
 function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
   const [jiweData, setJiweData] = useState<any>(null);
-  const [bricksRaised, setBricksRaised] = useState(0);
+  const [homePageData, setHomePageData] = useState<any>(null);
   const [golfOuting, setGolfOuting] = useState<any>(null);
 
   useEffect(() => {
     if (data) {
       setJiweData(data);
     } else {
-      Promise.all([getJiwePageData(), getDonationData()])
-        .then(([jiwe, donations]) => {
+      getJiwePageData()
+        .then(({ jiwe, homePage }) => {
           setJiweData(jiwe);
-          if (donations.totalBricks > 0) {
-            setBricksRaised(donations.totalBricks);
-          }
+          setHomePageData(homePage);
         })
         .catch(() => setJiweData(null));
     }
@@ -97,8 +84,8 @@ function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
     title: jiweData?.featuredProjectTitle || jiweData?.featuredProject?.title || "",
     subtitle: jiweData?.featuredProjectSubtitle || jiweData?.featuredProject?.subtitle || "",
     image: jiweData?.featuredProjectImage || jiweData?.featuredProject?.image,
-    bricksRaised: bricksRaised || jiweData?.bricksRaised || 0,
-    targetBricks: jiweData?.targetBricks || 0,
+    bricksRaised: jiweData?.bricksRaised || homePageData?.bricksRaised || 0,
+    targetBricks: jiweData?.targetBricks || homePageData?.targetBricks || 0,
   };
   const news = jiweData?.news || [];
 

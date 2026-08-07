@@ -41,9 +41,11 @@ interface FeaturedCarouselProps {
 
 function AnimatedNumber({ value, inView }: { value: number; inView: boolean }) {
   const [displayValue, setDisplayValue] = useState(0);
+  const startedRef = useRef(false);
 
   useEffect(() => {
-    if (!inView) return;
+    if (!inView || startedRef.current) return;
+    startedRef.current = true;
 
     const duration = 1500;
     const startTime = Date.now();
@@ -72,7 +74,7 @@ function FeaturedCarousel({ slides }: FeaturedCarouselProps) {
   const [api, setApi] = useState<CarouselApi | undefined>();
   const [current, setCurrent] = useState(0);
   const [donateOpen, setDonateOpen] = useState(false);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, amount: 0.2 });
 
   useEffect(() => {
     if (!api) return;

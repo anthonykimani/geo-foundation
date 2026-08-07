@@ -108,24 +108,6 @@ function HeroSection() {
   }, []);
 
   useEffect(() => {
-    const fetchDonations = async () => {
-      try {
-        const res = await fetch("/api/donations");
-        if (res.ok) {
-          const data = await res.json();
-          if (data.totalBricks > 0) {
-            setHomePageData((prev: any) => ({ ...prev, bricksRaised: data.totalBricks }));
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching donations:", error);
-      }
-    };
-
-    fetchDonations();
-  }, []);
-
-  useEffect(() => {
     const fetchSanityData = async () => {
       try {
         const data = await getHomePageData();

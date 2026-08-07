@@ -38,33 +38,15 @@ async function getJiwePageData() {
   return getJiwePage();
 }
 
-async function getDonationData() {
-  try {
-    const res = await fetch("/api/donations");
-    if (res.ok) {
-      return await res.json();
-    }
-  } catch (error) {
-    console.error("Error fetching donations:", error);
-  }
-  return { totalBricks: 0 };
-}
-
 function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
   const [jiweData, setJiweData] = useState<any>(null);
-  const [bricksRaised, setBricksRaised] = useState(0);
 
   useEffect(() => {
     if (data) {
       setJiweData(data);
     } else {
-      Promise.all([getJiwePageData(), getDonationData()])
-        .then(([jiwe, donations]) => {
-          setJiweData(jiwe);
-          if (donations.totalBricks > 0) {
-            setBricksRaised(donations.totalBricks);
-          }
-        })
+      getJiwePageData()
+        .then(setJiweData)
         .catch(() => setJiweData(null));
     }
   }, [data]);
@@ -77,7 +59,7 @@ function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
   const featuredProject = {
     title: jiweData?.featuredProjectTitle || "",
     subtitle: jiweData?.featuredProjectSubtitle || "",
-    bricksRaised: bricksRaised || jiweData?.bricksRaised || 0,
+    bricksRaised: jiweData?.bricksRaised || 0,
     targetBricks: jiweData?.targetBricks || 0,
     image: jiweData?.featuredProjectImage || null,
   };
