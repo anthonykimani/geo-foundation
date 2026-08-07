@@ -122,6 +122,20 @@ export function DonationForm({ className = "" }: DonationFormProps) {
             </div>
 
             <div className="mt-6 pt-6 border-t border-gray-200">
+              <h3 className="text-xl font-semibold text-foreground mb-2">Donate via CashApp</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Scan the QR code below to donate via CashApp
+              </p>
+              <div className="relative w-full h-[400px]">
+                <img
+                  src="/img/cashapp.jpeg"
+                  alt="CashApp QR Code"
+                  className="w-full h-full object-cover rounded-lg"
+                />
+              </div>
+            </div>
+
+            <div className="mt-6 pt-6 border-t border-gray-200">
               {!showPayPal ? (
                 <button
                   onClick={() => {
