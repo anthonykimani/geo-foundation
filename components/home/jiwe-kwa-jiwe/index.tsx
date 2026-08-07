@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Header from "./header";
-import FeaturedProject from "./featured-project";
+import FeaturedCarousel, { type FeaturedSlide } from "./featured-carousel";
 import NewsCard from "./news-card";
 
 interface Project {
@@ -33,6 +33,8 @@ interface JiweKwaJiweProps {
   data?: JiweKwaJiweData;
 }
 
+const GOLF_OUTING_ID = "437fc816-2f25-4da3-8183-d1071cc7d850";
+
 async function getJiwePageData() {
   const { getJiwePage } = await import("@/lib/sanity/queries");
   return getJiwePage();
@@ -50,9 +52,21 @@ async function getDonationData() {
   return { totalBricks: 0 };
 }
 
+async function getGolfOuting() {
+  const { getNews } = await import("@/lib/sanity/queries");
+  const news = await getNews();
+  const item =
+    news.find((n: any) => n._id === GOLF_OUTING_ID) ||
+    news.find((n: any) =>
+      (n.title || "").toUpperCase().includes("CHARITY GOLF OUTING")
+    );
+  return item || null;
+}
+
 function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
   const [jiweData, setJiweData] = useState<any>(null);
   const [bricksRaised, setBricksRaised] = useState(0);
+  const [golfOuting, setGolfOuting] = useState<any>(null);
 
   useEffect(() => {
     if (data) {
@@ -69,6 +83,12 @@ function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
     }
   }, [data]);
 
+  useEffect(() => {
+    getGolfOuting()
+      .then(setGolfOuting)
+      .catch(() => setGolfOuting(null));
+  }, []);
+
   const header = {
     title: jiweData?.headerTitle || jiweData?.header?.title || "Jiwe Kwa Jiwe",
     subtitle: jiweData?.headerSubtitle || jiweData?.header?.subtitle || "",
@@ -82,6 +102,34 @@ function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
   };
   const news = jiweData?.news || [];
 
+  const slides: FeaturedSlide[] = [];
+
+  if (golfOuting) {
+    slides.push({
+      id: "golf-outing",
+      kind: "event",
+      title: golfOuting.title || "CHARITY GOLF OUTING",
+      date: golfOuting.date,
+      description: golfOuting.excerpt?.split("\n")[0],
+      image: golfOuting.imageUrl,
+      videoUrl: golfOuting.videoUrl,
+      registrationUrl: golfOuting.registrationUrl,
+      registrationText: golfOuting.registrationText,
+    });
+  }
+
+  if (featuredProject.title) {
+    slides.push({
+      id: "featured-project",
+      kind: "project",
+      title: featuredProject.title,
+      subtitle: featuredProject.subtitle,
+      image: featuredProject.image,
+      bricksRaised: featuredProject.bricksRaised,
+      targetBricks: featuredProject.targetBricks,
+    });
+  }
+
   return (
     <section className="w-full bg-background">
       <div className="container py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 lg:px-[100px] max-w-[1440px] mx-auto">
@@ -91,12 +139,9 @@ function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
           animationIndex={0}
         />
 
-        <FeaturedProject
-          project={featuredProject}
-          animationIndex={1}
-        />
+        <FeaturedCarousel slides={slides} />
 
-        <div className="grid grid-cols-1 sm:gthrid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {news.map((newsItem: any, index: number) => (
             <NewsCard key={newsItem._id || index} news={newsItem} animationIndex={2 + index} />
           ))}
