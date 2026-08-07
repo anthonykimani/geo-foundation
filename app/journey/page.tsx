@@ -72,17 +72,6 @@ function JourneyPage() {
     if (res.ok) loadRunner();
   };
 
-  const handleManualLog = async (distanceKm: number) => {
-    if (!session?.runner_id) return;
-    trackEvent("journey_manual_run", { distanceKm });
-    const res = await fetch("/api/runs", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ runner_id: session.runner_id, distance_km: distanceKm, source: "manual" }),
-    });
-    if (res.ok) loadRunner();
-  };
-
   if (loading || status === "loading") {
     return (
       <main className="min-h-screen bg-background pt-24 pb-16">
@@ -184,7 +173,6 @@ function JourneyPage() {
 
         <FitnessHub
           onGpsComplete={handleGpsComplete}
-          onManualLog={handleManualLog}
           totalKm={stats?.totalKm || 0}
         />
 

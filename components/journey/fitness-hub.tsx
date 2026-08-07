@@ -1,16 +1,14 @@
 "use client";
 
 import GpsTracker from "./gps-tracker";
-import ManualLog from "./manual-log";
 
 interface FitnessHubProps {
   onGpsComplete: (distanceKm: number) => void;
-  onManualLog: (distanceKm: number) => void;
   disabled?: boolean;
   totalKm: number;
 }
 
-function FitnessHub({ onGpsComplete, onManualLog, disabled, totalKm }: FitnessHubProps) {
+function FitnessHub({ onGpsComplete, disabled, totalKm }: FitnessHubProps) {
   return (
     <div className="rounded-2xl bg-card border border-border p-6 sm:p-8">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
@@ -20,16 +18,8 @@ function FitnessHub({ onGpsComplete, onManualLog, disabled, totalKm }: FitnessHu
         </span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="space-y-4">
-          <GpsTracker onRunComplete={onGpsComplete} disabled={disabled} />
-        </div>
-
-        <div className="hidden md:block w-px bg-border" />
-
-        <div className="space-y-4">
-          <ManualLog onLog={onManualLog} disabled={disabled} />
-        </div>
+      <div className="max-w-xl">
+        <GpsTracker onRunComplete={onGpsComplete} disabled={disabled} />
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ interface GpsTrackerProps {
 }
 
 function GpsTracker({ onRunComplete, disabled }: GpsTrackerProps) {
-  const { isTracking, currentDistance, startTracking, stopTracking, error } =
+  const { isTracking, currentDistance, startTracking, stopTracking, error, paused } =
     useGpsTracker();
 
   const handleStop = () => {
@@ -28,9 +28,13 @@ function GpsTracker({ onRunComplete, disabled }: GpsTrackerProps) {
         <span className="text-sm text-muted-foreground">KM tracked</span>
       </div>
 
-      {error && (
-        <p className="text-sm text-destructive">{error}</p>
+      {paused && (
+        <p className="text-sm text-amber-500">
+          Tracking paused — unlock your screen to continue.
+        </p>
       )}
+
+      {error && <p className="text-sm text-destructive">{error}</p>}
 
       <Button
         onClick={isTracking ? handleStop : startTracking}

@@ -35,7 +35,7 @@ function RecentRuns({ runs }: { runs: RunEntry[] }) {
             className="flex items-center justify-between py-2.5 px-3 rounded-lg hover:bg-muted/50"
           >
             <div className="flex items-center gap-3">
-              <span className="text-lg">{run.source === "gps" ? "🛰️" : "✍️"}</span>
+              <span className="text-lg">🛰️</span>
               <div>
                 <p className="text-sm font-medium text-foreground">
                   {run.distance_km.toFixed(1)} km
@@ -49,14 +49,8 @@ function RecentRuns({ runs }: { runs: RunEntry[] }) {
                 </p>
               </div>
             </div>
-            <span
-              className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                run.verified
-                  ? "bg-emerald-500/20 text-emerald-500"
-                  : "bg-amber-500/20 text-amber-500"
-              }`}
-            >
-              {run.verified ? "Verified" : "Pending"}
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-500">
+              Verified
             </span>
           </div>
         ))}

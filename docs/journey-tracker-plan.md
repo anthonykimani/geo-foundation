@@ -153,11 +153,8 @@ Tracks all donations (Pesapal, PayPal, GoFundMe, manual, run).
 | `/api/runners` | POST | Register a runner | `{ name, email, country }` | Runner object (201) |
 | `/api/runners/[id]` | GET | Runner by UUID or email | — | `{ runner, stats, recentRuns }` |
 | `/api/runners/leaderboard` | GET | Top 20 runners by KM | — | Array of `{ id, name, totalKm, totalBricks, totalRuns }` |
-| `/api/runs` | POST | Log a run | `{ runner_id, distance_km, source }` | Run object (201) |
+| `/api/runs` | POST | Log a GPS run | `{ runner_id, distance_km }` | Run object (201) |
 | `/api/runs/[runner_id]` | GET | All runs for a runner | — | Array of runs |
-| `/api/runs/pending` | GET | Unverified manual runs | — | Array with nested runner info |
-| `/api/runs/verify` | PUT | Batch approve runs | `{ run_ids: string[] }` | `{ verified: count, runs: [...] }` |
-| `/api/runs/reject` | DELETE | Reject/delete a run | `?id=uuid` | `{ deleted: true }` |
 
 ---
 

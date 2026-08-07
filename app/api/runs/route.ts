@@ -2,7 +2,7 @@ import { queryOne } from "@/lib/db";
 
 export async function POST(request: Request) {
   try {
-    const { runner_id, distance_km, source } = await request.json();
+    const { runner_id, distance_km } = await request.json();
 
     if (!runner_id || !distance_km) {
       return Response.json(
@@ -18,8 +18,6 @@ export async function POST(request: Request) {
       );
     }
 
-    const verified = source === "gps";
-
     const run = await queryOne<{
       id: string;
       runner_id: string;
@@ -30,14 +28,8 @@ export async function POST(request: Request) {
       created_at: string;
     }>(
       `INSERT INTO runs (runner_id, distance_km, source, verified, run_date)
-       VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-      [
-        runner_id,
-        distance_km,
-        source || "manual",
-        verified,
-        new Date().toISOString().split("T")[0],
-      ]
+       VALUES ($1, $2, 'gps', true, $3) RETURNING *`,
+      [runner_id, distance_km, new Date().toISOString().split("T")[0]]
     );
 
     if (!run) throw new Error("Failed to create run");

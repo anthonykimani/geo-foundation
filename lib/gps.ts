@@ -3,6 +3,14 @@ export interface GeoCoord {
   lng: number;
 }
 
+export interface TrackPoint extends GeoCoord {
+  ts: number;
+  accuracy?: number;
+}
+
+export const MAX_POINT_ACCURACY_M = 100;
+export const MAX_SPEED_KMH = 45;
+
 export function haversineDistance(a: GeoCoord, b: GeoCoord): number {
   const R = 6371;
   const dLat = ((b.lat - a.lat) * Math.PI) / 180;
@@ -23,4 +31,17 @@ export function totalDistance(coords: GeoCoord[]): number {
     total += haversineDistance(coords[i - 1], coords[i]);
   }
   return total;
+}
+
+export function isPlausibleTrackPoint(prev: TrackPoint | null, next: TrackPoint): boolean {
+  if (next.accuracy != null && next.accuracy > MAX_POINT_ACCURACY_M) return false;
+  if (!prev) return true;
+
+  const distKm = haversineDistance(
+    { lat: prev.lat, lng: prev.lng },
+    { lat: next.lat, lng: next.lng }
+  );
+  const dtHours = (next.ts - prev.ts) / (1000 * 60 * 60);
+  if (dtHours <= 0) return distKm < 0.001;
+  return distKm / dtHours <= MAX_SPEED_KMH;
 }
