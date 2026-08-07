@@ -37,8 +37,8 @@ function VideoEmbed({ url, title = "Video", className, background }: VideoEmbedP
 
   const embedUrl =
     platform === "youtube"
-      ? `https://www.youtube.com/embed/${id}?rel=0${background ? "&autoplay=1&mute=1&controls=0&loop=1&playlist=" + id : ""}`
-      : `https://player.vimeo.com/video/${id}?${background ? "background=1&autoplay=1&loop=1&muted=1&controls=0" : ""}`;
+      ? `https://www.youtube.com/embed/${id}?rel=0&autoplay=1&mute=1&controls=0&loop=1&playlist=${id}`
+      : `https://player.vimeo.com/video/${id}?autoplay=1&loop=1&muted=1&controls=0${background ? "&background=1" : ""}`;
 
   if (background) {
     return (
@@ -47,13 +47,13 @@ function VideoEmbed({ url, title = "Video", className, background }: VideoEmbedP
         src={embedUrl}
         title={title}
         className={cn(
-          "absolute inset-0 w-full h-full pointer-events-none",
+          "pointer-events-none absolute top-1/2 left-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2",
           loaded ? "opacity-100" : "opacity-0",
           className
         )}
-        style={{ objectFit: "cover" }}
         allow="autoplay; encrypted-media"
         allowFullScreen
+        playsInline
         onLoad={() => setLoaded(true)}
       />
     );
@@ -68,6 +68,7 @@ function VideoEmbed({ url, title = "Video", className, background }: VideoEmbedP
         className="absolute inset-0 w-full h-full"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
+        playsInline
       />
     </div>
   );

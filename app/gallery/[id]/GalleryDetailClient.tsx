@@ -15,6 +15,8 @@ interface NewsItem {
   category?: string;
   date?: string;
   excerpt?: string;
+  registrationUrl?: string;
+  registrationText?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   imageUrl?: any;
 }
@@ -110,6 +112,19 @@ export default function GalleryDetailClient({
                     </p>
                   ))}
                 </div>
+
+                {newsItem.registrationUrl && (
+                  <a
+                    href={newsItem.registrationUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex w-full sm:w-auto"
+                  >
+                    <Button className="w-full sm:w-auto text-sm font-medium rounded-full h-12 px-8">
+                      {newsItem.registrationText || "Register Now"}
+                    </Button>
+                  </a>
+                )}
 
                 <div className="flex items-center gap-3 mt-6">
                   <span className="text-xs text-muted-foreground">Share:</span>

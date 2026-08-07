@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { Play } from "@phosphor-icons/react";
 import { trackEvent } from "@/lib/track";
+import VideoEmbed from "@/components/shared/video-embed";
 
 interface ChannelVideo {
   id: string;
@@ -29,6 +30,48 @@ function formatDate(iso: string | null): string {
   } catch {
     return "";
   }
+}
+
+function VideoCard({ video }: { video: ChannelVideo }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="relative aspect-video overflow-hidden bg-black">
+      {inView ? (
+        <VideoEmbed url={video.url} title={video.title} className="pointer-events-none" />
+      ) : (
+        <>
+          <img
+            src={video.thumbnail}
+            alt={video.title}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="flex items-center justify-center size-14 rounded-full bg-white/90 shadow-lg group-hover:bg-primary group-hover:text-white transition-colors">
+              <Play weight="fill" className="size-6 ml-1" />
+            </span>
+          </div>
+        </>
+      )}
+    </div>
+  );
 }
 
 function News() {
@@ -91,18 +134,9 @@ function News() {
                 viewport={{ once: true }}
                 className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer h-full"
               >
-                <div className="relative aspect-video overflow-hidden bg-black">
-                  <img
-                    src={video.thumbnail}
-                    alt={video.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+                <div className="relative">
+                  <VideoCard video={video} />
                   <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="flex items-center justify-center size-14 rounded-full bg-white/90 shadow-lg group-hover:bg-primary group-hover:text-white transition-colors">
-                      <Play weight="fill" className="size-6 ml-1" />
-                    </span>
-                  </div>
                 </div>
                 <div className="p-6">
                   <p className="text-sm text-muted-foreground mb-2">

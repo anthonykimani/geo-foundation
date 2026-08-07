@@ -22,5 +22,7 @@ export default {
     ]}]},
     {name: 'excerpt', title: 'Excerpt', type: 'text'},
     {name: 'content', title: 'Content', type: 'array', of: [{type: 'block'}]},
+    {name: 'registrationUrl', title: 'Registration URL', type: 'url', description: 'Optional link shown as a Register button on the news detail page'},
+    {name: 'registrationText', title: 'Registration Button Text', type: 'string', description: 'Label for the registration button (e.g. "Register Now")'},
   ],
 }
