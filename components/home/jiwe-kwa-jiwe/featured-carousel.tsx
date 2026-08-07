@@ -1,11 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useInView } from "motion/react";
+import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import DonationModal from "@/components/shared/donation-modal";
 import VideoEmbed from "@/components/shared/video-embed";
 import {
   Carousel,
@@ -15,22 +14,17 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { HeartIcon } from "@phosphor-icons/react";
 import { getImageUrl } from "@/lib/sanity";
 import { trackEvent } from "@/lib/track";
 
 export interface FeaturedSlide {
   id: string;
-  kind: "event" | "project";
   title: string;
-  subtitle?: string;
   description?: string;
   category?: string;
   date?: string;
   image?: any;
   videoUrl?: string;
-  bricksRaised?: number;
-  targetBricks?: number;
   registrationUrl?: string;
   registrationText?: string;
 }
@@ -39,42 +33,10 @@ interface FeaturedCarouselProps {
   slides: FeaturedSlide[];
 }
 
-function AnimatedNumber({ value, inView }: { value: number; inView: boolean }) {
-  const [displayValue, setDisplayValue] = useState(0);
-  const startedRef = useRef(false);
-
-  useEffect(() => {
-    if (!inView || startedRef.current) return;
-    startedRef.current = true;
-
-    const duration = 1500;
-    const startTime = Date.now();
-
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = Math.floor(eased * value);
-
-      setDisplayValue(current);
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-
-    requestAnimationFrame(animate);
-  }, [value, inView]);
-
-  return <span>{displayValue.toLocaleString()}</span>;
-}
-
 function FeaturedCarousel({ slides }: FeaturedCarouselProps) {
   const ref = useRef(null);
   const [api, setApi] = useState<CarouselApi | undefined>();
   const [current, setCurrent] = useState(0);
-  const [donateOpen, setDonateOpen] = useState(false);
-  const inView = useInView(ref, { once: true, amount: 0.2 });
 
   useEffect(() => {
     if (!api) return;
@@ -104,13 +66,6 @@ function FeaturedCarousel({ slides }: FeaturedCarouselProps) {
         <CarouselContent>
           {slides.map((slide) => {
             const imageSrc = getImageUrl(slide.image);
-            const isEvent = slide.kind === "event";
-            const progressPercentage = isEvent
-              ? 0
-              : Math.min(
-                  ((slide.bricksRaised || 0) / (slide.targetBricks || 1)) * 100,
-                  100
-                );
 
             return (
               <CarouselItem key={slide.id} className="basis-full pl-0">
@@ -136,7 +91,7 @@ function FeaturedCarousel({ slides }: FeaturedCarouselProps) {
 
                   <div className="bg-[#f6f6f6] dark:bg-white/5 p-6 sm:p-8 md:p-10 lg:p-10 rounded-r-[24px] flex flex-col justify-between">
                     <div className="mb-6">
-                      {isEvent && slide.category && (
+                      {slide.category && (
                         <span className="inline-block px-3 py-1.5 bg-primary text-white text-xs rounded mb-4">
                           {slide.category}
                         </span>
@@ -144,65 +99,32 @@ function FeaturedCarousel({ slides }: FeaturedCarouselProps) {
                       <h2 className="text-2xl sm:text-3xl md:text-[40px] leading-tight font-normal text-foreground">
                         {slide.title}
                       </h2>
-                      {isEvent && slide.date && (
+                      {slide.date && (
                         <p className="text-sm text-muted-foreground mt-2">
                           {slide.date}
                         </p>
                       )}
-                      {isEvent ? (
-                        <div className="mt-6">
-                          <h3 className="text-lg font-semibold text-foreground mb-3">
-                            About the Event
-                          </h3>
-                          <div className="space-y-4">
-                            {slide.description
-                              ?.split("\n")
-                              .filter((paragraph: string) => paragraph.trim())
-                              .map((paragraph: string, idx: number) => (
-                                <p
-                                  key={idx}
-                                  className="text-base sm:text-lg text-muted-foreground"
-                                >
-                                  {paragraph}
-                                </p>
-                              ))}
-                          </div>
-                        </div>
-                      ) : (
-                        <p className="text-base sm:text-lg text-muted-foreground">
-                          {slide.subtitle}
-                        </p>
-                      )}
-                    </div>
-
-                    {!isEvent && (
-                      <div className="mb-6">
-                        <div className="flex justify-between text-sm sm:text-base">
-                          <span className="text-foreground">
-                            <AnimatedNumber
-                              value={slide.bricksRaised || 0}
-                              inView={inView}
-                            />{" "}
-                            Bricks Raised
-                          </span>
-                          <span className="text-foreground">
-                            {(slide.targetBricks || 0).toLocaleString()}{" "}
-                            Targeted Bricks
-                          </span>
-                        </div>
-
-                        <div className="relative w-full h-[41px] bg-[#efeaea] dark:bg-white/10 rounded-[55px] overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${progressPercentage}%` }}
-                            transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-                            className="absolute top-0 left-0 h-full bg-[#ea3c58] rounded-[32px]"
-                          />
+                      <div className="mt-6">
+                        <h3 className="text-lg font-semibold text-foreground mb-3">
+                          About the Event
+                        </h3>
+                        <div className="space-y-4">
+                          {slide.description
+                            ?.split("\n")
+                            .filter((paragraph: string) => paragraph.trim())
+                            .map((paragraph: string, idx: number) => (
+                              <p
+                                key={idx}
+                                className="text-base sm:text-lg text-muted-foreground"
+                              >
+                                {paragraph}
+                              </p>
+                            ))}
                         </div>
                       </div>
-                    )}
+                    </div>
 
-                    {isEvent && slide.registrationUrl ? (
+                    {slide.registrationUrl ? (
                       <a
                         href={slide.registrationUrl}
                         target="_blank"
@@ -218,20 +140,7 @@ function FeaturedCarousel({ slides }: FeaturedCarouselProps) {
                           {slide.registrationText || "Register Now"}
                         </Button>
                       </a>
-                    ) : (
-                      <Button
-                        onClick={() => {
-                          setDonateOpen(true);
-                          trackEvent("featured_project_donate_click", {
-                            project: slide.title,
-                          });
-                        }}
-                        className="bg-primary text-white rounded-full text-lg px-8 py-6 gap-2"
-                      >
-                        <HeartIcon size={24} weight="fill" className="text-white" />
-                        Donate
-                      </Button>
-                    )}
+                    ) : null}
                   </div>
                 </div>
               </CarouselItem>
@@ -255,8 +164,6 @@ function FeaturedCarousel({ slides }: FeaturedCarouselProps) {
           ))}
         </div>
       </Carousel>
-
-      <DonationModal open={donateOpen} onOpenChange={setDonateOpen} />
     </motion.div>
   );
 }

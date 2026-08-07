@@ -5,14 +5,6 @@ import Header from "./header";
 import FeaturedCarousel, { type FeaturedSlide } from "./featured-carousel";
 import NewsCard from "./news-card";
 
-interface Project {
-  title: string;
-  subtitle: string;
-  bricksRaised: number;
-  targetBricks: number;
-  image?: any;
-}
-
 interface NewsItem {
   label: string;
   title: string;
@@ -25,7 +17,6 @@ interface JiweKwaJiweData {
     title: string;
     subtitle: string;
   };
-  featuredProject: Project;
   news: NewsItem[];
 }
 
@@ -36,9 +27,8 @@ interface JiweKwaJiweProps {
 const GOLF_OUTING_ID = "437fc816-2f25-4da3-8183-d1071cc7d850";
 
 async function getJiwePageData() {
-  const { getJiwePage, getHomePage } = await import("@/lib/sanity/queries");
-  const [jiwe, homePage] = await Promise.all([getJiwePage(), getHomePage()]);
-  return { jiwe, homePage };
+  const { getJiwePage } = await import("@/lib/sanity/queries");
+  return getJiwePage();
 }
 
 async function getGolfOuting() {
@@ -54,7 +44,6 @@ async function getGolfOuting() {
 
 function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
   const [jiweData, setJiweData] = useState<any>(null);
-  const [homePageData, setHomePageData] = useState<any>(null);
   const [golfOuting, setGolfOuting] = useState<any>(null);
 
   useEffect(() => {
@@ -62,10 +51,7 @@ function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
       setJiweData(data);
     } else {
       getJiwePageData()
-        .then(({ jiwe, homePage }) => {
-          setJiweData(jiwe);
-          setHomePageData(homePage);
-        })
+        .then(setJiweData)
         .catch(() => setJiweData(null));
     }
   }, [data]);
@@ -80,13 +66,6 @@ function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
     title: jiweData?.headerTitle || jiweData?.header?.title || "Jiwe Kwa Jiwe",
     subtitle: jiweData?.headerSubtitle || jiweData?.header?.subtitle || "",
   };
-  const featuredProject = {
-    title: jiweData?.featuredProjectTitle || jiweData?.featuredProject?.title || "",
-    subtitle: jiweData?.featuredProjectSubtitle || jiweData?.featuredProject?.subtitle || "",
-    image: jiweData?.featuredProjectImage || jiweData?.featuredProject?.image,
-    bricksRaised: jiweData?.bricksRaised || homePageData?.bricksRaised || 0,
-    targetBricks: jiweData?.targetBricks || homePageData?.targetBricks || 0,
-  };
   const news = jiweData?.news || [];
 
   const slides: FeaturedSlide[] = [];
@@ -94,7 +73,6 @@ function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
   if (golfOuting) {
     slides.push({
       id: "golf-outing",
-      kind: "event",
       title: golfOuting.title || "CHARITY GOLF OUTING",
       date: golfOuting.date,
       category: golfOuting.category,
@@ -103,18 +81,6 @@ function JiweKwaJiwe({ data }: JiweKwaJiweProps) {
       videoUrl: golfOuting.videoUrl,
       registrationUrl: golfOuting.registrationUrl,
       registrationText: golfOuting.registrationText,
-    });
-  }
-
-  if (featuredProject.title) {
-    slides.push({
-      id: "featured-project",
-      kind: "project",
-      title: featuredProject.title,
-      subtitle: featuredProject.subtitle,
-      image: featuredProject.image,
-      bricksRaised: featuredProject.bricksRaised,
-      targetBricks: featuredProject.targetBricks,
     });
   }
 
