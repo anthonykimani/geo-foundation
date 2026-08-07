@@ -25,6 +25,7 @@ export interface FeaturedSlide {
   title: string;
   subtitle?: string;
   description?: string;
+  category?: string;
   date?: string;
   image?: any;
   videoUrl?: string;
@@ -133,6 +134,11 @@ function FeaturedCarousel({ slides }: FeaturedCarouselProps) {
 
                   <div className="bg-[#f6f6f6] dark:bg-white/5 p-6 sm:p-8 md:p-10 lg:p-10 rounded-r-[24px] flex flex-col justify-between">
                     <div className="mb-6">
+                      {isEvent && slide.category && (
+                        <span className="inline-block px-3 py-1.5 bg-primary text-white text-xs rounded mb-4">
+                          {slide.category}
+                        </span>
+                      )}
                       <h2 className="text-2xl sm:text-3xl md:text-[40px] leading-tight font-normal text-foreground">
                         {slide.title}
                       </h2>
@@ -141,9 +147,30 @@ function FeaturedCarousel({ slides }: FeaturedCarouselProps) {
                           {slide.date}
                         </p>
                       )}
-                      <p className="text-base sm:text-lg text-muted-foreground">
-                        {isEvent ? slide.description : slide.subtitle}
-                      </p>
+                      {isEvent ? (
+                        <div className="mt-6">
+                          <h3 className="text-lg font-semibold text-foreground mb-3">
+                            About the Event
+                          </h3>
+                          <div className="space-y-4">
+                            {slide.description
+                              ?.split("\n")
+                              .filter((paragraph: string) => paragraph.trim())
+                              .map((paragraph: string, idx: number) => (
+                                <p
+                                  key={idx}
+                                  className="text-base sm:text-lg text-muted-foreground"
+                                >
+                                  {paragraph}
+                                </p>
+                              ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <p className="text-base sm:text-lg text-muted-foreground">
+                          {slide.subtitle}
+                        </p>
+                      )}
                     </div>
 
                     {!isEvent && (
